@@ -1,0 +1,159 @@
+﻿@model IEnumerable<ESMC.ELM.Domain.Entities.FirmwareRelease>
+
+@{
+    ViewData["Title"] = "Firmware Releases";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Firmware Releases</h2>
+        <p class="text-muted mb-0">
+            Manage firmware versions released for meter models.
+        </p>
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Add Firmware Release
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+@if (TempData["InfoMessage"] != null)
+{
+    <div class="alert alert-info">
+        @TempData["InfoMessage"]
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No firmware releases have been added yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Meter Model</th>
+                            <th>Version</th>
+                            <th>Release Type</th>
+                            <th>Release Date</th>
+                            <th>Status</th>
+                            <th>Production</th>
+                            <th style="width: 260px;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@item.MeterModel.ModelCode</strong>
+
+                                    @if (!string.IsNullOrWhiteSpace(item.MeterModel.CommercialName))
+                                    {
+                                        <div class="small text-muted">
+                                            @item.MeterModel.CommercialName
+                                        </div>
+                                    }
+                                </td>
+
+                                <td>
+                                    @item.Version
+                                </td>
+
+                                <td>
+                                    @item.ReleaseType
+                                </td>
+
+                                <td>
+                                    @(item.ReleaseDate.HasValue
+                                        ? item.ReleaseDate.Value.ToString("dd-MMM-yyyy")
+                                        : "-")
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        @item.Status
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (item.ApprovedForProduction)
+                                    {
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Not Approved
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-action="Details"
+                                       asp-route-id="@item.FirmwareReleaseId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Details
+                                    </a>
+
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.FirmwareReleaseId"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Edit
+                                    </a>
+
+                                    @if (!item.ApprovedForProduction &&
+                                   string.Equals(
+                                   item.Status,
+                                   "Released",
+                                   StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <form asp-action="ApproveForProduction"
+                                              asp-route-id="@item.FirmwareReleaseId"
+                                              method="post"
+                                              class="d-inline">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-success"
+                                                    onclick="return confirm('Approve this firmware release for production?');">
+                                                Approve
+                                            </button>
+                                        </form>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

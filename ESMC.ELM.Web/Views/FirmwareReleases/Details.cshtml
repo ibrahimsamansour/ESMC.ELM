@@ -1,0 +1,221 @@
+﻿@model ESMC.ELM.Domain.Entities.FirmwareRelease
+
+@{
+    ViewData["Title"] = "Firmware Release Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Firmware Release Details</h2>
+                <p class="text-muted mb-0">
+                    View firmware release information and production approval status.
+                </p>
+            </div>
+
+            <div>
+                <a asp-action="Edit"
+                   asp-route-id="@Model.FirmwareReleaseId"
+                   class="btn btn-primary">
+                    Edit
+                </a>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Back
+                </a>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <div>
+                        <h4 class="mb-1">
+                            @Model.MeterModel.ModelCode - @Model.Version
+                        </h4>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.MeterModel.CommercialName))
+                        {
+                            <div class="text-muted">
+                                @Model.MeterModel.CommercialName
+                            </div>
+                        }
+                    </div>
+
+                    <div>
+                        @if (Model.ApprovedForProduction)
+                        {
+                            <span class="badge bg-success fs-6">
+                                Approved for Production
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-secondary fs-6">
+                                Not Approved for Production
+                            </span>
+                        }
+                    </div>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Meter Model</label>
+                        <div class="fw-semibold">
+                            @Model.MeterModel.ModelCode
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Version</label>
+                        <div class="fw-semibold">
+                            @Model.Version
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Release Type</label>
+                        <div>
+                            @Model.ReleaseType
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Status</label>
+                        <div>
+                            <span class="badge bg-primary">
+                                @Model.Status
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Release Date</label>
+                        <div>
+                            @(Model.ReleaseDate.HasValue
+                                ? Model.ReleaseDate.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Parent Firmware Release</label>
+                        <div>
+                            @if (Model.ParentFirmwareRelease == null)
+                            {
+                                <span>-</span>
+                            }
+                            else
+                            {
+                                @Model.ParentFirmwareRelease.Version
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Change Summary</label>
+                        <div>
+                            @Model.ChangeSummary
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Reason For Change</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.ReasonForChange)
+                                ? "-"
+                                : Model.ReasonForChange)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Checksum</label>
+                        <div class="text-break">
+                            @(string.IsNullOrWhiteSpace(Model.Checksum)
+                                ? "-"
+                                : Model.Checksum)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Firmware File Path</label>
+                        <div class="text-break">
+                            @(string.IsNullOrWhiteSpace(Model.FirmwareFilePath)
+                                ? "-"
+                                : Model.FirmwareFilePath)
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Release Notes</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.ReleaseNotes)
+                                ? "-"
+                                : Model.ReleaseNotes)
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Production Approval</label>
+
+                        <div>
+                            @if (Model.ApprovedForProduction)
+                            {
+                                <span class="text-success fw-semibold">
+                                    Approved
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="text-muted">
+                                    Not Approved
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Approval Date</label>
+                        <div>
+                            @(Model.ApprovalDate.HasValue
+                                ? Model.ApprovalDate.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Created At</label>
+                        <div>
+                            @Model.CreatedAt.ToString("dd-MMM-yyyy HH:mm")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Last Updated</label>
+                        <div>
+                            @(Model.UpdatedAt.HasValue
+                                ? Model.UpdatedAt.Value.ToString("dd-MMM-yyyy HH:mm")
+                                : "-")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

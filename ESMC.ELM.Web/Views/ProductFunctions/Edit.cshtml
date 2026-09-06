@@ -1,0 +1,129 @@
+﻿@model ESMC.ELM.Web.Models.EditProductFunctionViewModel
+
+@{
+    ViewData["Title"] = "Edit Product Function";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Edit Product Function</h2>
+                <p class="text-muted mb-0">
+                    Update product function engineering information.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Edit" method="post">
+
+                    <input asp-for="ProductFunctionId"
+                           type="hidden" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FunctionCode"
+                                   class="form-label"></label>
+
+                            <input asp-for="FunctionCode"
+                                   class="form-control" />
+
+                            <span asp-validation-for="FunctionCode"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FunctionName"
+                                   class="form-label"></label>
+
+                            <input asp-for="FunctionName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="FunctionName"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Category"
+                                   class="form-label"></label>
+
+                            <input asp-for="Category"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Category"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                                <option value="Deprecated">Deprecated</option>
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Purpose"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Purpose"
+                                      class="form-control"
+                                      rows="3"></textarea>
+
+                            <span asp-validation-for="Purpose"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="5"></textarea>
+
+                            <span asp-validation-for="Description"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

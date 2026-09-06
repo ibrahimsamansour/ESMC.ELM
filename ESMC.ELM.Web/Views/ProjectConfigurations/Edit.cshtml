@@ -1,0 +1,281 @@
+﻿@model ESMC.ELM.Web.Models.EditProjectConfigurationViewModel
+
+@{
+    ViewData["Title"] = "Edit Project Configuration";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Edit Project Configuration</h2>
+                <p class="text-muted mb-0">
+                    Update project-specific meter and firmware configuration.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Edit" method="post">
+
+                    <input asp-for="ProjectConfigurationId"
+                           type="hidden" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ConfigurationCode"
+                                   class="form-label"></label>
+
+                            <input asp-for="ConfigurationCode"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ConfigurationCode"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ConfigurationName"
+                                   class="form-label"></label>
+
+                            <input asp-for="ConfigurationName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ConfigurationName"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProjectId"
+                                    asp-items="Model.Projects"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Project --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="ProjectId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MeterModelId"
+                                   class="form-label"></label>
+
+                            <select asp-for="MeterModelId"
+                                    asp-items="Model.MeterModels"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Meter Model --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="MeterModelId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirmwareReleaseId"
+                                   class="form-label"></label>
+
+                            <select asp-for="FirmwareReleaseId"
+                                    asp-items="Model.FirmwareReleases"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Firmware Release --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="FirmwareReleaseId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PlannedQuantity"
+                                   class="form-label"></label>
+
+                            <input asp-for="PlannedQuantity"
+                                   class="form-control"
+                                   type="number"
+                                   min="1" />
+
+                            <span asp-validation-for="PlannedQuantity"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MeterProfile"
+                                   class="form-label"></label>
+
+                            <input asp-for="MeterProfile"
+                                   class="form-control" />
+
+                            <span asp-validation-for="MeterProfile"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CommunicationProfile"
+                                   class="form-label"></label>
+
+                            <input asp-for="CommunicationProfile"
+                                   class="form-control" />
+
+                            <span asp-validation-for="CommunicationProfile"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DLMSConfigurationVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="DLMSConfigurationVersion"
+                                   class="form-control" />
+
+                            <span asp-validation-for="DLMSConfigurationVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ParameterizationVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="ParameterizationVersion"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ParameterizationVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EncryptionKeysVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="EncryptionKeysVersion"
+                                   class="form-control" />
+
+                            <span asp-validation-for="EncryptionKeysVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="LabelVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="LabelVersion"
+                                   class="form-control" />
+
+                            <span asp-validation-for="LabelVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PackagingVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="PackagingVersion"
+                                   class="form-control" />
+
+                            <span asp-validation-for="PackagingVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+                                <option value="Draft">Draft</option>
+                                <option value="Active">Active</option>
+                                <option value="Superseded">Superseded</option>
+                                <option value="Closed">Closed</option>
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EffectiveFrom"
+                                   class="form-label"></label>
+
+                            <input asp-for="EffectiveFrom"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="EffectiveFrom"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="EffectiveTo"
+                                   class="form-label"></label>
+
+                            <input asp-for="EffectiveTo"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="EffectiveTo"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ChangeReason"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ChangeReason"
+                                      class="form-control"
+                                      rows="3"></textarea>
+
+                            <span asp-validation-for="ChangeReason"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="EngineeringNotes"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="EngineeringNotes"
+                                      class="form-control"
+                                      rows="4"></textarea>
+
+                            <span asp-validation-for="EngineeringNotes"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Changes
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

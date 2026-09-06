@@ -1,0 +1,194 @@
+﻿@model ESMC.ELM.Web.Models.CreateProjectViewModel
+
+@{
+    ViewData["Title"] = "Create Project";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Create Project</h2>
+                <p class="text-muted mb-0">
+                    Create a new engineering project.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectCode"
+                                   class="form-label"></label>
+
+                            <input asp-for="ProjectCode"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProjectCode"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectName"
+                                   class="form-label"></label>
+
+                            <input asp-for="ProjectName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProjectName"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CustomerName"
+                                   class="form-label"></label>
+
+                            <input asp-for="CustomerName"
+                                   class="form-control" />
+
+                            <span asp-validation-for="CustomerName"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Country"
+                                   class="form-label"></label>
+
+                            <input asp-for="Country"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContractNumber"
+                                   class="form-label"></label>
+
+                            <input asp-for="ContractNumber"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ContractQuantity"
+                                   class="form-label"></label>
+
+                            <input asp-for="ContractQuantity"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ContractQuantity"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectManagerUserId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProjectManagerUserId"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Project Manager --
+                                </option>
+
+                                @foreach (var manager in Model.AvailableProjectManagers)
+                                {
+                                    <option value="@manager.Id">
+                                        @manager.DisplayName
+                                    </option>
+                                }
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Priority"
+                                   class="form-label"></label>
+
+                            <select asp-for="Priority"
+                                    class="form-select">
+
+                                <option value="Low">Low</option>
+                                <option value="Medium">Medium</option>
+                                <option value="High">High</option>
+                                <option value="Critical">Critical</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+
+                                <option value="Planned">Planned</option>
+                                <option value="Active">Active</option>
+                                <option value="On Hold">On Hold</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="StartDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="StartDate"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PlannedEndDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="PlannedEndDate"
+                                   class="form-control" />
+
+                            <span asp-validation-for="PlannedEndDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Create Project
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

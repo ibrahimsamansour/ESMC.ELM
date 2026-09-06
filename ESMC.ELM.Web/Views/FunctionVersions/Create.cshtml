@@ -1,0 +1,244 @@
+﻿@model ESMC.ELM.Web.Models.CreateFunctionVersionViewModel
+
+@{
+    ViewData["Title"] = "Add Function Version";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Add Function Version</h2>
+                <p class="text-muted mb-0">
+                    Add a technical revision to the engineering knowledge base.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProductFunctionId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProductFunctionId"
+                                    asp-items="Model.ProductFunctions"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Product Function --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="ProductFunctionId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Revision"
+                                   class="form-label"></label>
+
+                            <input asp-for="Revision"
+                                   class="form-control"
+                                   placeholder="e.g. 1.0" />
+
+                            <span asp-validation-for="Revision"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+                                <option value="Draft">Draft</option>
+                                <option value="Approved">Approved</option>
+                                <option value="Obsolete">Obsolete</option>
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="BehaviorDescription"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="BehaviorDescription"
+                                      class="form-control"
+                                      rows="4"></textarea>
+
+                            <span asp-validation-for="BehaviorDescription"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Inputs"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Inputs"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Outputs"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Outputs"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Preconditions"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Preconditions"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="TriggerConditions"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="TriggerConditions"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ProcessingLogic"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ProcessingLogic"
+                                      class="form-control"
+                                      rows="4"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Parameters"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Parameters"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Dependencies"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Dependencies"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="DLMSObjects"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="DLMSObjects"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Commands"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Commands"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="SecurityRequirements"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="SecurityRequirements"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CommunicationRequirements"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="CommunicationRequirements"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="StandardsReferences"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="StandardsReferences"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ErrorConditions"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ErrorConditions"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ChangeFromPrevious"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ChangeFromPrevious"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReasonForChange"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ReasonForChange"
+                                      class="form-control"
+                                      rows="3"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Function Version
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

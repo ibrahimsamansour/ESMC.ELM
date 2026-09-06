@@ -1,0 +1,185 @@
+﻿@model ESMC.ELM.Domain.Entities.FunctionVersion
+
+@{
+    ViewData["Title"] = "Function Version Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Function Version Details</h2>
+                <p class="text-muted mb-0">
+                    Technical engineering knowledge and revision information.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between mb-4">
+                    <div>
+                        <h4 class="mb-1">
+                            @Model.ProductFunction.FunctionCode
+                            - Rev @Model.Revision
+                        </h4>
+
+                        <div class="text-muted">
+                            @Model.ProductFunction.FunctionName
+                        </div>
+                    </div>
+
+                    <span class="badge bg-primary">
+                        @Model.Status
+                    </span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">
+                            Behavior Description
+                        </label>
+                        <div>@Model.BehaviorDescription</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Inputs</label>
+                        <div>@(Model.Inputs ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Outputs</label>
+                        <div>@(Model.Outputs ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Preconditions</label>
+                        <div>@(Model.Preconditions ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Trigger Conditions</label>
+                        <div>@(Model.TriggerConditions ?? "-")</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Processing Logic</label>
+                        <div>@(Model.ProcessingLogic ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Parameters</label>
+                        <div>@(Model.Parameters ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Dependencies</label>
+                        <div>@(Model.Dependencies ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">DLMS Objects</label>
+                        <div>@(Model.DLMSObjects ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Commands</label>
+                        <div>@(Model.Commands ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">
+                            Security Requirements
+                        </label>
+                        <div>@(Model.SecurityRequirements ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">
+                            Communication Requirements
+                        </label>
+                        <div>@(Model.CommunicationRequirements ?? "-")</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">
+                            Standards References
+                        </label>
+                        <div>@(Model.StandardsReferences ?? "-")</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">
+                            Error Conditions
+                        </label>
+                        <div>@(Model.ErrorConditions ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">
+                            Change From Previous
+                        </label>
+                        <div>@(Model.ChangeFromPrevious ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">
+                            Reason For Change
+                        </label>
+                        <div>@(Model.ReasonForChange ?? "-")</div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Approval</label>
+
+                        <div>
+                            @if (Model.ApprovedByUserId.HasValue)
+                            {
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    Not Approved
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Approval Date</label>
+                        <div>
+                            @(Model.ApprovalDate.HasValue
+                                ? Model.ApprovalDate.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Created At</label>
+                        <div>
+                            @Model.CreatedAt.ToString("dd-MMM-yyyy HH:mm")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -1,0 +1,323 @@
+﻿@model ESMC.ELM.Web.Models.CreateMeterModelViewModel
+
+@{
+    ViewData["Title"] = "Create Meter Model";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Create Meter Model</h2>
+                <p class="text-muted mb-0">
+                    Create a new meter hardware model and define its electrical specifications.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ModelCode"
+                                   class="form-label"></label>
+
+                            <input asp-for="ModelCode"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ModelCode"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="CommercialName"
+                                   class="form-label"></label>
+
+                            <input asp-for="CommercialName"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ModelFamily"
+                                   class="form-label"></label>
+
+                            <input asp-for="ModelFamily"
+                                   class="form-control" />
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MeterType"
+                                   class="form-label"></label>
+
+                            <select asp-for="MeterType"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Meter Type --
+                                </option>
+
+                                <option value="Electricity Meter">
+                                    Electricity Meter
+                                </option>
+
+                                <option value="Smart Meter">
+                                    Smart Meter
+                                </option>
+
+                                <option value="Prepaid Meter">
+                                    Prepaid Meter
+                                </option>
+
+                                <option value="AMI Meter">
+                                    AMI Meter
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="MeterType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="PhaseType"
+                                   class="form-label"></label>
+
+                            <select asp-for="PhaseType"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Phase Type --
+                                </option>
+
+                                <option value="Single Phase">
+                                    Single Phase
+                                </option>
+
+                                <option value="Three Phase">
+                                    Three Phase
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="PhaseType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ConnectionType"
+                                   class="form-label"></label>
+
+                            <select asp-for="ConnectionType"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Connection Type --
+                                </option>
+
+                                <option value="Direct">
+                                    Direct
+                                </option>
+
+                                <option value="CT">
+                                    CT
+                                </option>
+
+                                <option value="CT/PT">
+                                    CT/PT
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ActiveAccuracyClass"
+                                   class="form-label"></label>
+
+                            <select asp-for="ActiveAccuracyClass"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Active Accuracy --
+                                </option>
+
+                                <option value="Class 0.2S">
+                                    Class 0.2S
+                                </option>
+
+                                <option value="Class 0.5S">
+                                    Class 0.5S
+                                </option>
+
+                                <option value="Class 1.0">
+                                    Class 1.0
+                                </option>
+
+                                <option value="Class 2.0">
+                                    Class 2.0
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="ActiveAccuracyClass"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReactiveAccuracyClass"
+                                   class="form-label"></label>
+
+                            <select asp-for="ReactiveAccuracyClass"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Reactive Accuracy --
+                                </option>
+
+                                <option value="Class 1.0">
+                                    Class 1.0
+                                </option>
+
+                                <option value="Class 2.0">
+                                    Class 2.0
+                                </option>
+
+                                <option value="Class 3.0">
+                                    Class 3.0
+                                </option>
+
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReferenceVoltage"
+                                   class="form-label"></label>
+
+                            <input asp-for="ReferenceVoltage"
+                                   class="form-control"
+                                   placeholder="e.g. 230 V or 3x230/400 V" />
+
+                            <span asp-validation-for="ReferenceVoltage"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="BasicCurrent"
+                                   class="form-label"></label>
+
+                            <input asp-for="BasicCurrent"
+                                   class="form-control"
+                                   step="0.001" />
+
+                            <span asp-validation-for="BasicCurrent"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-3 mb-3">
+                            <label asp-for="MaximumCurrent"
+                                   class="form-label"></label>
+
+                            <input asp-for="MaximumCurrent"
+                                   class="form-control"
+                                   step="0.001" />
+
+                            <span asp-validation-for="MaximumCurrent"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Frequency"
+                                   class="form-label"></label>
+
+                            <select asp-for="Frequency"
+                                    class="form-select">
+
+                                <option value="50 Hz">
+                                    50 Hz
+                                </option>
+
+                                <option value="60 Hz">
+                                    60 Hz
+                                </option>
+
+                                <option value="50/60 Hz">
+                                    50/60 Hz
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="Frequency"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProductStatus"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProductStatus"
+                                    class="form-select">
+
+                                <option value="Active">
+                                    Active
+                                </option>
+
+                                <option value="Development">
+                                    Development
+                                </option>
+
+                                <option value="Obsolete">
+                                    Obsolete
+                                </option>
+
+                                <option value="Discontinued">
+                                    Discontinued
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="ProductStatus"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Description"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Description"
+                                      class="form-control"
+                                      rows="4"></textarea>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Create Meter Model
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

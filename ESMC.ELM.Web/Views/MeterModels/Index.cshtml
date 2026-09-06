@@ -1,0 +1,132 @@
+﻿@model List<ESMC.ELM.Domain.Entities.MeterModel>
+
+@{
+    ViewData["Title"] = "Meter Models";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Meter Models</h2>
+        <p class="text-muted mb-0">
+            Manage meter hardware models and electrical specifications.
+        </p>
+    </div>
+
+    <a asp-controller="MeterModels"
+       asp-action="Create"
+       class="btn btn-primary">
+        Add Meter Model
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="table-responsive">
+
+            <table class="table table-striped table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>Model Code</th>
+                        <th>Commercial Name</th>
+                        <th>Family</th>
+                        <th>Meter Type</th>
+                        <th>Phase</th>
+                        <th>Voltage</th>
+                        <th>Ib</th>
+                        <th>Imax</th>
+                        <th>Active Class</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model.Any())
+                    {
+                        @foreach (var meter in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@meter.ModelCode</strong>
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(meter.CommercialName)
+                                        ? "-"
+                                        : meter.CommercialName)
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(meter.ModelFamily)
+                                        ? "-"
+                                        : meter.ModelFamily)
+                                </td>
+
+                                <td>
+                                    @meter.MeterType
+                                </td>
+
+                                <td>
+                                    @meter.PhaseType
+                                </td>
+
+                                <td>
+                                    @meter.ReferenceVoltage
+                                </td>
+
+                                <td>
+                                    @meter.BasicCurrent.ToString("0.###")
+                                </td>
+
+                                <td>
+                                    @meter.MaximumCurrent.ToString("0.###")
+                                </td>
+
+                                <td>
+                                    @meter.ActiveAccuracyClass
+                                </td>
+
+                                <td>
+                                    <span class="badge bg-primary">
+                                        @meter.ProductStatus
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <a asp-controller="MeterModels"
+                                       asp-action="Details"
+                                       asp-route-id="@meter.MeterModelId"
+                                       class="btn btn-sm btn-outline-secondary">
+                                        Details
+                                    </a>
+
+                                    <a asp-controller="MeterModels"
+                                       asp-action="Edit"
+                                       asp-route-id="@meter.MeterModelId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Edit
+                                    </a>
+                                    <a asp-action="CommunicationInterfaces"
+                                       asp-route-id="@meter.MeterModelId"
+                                       class="btn btn-sm btn-outline-success">
+                                        Interfaces
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="11"
+                                class="text-center text-muted py-4">
+                                No meter models found.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>

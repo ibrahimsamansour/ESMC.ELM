@@ -1,0 +1,150 @@
+﻿@model IEnumerable<ESMC.ELM.Domain.Entities.FunctionVersion>
+
+@{
+    ViewData["Title"] = "Function Versions";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Function Versions</h2>
+        <p class="text-muted mb-0">
+            Manage technical revisions and engineering knowledge for product functions.
+        </p>
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Add Function Version
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No function versions have been added yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Function</th>
+                            <th>Revision</th>
+                            <th>Behavior</th>
+                            <th>Status</th>
+                            <th>Created</th>
+                            <th style="width: 160px;">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        @item.ProductFunction.FunctionCode
+                                    </strong>
+
+                                    <div class="small text-muted">
+                                        @item.ProductFunction.FunctionName
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        @item.Revision
+                                    </strong>
+                                </td>
+
+                                <td style="max-width: 350px;">
+                                    @if (string.IsNullOrWhiteSpace(
+                                   item.BehaviorDescription))
+                                    {
+                                        <span>-</span>
+                                    }
+                                    else
+                                    {
+                                        <span>
+                                            @item.BehaviorDescription
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (string.Equals(
+                                   item.Status,
+                                   "Approved",
+                                   StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+                                    }
+                                    else if (string.Equals(
+                                    item.Status,
+                                    "Draft",
+                                    StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Draft
+                                        </span>
+                                    }
+                                    else if (string.Equals(
+                                    item.Status,
+                                    "Obsolete",
+                                    StringComparison.OrdinalIgnoreCase))
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Obsolete
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-dark">
+                                            @item.Status
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @item.CreatedAt.ToString("dd-MMM-yyyy")
+                                </td>
+
+                                <td>
+                                    <div class="d-flex gap-1">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.FunctionVersionId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.FunctionVersionId"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </a>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

@@ -1,0 +1,192 @@
+﻿@model IEnumerable<ESMC.ELM.Domain.Entities.ProjectConfiguration>
+
+@{
+    ViewData["Title"] = "Project Configurations";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Project Configurations</h2>
+        <p class="text-muted mb-0">
+            Manage project-specific meter and firmware configurations.
+        </p>
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Add Project Configuration
+    </a>
+</div>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["SuccessMessage"]
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No project configurations have been added yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Configuration</th>
+                            <th>Project</th>
+                            <th>Meter Model</th>
+                            <th>Firmware</th>
+                            <th>Planned Quantity</th>
+                            <th>Status</th>
+                            <th>Approval</th>
+                            <th style="width: 230px;">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@item.ConfigurationCode</strong>
+
+                                    @if (!string.IsNullOrWhiteSpace(item.ConfigurationName))
+                                    {
+                                        <div class="small text-muted">
+                                            @item.ConfigurationName
+                                        </div>
+                                    }
+                                </td>
+
+                                <td>
+                                    <strong>@item.Project.ProjectCode</strong>
+
+                                    <div class="small text-muted">
+                                        @item.Project.ProjectName
+                                    </div>
+                                </td>
+
+                                <td>
+                                    @item.MeterModel.ModelCode
+                                </td>
+
+                                <td>
+                                    @item.FirmwareRelease.Version
+                                </td>
+
+                                <td>
+                                    @item.PlannedQuantity.ToString("N0")
+                                </td>
+
+                                <td>
+                                    @if (item.Status == "Active")
+                                    {
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else if (item.Status == "Draft")
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Draft
+                                        </span>
+                                    }
+                                    else if (item.Status == "Superseded")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Superseded
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-dark">
+                                            @item.Status
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.ApprovedByUserId.HasValue)
+                                    {
+                                        <span class="badge bg-success">
+                                            Approved
+                                        </span>
+
+                                        @if (item.ApprovalDate.HasValue)
+                                        {
+                                            <div class="small text-muted mt-1">
+                                                @item.ApprovalDate.Value.ToString("dd-MMM-yyyy")
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Not Approved
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <div class="d-flex gap-1 flex-wrap">
+
+                                        <a asp-action="Details"
+                                           asp-route-id="@item.ProjectConfigurationId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Details
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.ProjectConfigurationId"
+                                           class="btn btn-sm btn-outline-secondary">
+                                            Edit
+                                        </a>
+
+                                        @if (!item.ApprovedByUserId.HasValue &&
+                                       string.Equals(
+                                       item.Status,
+                                       "Active",
+                                       StringComparison.OrdinalIgnoreCase))
+                                        {
+                                            <form asp-action="Approve"
+                                                  asp-route-id="@item.ProjectConfigurationId"
+                                                  method="post"
+                                                  class="d-inline">
+
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-success"
+                                                        onclick="return confirm('Approve this project configuration?');">
+                                                    Approve
+                                                </button>
+
+                                            </form>
+                                        }
+
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

@@ -1,0 +1,233 @@
+﻿@model ESMC.ELM.Domain.Entities.ProjectConfiguration
+
+@{
+    ViewData["Title"] = "Project Configuration Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Project Configuration Details</h2>
+                <p class="text-muted mb-0">
+                    View project-specific meter and firmware configuration.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between align-items-start mb-4">
+                    <div>
+                        <h4 class="mb-1">
+                            @Model.ConfigurationCode
+                        </h4>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.ConfigurationName))
+                        {
+                            <div class="text-muted">
+                                @Model.ConfigurationName
+                            </div>
+                        }
+                    </div>
+
+                    <span class="badge bg-primary">
+                        @Model.Status
+                    </span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Project</label>
+                        <div class="fw-semibold">
+                            @Model.Project.ProjectCode
+                        </div>
+                        <div class="small text-muted">
+                            @Model.Project.ProjectName
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Meter Model</label>
+                        <div class="fw-semibold">
+                            @Model.MeterModel.ModelCode
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.MeterModel.CommercialName))
+                        {
+                            <div class="small text-muted">
+                                @Model.MeterModel.CommercialName
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Firmware Release</label>
+                        <div class="fw-semibold">
+                            @Model.FirmwareRelease.Version
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Planned Quantity</label>
+                        <div>
+                            @Model.PlannedQuantity.ToString("N0")
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                        <h5 class="mb-3">Profiles & Versions</h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Meter Profile</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.MeterProfile)
+                                ? "-"
+                                : Model.MeterProfile)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Communication Profile</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.CommunicationProfile)
+                                ? "-"
+                                : Model.CommunicationProfile)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">DLMS Configuration Version</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.DLMSConfigurationVersion)
+                                ? "-"
+                                : Model.DLMSConfigurationVersion)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Parameterization Version</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.ParameterizationVersion)
+                                ? "-"
+                                : Model.ParameterizationVersion)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Encryption Keys Version</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.EncryptionKeysVersion)
+                                ? "-"
+                                : Model.EncryptionKeysVersion)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Label Version</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.LabelVersion)
+                                ? "-"
+                                : Model.LabelVersion)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Packaging Version</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.PackagingVersion)
+                                ? "-"
+                                : Model.PackagingVersion)
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                        <h5 class="mb-3">Validity</h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Effective From</label>
+                        <div>
+                            @(Model.EffectiveFrom.HasValue
+                                ? Model.EffectiveFrom.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Effective To</label>
+                        <div>
+                            @(Model.EffectiveTo.HasValue
+                                ? Model.EffectiveTo.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Change Reason</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.ChangeReason)
+                                ? "-"
+                                : Model.ChangeReason)
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Engineering Notes</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.EngineeringNotes)
+                                ? "-"
+                                : Model.EngineeringNotes)
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                        <h5 class="mb-3">Approval</h5>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Approval Status</label>
+                        <div>
+                            @if (Model.ApprovedByUserId.HasValue)
+                            {
+                                <span class="badge bg-success">
+                                    Approved
+                                </span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">
+                                    Not Approved
+                                </span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Approval Date</label>
+                        <div>
+                            @(Model.ApprovalDate.HasValue
+                                ? Model.ApprovalDate.Value.ToString("dd-MMM-yyyy")
+                                : "-")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>

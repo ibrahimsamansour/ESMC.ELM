@@ -1,0 +1,212 @@
+﻿@model ESMC.ELM.Web.Models.CreateFirmwareReleaseViewModel
+
+@{
+    ViewData["Title"] = "Add Firmware Release";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Add Firmware Release</h2>
+                <p class="text-muted mb-0">
+                    Create a firmware release for a meter model.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="MeterModelId"
+                                   class="form-label"></label>
+
+                            <select asp-for="MeterModelId"
+                                    asp-items="Model.MeterModels"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Meter Model --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="MeterModelId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Version"
+                                   class="form-label"></label>
+
+                            <input asp-for="Version"
+                                   class="form-control"
+                                   placeholder="Example: V1.0.0" />
+
+                            <span asp-validation-for="Version"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ParentFirmwareReleaseId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ParentFirmwareReleaseId"
+                                    asp-items="Model.ParentFirmwareReleases"
+                                    class="form-select">
+                                <option value="">
+                                    -- No Parent Release --
+                                </option>
+                            </select>
+
+                            <div class="form-text">
+                                Use this when the release is based on a previous firmware version.
+                            </div>
+
+                            <span asp-validation-for="ParentFirmwareReleaseId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReleaseType"
+                                   class="form-label"></label>
+
+                            <select asp-for="ReleaseType"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Release Type --
+                                </option>
+                                <option value="Major">Major</option>
+                                <option value="Minor">Minor</option>
+                                <option value="Patch">Patch</option>
+                                <option value="Hotfix">Hotfix</option>
+                            </select>
+
+                            <span asp-validation-for="ReleaseType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+                                <option value="Draft">Draft</option>
+                                <option value="Testing">Testing</option>
+                                <option value="Released">Released</option>
+                                <option value="Deprecated">Deprecated</option>
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ReleaseDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="ReleaseDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ReleaseDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ChangeSummary"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ChangeSummary"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Summarize the main changes in this firmware release."></textarea>
+
+                            <span asp-validation-for="ChangeSummary"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReasonForChange"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ReasonForChange"
+                                      class="form-control"
+                                      rows="3"
+                                      placeholder="Reason or business/technical need for this change."></textarea>
+
+                            <span asp-validation-for="ReasonForChange"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Checksum"
+                                   class="form-label"></label>
+
+                            <input asp-for="Checksum"
+                                   class="form-control"
+                                   placeholder="Optional checksum / hash" />
+
+                            <span asp-validation-for="Checksum"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirmwareFilePath"
+                                   class="form-label"></label>
+
+                            <input asp-for="FirmwareFilePath"
+                                   class="form-control"
+                                   placeholder="Example: /firmware/CL730C1/V1.0.0.bin" />
+
+                            <span asp-validation-for="FirmwareFilePath"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReleaseNotes"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="ReleaseNotes"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Additional release notes, known limitations, deployment notes, etc."></textarea>
+
+                            <span asp-validation-for="ReleaseNotes"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Create Firmware Release
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
