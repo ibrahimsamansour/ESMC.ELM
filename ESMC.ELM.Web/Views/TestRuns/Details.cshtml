@@ -1,0 +1,126 @@
+﻿@model ESMC.ELM.Domain.Entities.TestRun
+
+@{
+    ViewData["Title"] = "Test Run Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>@Model.TestRunCode</h2>
+        <p class="text-muted mb-0">@Model.Title</p>
+    </div>
+
+    <div>
+        <a asp-action="Edit"
+           asp-route-id="@Model.TestRunId"
+           class="btn btn-primary">
+            Edit
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back
+        </a>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <strong>Project</strong>
+                <div>
+                    @Model.Project.ProjectCode -
+                    @Model.Project.ProjectName
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Project Configuration</strong>
+                <div>
+                    @if (Model.ProjectConfiguration != null)
+                    {
+                        @Model.ProjectConfiguration.ConfigurationCode
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not specified</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Firmware Release</strong>
+                <div>
+                    @if (Model.FirmwareRelease != null)
+                    {
+                        @Model.FirmwareRelease.Version
+                    }
+                    else
+                    {
+                        <span class="text-muted">Not specified</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Test Type</strong>
+                <div>@Model.TestType</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Environment</strong>
+                <div>@(Model.Environment ?? "-")</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Build Version</strong>
+                <div>@(Model.BuildVersion ?? "-")</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Start Date</strong>
+                <div>@Model.StartDate.ToString("dd-MMM-yyyy HH:mm")</div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>End Date</strong>
+                <div>
+                    @(Model.EndDate?.ToString("dd-MMM-yyyy HH:mm") ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Status</strong>
+                <div>
+                    @if (Model.Status == "Completed")
+                    {
+                        <span class="badge bg-success">Completed</span>
+                    }
+                    else if (Model.Status == "InProgress")
+                    {
+                        <span class="badge bg-primary">In Progress</span>
+                    }
+                    else if (Model.Status == "Cancelled")
+                    {
+                        <span class="badge bg-danger">Cancelled</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Planned</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <strong>Notes</strong>
+                <div class="mt-1">
+                    @(Model.Notes ?? "-")
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

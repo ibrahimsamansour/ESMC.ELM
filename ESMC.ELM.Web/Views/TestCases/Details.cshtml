@@ -1,0 +1,141 @@
+﻿@model ESMC.ELM.Domain.Entities.TestCase
+
+@{
+    ViewData["Title"] = "Test Case Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Test Case Details</h2>
+                <p class="text-muted mb-0">
+                    Detailed engineering and validation test information.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between mb-4">
+                    <div>
+                        <h4 class="mb-1">
+                            @Model.TestCaseCode
+                        </h4>
+
+                        <div class="text-muted">
+                            @Model.Title
+                        </div>
+                    </div>
+
+                    <span class="badge bg-primary">
+                        @Model.Status
+                    </span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Project</label>
+                        <div>
+                            <strong>@Model.Project.ProjectCode</strong>
+                            <div>@Model.Project.ProjectName</div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Requirement</label>
+                        <div>
+                            @(Model.Requirement != null
+                                                        ? Model.Requirement.RequirementCode
+                                                        : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Product Function</label>
+                        <div>
+                            @(Model.ProductFunction != null
+                                                        ? Model.ProductFunction.FunctionCode
+                                                        : "-")
+                        </div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Test Type</label>
+                        <div>@Model.TestType</div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Priority</label>
+                        <div>@Model.Priority</div>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label class="text-muted">Status</label>
+                        <div>@Model.Status</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Objective</label>
+                        <div>@(Model.Objective ?? "-")</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Preconditions</label>
+                        <div>@(Model.Preconditions ?? "-")</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Test Steps</label>
+                        <div style="white-space: pre-line;">
+                            @Model.TestSteps
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Test Data</label>
+                        <div style="white-space: pre-line;">
+                            @(Model.TestData ?? "-")
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">Expected Result</label>
+                        <div style="white-space: pre-line;">
+                            @Model.ExpectedResult
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Created</label>
+                        <div>
+                            @Model.CreatedAt.ToString("dd-MMM-yyyy HH:mm")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Last Updated</label>
+                        <div>
+                            @(Model.UpdatedAt.HasValue
+                                                        ? Model.UpdatedAt.Value.ToString("dd-MMM-yyyy HH:mm")
+                                                        : "-")
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

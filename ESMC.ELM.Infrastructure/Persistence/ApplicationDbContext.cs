@@ -22,6 +22,11 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<ProductFunction> ProductFunctions { get; set; } = null!;
         public DbSet<FunctionVersion> FunctionVersions { get; set; } = null!;
         public DbSet<FunctionKnowledgeFile> FunctionKnowledgeFiles { get; set; } = null!;
+        public DbSet<Requirement> Requirements { get; set; } = null!;
+        public DbSet<RequirementFunction> RequirementFunctions { get; set; } = null!;
+        public DbSet<TestCase> TestCases { get; set; } = null!;
+        public DbSet<TestRun> TestRuns { get; set; } = null!;
+        public DbSet<TestResult> TestResults { get; set; } = null!;
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces

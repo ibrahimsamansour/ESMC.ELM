@@ -1,0 +1,107 @@
+﻿@model ESMC.ELM.Web.Models.RequirementFunctionsViewModel
+
+@{
+    ViewData["Title"] = "Requirement Functions";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Requirement Functions</h2>
+                <p class="text-muted mb-0">
+                    Link requirement to related product functions.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="mb-4">
+                    <strong>
+                        @Model.RequirementCode
+                    </strong>
+
+                    <div class="text-muted">
+                        @Model.RequirementTitle
+                    </div>
+                </div>
+
+                <form asp-action="Functions"
+                      method="post">
+
+                    <input asp-for="RequirementId"
+                           type="hidden" />
+
+                    <div class="mb-4">
+                        <label class="form-label">
+                            Product Functions
+                        </label>
+
+                        @if (!Model.ProductFunctions.Any())
+                        {
+                            <div class="alert alert-info">
+                                No active product functions are available.
+                            </div>
+                        }
+                        else
+                        {
+                            @foreach (var function in Model.ProductFunctions)
+                            {
+                                var functionId =
+                                long.Parse(function.Value);
+
+                                var isChecked =
+                                Model.SelectedProductFunctionIds
+                                .Contains(functionId);
+
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input"
+                                           type="checkbox"
+                                           name="SelectedProductFunctionIds"
+                                           value="@function.Value"
+                                           id="function_@function.Value"
+                                           checked="@isChecked" />
+
+                                    <label class="form-check-label"
+                                           for="function_@function.Value">
+                                        @function.Text
+                                    </label>
+                                </div>
+                            }
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <label asp-for="Notes"
+                               class="form-label">
+                            Notes
+                        </label>
+
+                        <textarea asp-for="Notes"
+                                  class="form-control"
+                                  rows="3"
+                                  placeholder="Optional notes about this requirement-function relation..."></textarea>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Functions
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>

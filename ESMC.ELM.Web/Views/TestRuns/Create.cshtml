@@ -1,0 +1,226 @@
+﻿@model ESMC.ELM.Web.Models.CreateTestRunViewModel
+
+@{
+    ViewData["Title"] = "Add Test Run";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Add Test Run</h2>
+                <p class="text-muted mb-0">
+                    Create a test execution cycle for a project.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="TestRunCode"
+                                   class="form-label"></label>
+
+                            <input asp-for="TestRunCode"
+                                   class="form-control"
+                                   placeholder="e.g. TR-001" />
+
+                            <span asp-validation-for="TestRunCode"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="ProjectId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProjectId"
+                                    asp-items="Model.Projects"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Project --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="ProjectId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="TestType"
+                                   class="form-label"></label>
+
+                            <select asp-for="TestType"
+                                    class="form-select">
+                                <option value="">
+                                    -- Select Test Type --
+                                </option>
+                                <option value="Functional">Functional</option>
+                                <option value="Integration">Integration</option>
+                                <option value="System">System</option>
+                                <option value="Regression">Regression</option>
+                                <option value="Acceptance">Acceptance</option>
+                                <option value="Compliance">Compliance</option>
+                                <option value="Communication">Communication</option>
+                                <option value="Security">Security</option>
+                                <option value="Performance">Performance</option>
+                            </select>
+
+                            <span asp-validation-for="TestType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectConfigurationId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProjectConfigurationId"
+                                    asp-items="Model.ProjectConfigurations"
+                                    class="form-select">
+                                <option value="">
+                                    -- No Project Configuration --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="ProjectConfigurationId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="FirmwareReleaseId"
+                                   class="form-label"></label>
+
+                            <select asp-for="FirmwareReleaseId"
+                                    asp-items="Model.FirmwareReleases"
+                                    class="form-select">
+                                <option value="">
+                                    -- No Firmware Release --
+                                </option>
+                            </select>
+
+                            <span asp-validation-for="FirmwareReleaseId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Title"
+                                   class="form-label"></label>
+
+                            <input asp-for="Title"
+                                   class="form-control" />
+
+                            <span asp-validation-for="Title"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Environment"
+                                   class="form-label"></label>
+
+                            <input asp-for="Environment"
+                                   class="form-control"
+                                   placeholder="Lab, Production Simulation, Customer Site..." />
+
+                            <span asp-validation-for="Environment"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="BuildVersion"
+                                   class="form-label"></label>
+
+                            <input asp-for="BuildVersion"
+                                   class="form-control"
+                                   placeholder="e.g. 101.68" />
+
+                            <span asp-validation-for="BuildVersion"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="StartDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="StartDate"
+                                   type="datetime-local"
+                                   class="form-control" />
+
+                            <span asp-validation-for="StartDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="EndDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="EndDate"
+                                   type="datetime-local"
+                                   class="form-control" />
+
+                            <span asp-validation-for="EndDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+                                <option value="Planned">Planned</option>
+                                <option value="InProgress">In Progress</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Notes"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Notes"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Optional execution notes..."></textarea>
+
+                            <span asp-validation-for="Notes"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Test Run
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

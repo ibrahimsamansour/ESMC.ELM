@@ -1,0 +1,129 @@
+﻿@model ESMC.ELM.Domain.Entities.Requirement
+
+@{
+    ViewData["Title"] = "Requirement Details";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-10">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Requirement Details</h2>
+                <p class="text-muted mb-0">
+                    Detailed customer and engineering requirement information.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <div class="d-flex justify-content-between mb-4">
+                    <div>
+                        <h4 class="mb-1">
+                            @Model.RequirementCode
+                        </h4>
+
+                        <div class="text-muted">
+                            @Model.Title
+                        </div>
+                    </div>
+
+                    <span class="badge bg-primary">
+                        @Model.Status
+                    </span>
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Project</label>
+
+                        <div>
+                            @if (Model.Project != null)
+                            {
+                                <strong>@Model.Project.ProjectCode</strong>
+                                <div>@Model.Project.ProjectName</div>
+                            }
+                            else
+                            {
+                                <span>General</span>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="text-muted">Type</label>
+                        <div>@Model.RequirementType</div>
+                    </div>
+
+                    <div class="col-md-3 mb-3">
+                        <label class="text-muted">Priority</label>
+                        <div>@Model.Priority</div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">
+                            Customer Requirement
+                        </label>
+                        <div>
+                            @(Model.CustomerRequirement ?? "-")
+                        </div>
+                    </div>
+
+                    <div class="col-12 mb-3">
+                        <label class="text-muted">
+                            Technical Interpretation
+                        </label>
+                        <div>
+                            @Model.TechnicalInterpretation
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Source</label>
+                        <div>@(Model.Source ?? "-")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">
+                            Acceptance Criteria
+                        </label>
+                        <div>
+                            @(Model.AcceptanceCriteria ?? "-")
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <hr />
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Created</label>
+                        <div>
+                            @Model.CreatedAt.ToString("dd-MMM-yyyy HH:mm")
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted">Last Updated</label>
+                        <div>
+                            @(Model.UpdatedAt.HasValue
+                                                        ? Model.UpdatedAt.Value.ToString("dd-MMM-yyyy HH:mm")
+                                                        : "-")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
