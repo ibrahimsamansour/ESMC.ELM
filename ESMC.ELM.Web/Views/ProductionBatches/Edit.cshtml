@@ -1,0 +1,326 @@
+﻿@model ESMC.ELM.Web.Models.EditProductionBatchViewModel
+
+@{
+    ViewData["Title"] = "Edit Production Batch";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Edit Production Batch</h2>
+                <p class="text-muted mb-0">
+                    Update production batch information.
+                </p>
+            </div>
+
+            <a asp-action="Details"
+               asp-route-id="@Model.ProductionBatchId"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <div class="text-muted small">
+                            Production Order
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.ProductionOrderNumber
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <div class="text-muted small">
+                            Project Configuration
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.ConfigurationDisplay
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="row text-center">
+
+                    <div class="col-md-4">
+                        <div class="text-muted small">
+                            Allocated Quantity
+                        </div>
+
+                        <div class="fs-5 fw-semibold">
+                            @Model.AllocatedQuantity.ToString("N0")
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="text-muted small">
+                            Other Batches
+                        </div>
+
+                        <div class="fs-5 fw-semibold">
+                            @Model.OtherBatchesQuantity.ToString("N0")
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <div class="text-muted small">
+                            Maximum Allowed
+                        </div>
+
+                        <div class="fs-5 fw-semibold">
+                            @Model.MaximumAllowedQuantity.ToString("N0")
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Edit" method="post">
+
+                    <input asp-for="ProductionBatchId"
+                           type="hidden" />
+
+                    <input asp-for="ProductionOrderId"
+                           type="hidden" />
+
+                    <input asp-for="ProjectConfigurationId"
+                           type="hidden" />
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="BatchNumber"
+                                   class="form-label"></label>
+
+                            <input asp-for="BatchNumber"
+                                   class="form-control" />
+
+                            <span asp-validation-for="BatchNumber"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="BatchQuantity"
+                                   class="form-label"></label>
+
+                            <input asp-for="BatchQuantity"
+                                   type="number"
+                                   min="1"
+                                   max="@Model.MaximumAllowedQuantity"
+                                   class="form-control" />
+
+                            <span asp-validation-for="BatchQuantity"
+                                  class="text-danger"></span>
+
+                            <div class="form-text">
+                                Maximum allowed:
+                                @Model.MaximumAllowedQuantity.ToString("N0")
+                            </div>
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="ProductionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="ProductionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProductionDate"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="CompletionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="CompletionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="CompletionDate"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+
+                            <label asp-for="ProductionLine"
+                                   class="form-label"></label>
+
+                            <input asp-for="ProductionLine"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProductionLine"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="BatchStatus"
+                                   class="form-label"></label>
+
+                            <select asp-for="BatchStatus"
+                                    class="form-select">
+
+                                <option value="Planned">
+                                    Planned
+                                </option>
+
+                                <option value="InProduction">
+                                    In Production
+                                </option>
+
+                                <option value="ProductionCompleted">
+                                    Production Completed
+                                </option>
+
+                                <option value="UnderInspection">
+                                    Under Inspection
+                                </option>
+
+                                <option value="Closed">
+                                    Closed
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="BatchStatus"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="BatchDecision"
+                                   class="form-label"></label>
+
+                            <select asp-for="BatchDecision"
+                                    class="form-select">
+
+                                <option value="Pending">
+                                    Pending
+                                </option>
+
+                                <option value="Accepted">
+                                    Accepted
+                                </option>
+
+                                <option value="Rejected">
+                                    Rejected
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="BatchDecision"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="DecisionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="DecisionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="DecisionDate"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+
+                            <label asp-for="DecisionBy"
+                                   class="form-label"></label>
+
+                            <input asp-for="DecisionBy"
+                                   class="form-control" />
+
+                            <span asp-validation-for="DecisionBy"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-12 mb-3">
+
+                            <label asp-for="RejectionReason"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="RejectionReason"
+                                      rows="3"
+                                      class="form-control">
+                            </textarea>
+
+                            <span asp-validation-for="RejectionReason"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                        <div class="col-12 mb-3">
+
+                            <label asp-for="Notes"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Notes"
+                                      rows="4"
+                                      class="form-control">
+                            </textarea>
+
+                            <span asp-validation-for="Notes"
+                                  class="text-danger"></span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Save Changes
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

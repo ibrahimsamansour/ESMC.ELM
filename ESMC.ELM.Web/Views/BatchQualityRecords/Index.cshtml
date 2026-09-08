@@ -1,0 +1,111 @@
+﻿@model IEnumerable<ESMC.ELM.Domain.Entities.BatchQualityRecord>
+
+@{
+    ViewData["Title"] = "Batch Quality Records";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Batch Quality Records</h2>
+        <p class="text-muted mb-0">
+            View quality inspection records for production batches.
+        </p>
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Add Quality Record
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No batch quality records have been added yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Batch</th>
+                            <th>Inspection Type</th>
+                            <th>Inspection Date</th>
+                            <th>Result</th>
+                            <th>Report Reference</th>
+                            <th>Comments</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        @item.ProductionBatch.BatchNumber
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @item.InspectionType
+                                </td>
+
+                                <td>
+                                    @item.InspectionDate.ToString("dd-MMM-yyyy")
+                                </td>
+
+                                <td>
+                                    @if (item.Result == "Passed")
+                                    {
+                                        <span class="badge bg-success">
+                                            Passed
+                                        </span>
+                                    }
+                                    else if (item.Result == "Failed")
+                                    {
+                                        <span class="badge bg-danger">
+                                            Failed
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Conditional
+                                        </span>
+                                    }
+                            </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(item.ReportReference)
+                                                            ? "-"
+                                                            : item.ReportReference)
+                                                                               </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(item.Comments)
+                                                            ? "-"
+                                                            : item.Comments)
+                        </td>
+
+                            </tr>
+                                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+</div>

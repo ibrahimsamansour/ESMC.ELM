@@ -1,0 +1,243 @@
+﻿@model ESMC.ELM.Domain.Entities.Defect
+
+@{
+    ViewData["Title"] = "Defect Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Defect Details</h2>
+        <p class="text-muted mb-0">
+            @Model.DefectCode - @Model.Title
+        </p>
+    </div>
+
+    <div>
+        <a asp-action="Edit"
+           asp-route-id="@Model.DefectId"
+           class="btn btn-primary">
+            Edit
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back
+        </a>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <strong>Defect Information</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <strong>Defect Code</strong>
+                <div>@Model.DefectCode</div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Title</strong>
+                <div>@Model.Title</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <strong>Source</strong>
+                <div>@Model.Source</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <strong>Severity</strong>
+                <div>
+                    @if (Model.Severity == "Critical")
+                    {
+                        <span class="badge bg-danger">Critical</span>
+                    }
+                    else if (Model.Severity == "High")
+                    {
+                        <span class="badge bg-warning text-dark">High</span>
+                    }
+                    else if (Model.Severity == "Medium")
+                    {
+                        <span class="badge bg-primary">Medium</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Low</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <strong>Priority</strong>
+                <div>@Model.Priority</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <strong>Status</strong>
+                <div>
+                    @if (Model.Status == "Closed")
+                    {
+                        <span class="badge bg-success">Closed</span>
+                    }
+                    else if (Model.Status == "Resolved")
+                    {
+                        <span class="badge bg-info text-dark">Resolved</span>
+                    }
+                    else if (Model.Status == "InProgress")
+                    {
+                        <span class="badge bg-primary">In Progress</span>
+                    }
+                    else if (Model.Status == "Rejected")
+                    {
+                        <span class="badge bg-dark">Rejected</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Open</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <strong>Verification</strong>
+                <div>
+                    @(Model.VerificationStatus ?? "-")
+                </div>
+            </div>
+
+            <div class="col-12 mb-3">
+                <strong>Description</strong>
+                <div class="mt-1">
+                    @Model.Description
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card mb-3">
+    <div class="card-header">
+        <strong>Engineering Context</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-4 mb-3">
+                <strong>Project</strong>
+                <div>
+                    @(Model.Project?.ProjectCode ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Test Case</strong>
+                <div>
+                    @(Model.TestResult?.TestCase?.TestCaseCode ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Meter Model</strong>
+                <div>
+                    @(Model.MeterModel?.ModelCode ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Firmware</strong>
+                <div>
+                    @(Model.FirmwareRelease?.Version ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Product Function</strong>
+                <div>
+                    @(Model.ProductFunction?.FunctionCode ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Function Version</strong>
+                <div>
+                    @(Model.FunctionVersion?.Revision ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Reported Date</strong>
+                <div>
+                    @Model.ReportedDate.ToString("dd-MMM-yyyy HH:mm")
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <strong>Closed Date</strong>
+                <div>
+                    @(Model.ClosedDate?.ToString("dd-MMM-yyyy HH:mm") ?? "-")
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <strong>Investigation & Resolution</strong>
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+            <strong>Reproduction Steps</strong>
+            <div class="mt-1">
+                @(Model.ReproductionSteps ?? "-")
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <strong>Expected Behavior</strong>
+                <div class="mt-1">
+                    @(Model.ExpectedBehavior ?? "-")
+                </div>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Actual Behavior</strong>
+                <div class="mt-1">
+                    @(Model.ActualBehavior ?? "-")
+                </div>
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Root Cause</strong>
+            <div class="mt-1">
+                @(Model.RootCause ?? "-")
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <strong>Fix Description</strong>
+            <div class="mt-1">
+                @(Model.FixDescription ?? "-")
+            </div>
+        </div>
+
+        <div>
+            <strong>Fix Firmware Release</strong>
+            <div class="mt-1">
+                @(Model.FixFirmwareRelease?.Version ?? "-")
+            </div>
+        </div>
+
+    </div>
+</div>

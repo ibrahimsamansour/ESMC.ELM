@@ -1,0 +1,147 @@
+﻿@model ESMC.ELM.Web.Models.CreateBatchQualityRecordViewModel
+
+@{
+    ViewData["Title"] = "Create Batch Quality Record";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Create Batch Quality Record</h2>
+                <p class="text-muted mb-0">
+                    Record quality inspection results for a production batch.
+                </p>
+            </div>
+
+            @if (Model.ProductionBatchId > 0)
+            {
+                <a asp-controller="ProductionBatches"
+                   asp-action="Details"
+                   asp-route-id="@Model.ProductionBatchId"
+                   class="btn btn-outline-secondary">
+                    Back
+                </a>
+            }
+            else
+            {
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Back
+                </a>
+            }
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3">
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProductionBatchId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProductionBatchId"
+                                    asp-items="Model.ProductionBatches"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Production Batch --
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="ProductionBatchId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="InspectionType"
+                                   class="form-label"></label>
+
+                            <input asp-for="InspectionType"
+                                   class="form-control" />
+
+                            <span asp-validation-for="InspectionType"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="InspectionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="InspectionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="InspectionDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="Result"
+                                   class="form-label"></label>
+
+                            <select asp-for="Result"
+                                    class="form-select">
+
+                                <option value="Passed">Passed</option>
+                                <option value="Failed">Failed</option>
+                                <option value="Conditional">Conditional</option>
+
+                            </select>
+
+                            <span asp-validation-for="Result"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="ReportReference"
+                                   class="form-label"></label>
+
+                            <input asp-for="ReportReference"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ReportReference"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Comments"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Comments"
+                                      rows="4"
+                                      class="form-control"></textarea>
+
+                            <span asp-validation-for="Comments"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Create Quality Record
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -27,6 +27,13 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<TestCase> TestCases { get; set; } = null!;
         public DbSet<TestRun> TestRuns { get; set; } = null!;
         public DbSet<TestResult> TestResults { get; set; } = null!;
+        public DbSet<Defect> Defects { get; set; } = null!;
+        public DbSet<ProductionOrder> ProductionOrders { get; set; }
+        public DbSet<ProductionOrderConfiguration>
+    ProductionOrderConfigurations
+        { get; set; }
+        public DbSet<ProductionBatch> ProductionBatches { get; set; }
+        public DbSet<BatchQualityRecord> BatchQualityRecords { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces

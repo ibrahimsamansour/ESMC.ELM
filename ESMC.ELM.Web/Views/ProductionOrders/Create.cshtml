@@ -1,0 +1,192 @@
+﻿@model ESMC.ELM.Web.Models.CreateProductionOrderViewModel
+
+@{
+    ViewData["Title"] = "Create Production Order";
+}
+
+<div class="row justify-content-center">
+    <div class="col-lg-9">
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div>
+                <h2>Create Production Order</h2>
+                <p class="text-muted mb-0">
+                    Create a new production order for a project.
+                </p>
+            </div>
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Back
+            </a>
+        </div>
+
+        <div class="card">
+            <div class="card-body">
+
+                <form asp-action="Create" method="post">
+
+                    <div asp-validation-summary="ModelOnly"
+                         class="text-danger mb-3"></div>
+
+                    <div class="row">
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProductionOrderNumber"
+                                   class="form-label"></label>
+
+                            <input asp-for="ProductionOrderNumber"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ProductionOrderNumber"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label asp-for="ProjectId"
+                                   class="form-label"></label>
+
+                            <select asp-for="ProjectId"
+                                    asp-items="Model.Projects"
+                                    class="form-select">
+
+                                <option value="">
+                                    -- Select Project --
+                                </option>
+
+                            </select>
+
+                            <span asp-validation-for="ProjectId"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="OrderDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="OrderDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="OrderDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="PlannedQuantity"
+                                   class="form-label"></label>
+
+                            <input asp-for="PlannedQuantity"
+                                   type="number"
+                                   min="1"
+                                   class="form-control" />
+
+                            <span asp-validation-for="PlannedQuantity"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Priority"
+                                   class="form-label"></label>
+
+                            <select asp-for="Priority"
+                                    class="form-select">
+
+                                <option value="Critical">Critical</option>
+                                <option value="High">High</option>
+                                <option value="Normal">Normal</option>
+                                <option value="Low">Low</option>
+
+                            </select>
+
+                            <span asp-validation-for="Priority"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="Status"
+                                   class="form-label"></label>
+
+                            <select asp-for="Status"
+                                    class="form-select">
+
+                                <option value="Planned">Planned</option>
+                                <option value="Released">Released</option>
+                                <option value="InProduction">In Production</option>
+                                <option value="OnHold">On Hold</option>
+                                <option value="Completed">Completed</option>
+                                <option value="Cancelled">Cancelled</option>
+
+                            </select>
+
+                            <span asp-validation-for="Status"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="RequestedStartDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="RequestedStartDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="RequestedStartDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="RequestedCompletionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="RequestedCompletionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="RequestedCompletionDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <label asp-for="ActualCompletionDate"
+                                   class="form-label"></label>
+
+                            <input asp-for="ActualCompletionDate"
+                                   type="date"
+                                   class="form-control" />
+
+                            <span asp-validation-for="ActualCompletionDate"
+                                  class="text-danger"></span>
+                        </div>
+
+                        <div class="col-12 mb-3">
+                            <label asp-for="Notes"
+                                   class="form-label"></label>
+
+                            <textarea asp-for="Notes"
+                                      rows="4"
+                                      class="form-control"></textarea>
+
+                            <span asp-validation-for="Notes"
+                                  class="text-danger"></span>
+                        </div>
+
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="submit"
+                                class="btn btn-primary">
+                            Create Production Order
+                        </button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

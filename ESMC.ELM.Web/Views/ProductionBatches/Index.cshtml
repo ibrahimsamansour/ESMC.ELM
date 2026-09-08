@@ -1,0 +1,159 @@
+﻿@model IEnumerable<ESMC.ELM.Domain.Entities.ProductionBatch>
+
+@{
+    ViewData["Title"] = "Production Batches";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <div>
+        <h2>Production Batches</h2>
+        <p class="text-muted mb-0">
+            Manage and track production batches.
+        </p>
+    </div>
+
+    <a asp-action="Create"
+       class="btn btn-primary">
+        Add Production Batch
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        @if (!Model.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No production batches have been added yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Batch Number</th>
+                            <th>Production Order</th>
+                            <th>Configuration</th>
+                            <th>Quantity</th>
+                            <th>Status</th>
+                            <th>Decision</th>
+                            <th>Production Date</th>
+                            <th>Production Line</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+
+                                <td>
+                                    <strong>
+                                        @item.BatchNumber
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @item.ProductionOrder.ProductionOrderNumber
+                                </td>
+
+                                <td>
+                                    @item.ProjectConfiguration.ConfigurationCode
+                                </td>
+
+                                <td>
+                                    @item.BatchQuantity.ToString("N0")
+                                </td>
+
+                                <td>
+                                    @if (item.BatchStatus == "Closed")
+                                    {
+                                        <span class="badge bg-success">
+                                            Closed
+                                        </span>
+                                    }
+                                    else if (item.BatchStatus == "UnderInspection")
+                                    {
+                                        <span class="badge bg-warning text-dark">
+                                            Under Inspection
+                                        </span>
+                                    }
+                                    else if (item.BatchStatus == "ProductionCompleted")
+                                    {
+                                        <span class="badge bg-info text-dark">
+                                            Production Completed
+                                        </span>
+                                    }
+                                    else if (item.BatchStatus == "InProduction")
+                                    {
+                                        <span class="badge bg-primary">
+                                            In Production
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Planned
+                                        </span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.BatchDecision == "Accepted")
+                                    {
+                                        <span class="badge bg-success">
+                                            Accepted
+                                        </span>
+                                    }
+                                    else if (item.BatchDecision == "Rejected")
+                                    {
+                                        <span class="badge bg-danger">
+                                            Rejected
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Pending
+                                        </span>
+                                    }
+                            </td>
+
+                            <td>
+                                @(item.ProductionDate?
+                                                            .ToString("dd-MMM-yyyy") ?? "-")
+                                                                                        </td>
+
+                            <td>
+                                @(string.IsNullOrWhiteSpace(item.ProductionLine)
+                                                            ? "-"
+                                                            : item.ProductionLine)
+                        </td>
+
+                                <td class="text-end">
+                                    <a asp-action="Details"
+                                       asp-route-id="@item.ProductionBatchId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Details
+                                    </a>
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.ProductionBatchId"
+                                       class="btn btn-sm btn-primary">
+                                        Edit
+                                    </a>
+                                </td>
+
+                            </tr>
+                                        }
+                    </tbody>
+
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
