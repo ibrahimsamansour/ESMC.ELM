@@ -1,0 +1,265 @@
+﻿@model ESMC.ELM.Web.Models.CreateServiceRequestViewModel
+
+@{
+    ViewData["Title"] = "Create Service Request";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Create Service Request</h2>
+        <p class="text-muted mb-0">
+            Register a new after-sales or maintenance service request.
+        </p>
+    </div>
+
+    <a asp-action="Index"
+       class="btn btn-outline-secondary">
+        Back
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ServiceRequestNumber"
+                           class="form-label"></label>
+
+                    <input asp-for="ServiceRequestNumber"
+                           class="form-control" />
+
+                    <span asp-validation-for="ServiceRequestNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ReceivedDate"
+                           class="form-label"></label>
+
+                    <input asp-for="ReceivedDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="ReceivedDate"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MeterSerialNumber"
+                           class="form-label"></label>
+
+                    <input asp-for="MeterSerialNumber"
+                           class="form-control"
+                           maxlength="8"
+                           inputmode="numeric"
+                           placeholder="Enter 8-digit serial number" />
+
+                    <span asp-validation-for="MeterSerialNumber"
+                          class="text-danger"></span>
+
+                    <small class="text-muted">
+                        If the serial exists in Production Traceability,
+                        related production information will be derived automatically.
+                    </small>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="CustomerReference"
+                           class="form-label"></label>
+
+                    <input asp-for="CustomerReference"
+                           class="form-control" />
+
+                    <span asp-validation-for="CustomerReference"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ProjectId"
+                           class="form-label"></label>
+
+                    <select asp-for="ProjectId"
+                            asp-items="Model.Projects"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Project --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="ProjectId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="MeterModelId"
+                           class="form-label"></label>
+
+                    <select asp-for="MeterModelId"
+                            asp-items="Model.MeterModels"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Meter Model --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="MeterModelId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FirmwareReleaseId"
+                           class="form-label"></label>
+
+                    <select asp-for="FirmwareReleaseId"
+                            asp-items="Model.FirmwareReleases"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Firmware Release --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="FirmwareReleaseId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ProductionBatchId"
+                           class="form-label"></label>
+
+                    <select asp-for="ProductionBatchId"
+                            asp-items="Model.ProductionBatches"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Production Batch --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="ProductionBatchId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Priority"
+                           class="form-label"></label>
+
+                    <select asp-for="Priority"
+                            class="form-select">
+
+                        <option value="Critical">Critical</option>
+                        <option value="High">High</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Low">Low</option>
+
+                    </select>
+
+                    <span asp-validation-for="Priority"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="WarrantyStatus"
+                           class="form-label"></label>
+
+                    <select asp-for="WarrantyStatus"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Warranty Status --
+                        </option>
+
+                        <option value="InWarranty">
+                            In Warranty
+                        </option>
+
+                        <option value="OutOfWarranty">
+                            Out of Warranty
+                        </option>
+
+                        <option value="Unknown">
+                            Unknown
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="WarrantyStatus"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="CustomerComplaint"
+                           class="form-label"></label>
+
+                    <textarea asp-for="CustomerComplaint"
+                              rows="4"
+                              class="form-control"
+                              placeholder="Describe the reported issue or customer complaint"></textarea>
+
+                    <span asp-validation-for="CustomerComplaint"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="ConditionOnReceipt"
+                           class="form-label"></label>
+
+                    <textarea asp-for="ConditionOnReceipt"
+                              rows="3"
+                              class="form-control"
+                              placeholder="Describe the physical condition of the meter when received"></textarea>
+
+                    <span asp-validation-for="ConditionOnReceipt"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Notes"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Notes"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="Notes"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Create Service Request
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

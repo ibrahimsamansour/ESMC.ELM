@@ -1,0 +1,239 @@
+@model ESMC.ELM.Domain.Entities.ServiceRequest
+
+@{
+    ViewData["Title"] = "Service Request Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Service Request Details</h2>
+        <p class="text-muted mb-0">
+            Review request information and continue the maintenance workflow.
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-action="Edit"
+           asp-route-id="@Model.ServiceRequestId"
+           class="btn btn-primary">
+            Edit
+        </a>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back
+        </a>
+    </div>
+</div>
+
+<div class="row">
+
+    <div class="col-lg-8">
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>Request Information</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Service Request Number</label>
+                        <div class="fw-semibold">@Model.ServiceRequestNumber</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Received Date</label>
+                        <div>@Model.ReceivedDate.ToString("dd-MMM-yyyy")</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Meter Serial Number</label>
+                        <div class="fw-semibold">@Model.MeterSerialNumber</div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Customer Reference</label>
+                        <div>
+                            @(string.IsNullOrWhiteSpace(Model.CustomerReference)
+                                ? "-"
+                                : Model.CustomerReference)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Project</label>
+                        <div>
+                            @(Model.Project == null
+                                ? "-"
+                                : Model.Project.ProjectCode)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Meter Model</label>
+                        <div>
+                            @(Model.MeterModel == null
+                                ? "-"
+                                : Model.MeterModel.ModelCode)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Firmware Release</label>
+                        <div>
+                            @(Model.FirmwareRelease == null
+                                ? "-"
+                                : Model.FirmwareRelease.Version)
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label class="text-muted small">Production Batch</label>
+                        <div>
+                            @(Model.ProductionBatch == null
+                                ? "-"
+                                : Model.ProductionBatch.BatchNumber)
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>Customer Complaint</strong>
+            </div>
+
+            <div class="card-body">
+                <div style="white-space: pre-wrap;">@Model.CustomerComplaint</div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>Condition On Receipt</strong>
+            </div>
+
+            <div class="card-body">
+                <div style="white-space: pre-wrap;">
+                    @(string.IsNullOrWhiteSpace(Model.ConditionOnReceipt)
+                        ? "-"
+                        : Model.ConditionOnReceipt)
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <strong>Notes</strong>
+            </div>
+
+            <div class="card-body">
+                <div style="white-space: pre-wrap;">
+                    @(string.IsNullOrWhiteSpace(Model.Notes)
+                        ? "-"
+                        : Model.Notes)
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-4">
+
+        <div class="card mb-4">
+            <div class="card-header">
+                <strong>Current Status</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+                    <label class="text-muted small">Status</label>
+
+                    <div class="mt-1">
+                        <span class="badge bg-info text-dark">
+                            @Model.Status
+                        </span>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="text-muted small">Priority</label>
+
+                    <div class="mt-1">
+                        @if (Model.Priority == "Critical")
+                        {
+                            <span class="badge bg-danger">Critical</span>
+                        }
+                        else if (Model.Priority == "High")
+                        {
+                            <span class="badge bg-warning text-dark">High</span>
+                        }
+                        else if (Model.Priority == "Low")
+                        {
+                            <span class="badge bg-secondary">Low</span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-primary">Normal</span>
+                        }
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-muted small">Warranty Status</label>
+
+                    <div>
+                        @(string.IsNullOrWhiteSpace(Model.WarrantyStatus)
+                            ? "-"
+                            : Model.WarrantyStatus)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <strong>Maintenance Workflow</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="d-grid gap-2">
+
+                    <button class="btn btn-outline-primary" disabled>
+                        Inspection
+                    </button>
+
+                    <button class="btn btn-outline-primary" disabled>
+                        Repair
+                    </button>
+
+                    <button class="btn btn-outline-primary" disabled>
+                        Parts Used
+                    </button>
+
+                    <button class="btn btn-outline-success" disabled>
+                        Post-Maintenance Result
+                    </button>
+
+                </div>
+
+                <small class="text-muted d-block mt-3">
+                    Workflow actions will be enabled as the
+                    after-sales stages are implemented.
+                </small>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>

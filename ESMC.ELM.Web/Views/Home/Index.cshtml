@@ -1,8 +1,278 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "ELM Testing Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="mb-4">
+    <h1 class="display-6 fw-semibold">
+        ESMC Engineering Lifecycle Management
+    </h1>
+
+    <p class="text-muted mb-0">
+        Development, Testing & Data Entry Dashboard
+    </p>
+</div>
+
+<div class="alert alert-info mb-4">
+    <strong>Testing Mode:</strong>
+    Quick access to all implemented ELM screens.
+</div>
+
+<!-- ========================================================= -->
+<!-- PROJECTS & PRODUCT CONFIGURATION                          -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">1. Projects & Product Configuration</h5>
+        <small class="text-muted">
+            Core project and meter configuration data.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="Projects"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Projects
+            </a>
+
+            <a asp-controller="MeterModels"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Meter Models
+            </a>
+
+            <a asp-controller="FirmwareReleases"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Firmware Releases
+            </a>
+
+            <a asp-controller="CommunicationInterfaces"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Communication Interfaces
+            </a>
+
+            <a asp-controller="ProjectConfigurations"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Project Configurations
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- FUNCTIONS KNOWLEDGE                                       -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">2. Functions Knowledge</h5>
+        <small class="text-muted">
+            Product functions, versions and supporting knowledge files.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="ProductFunctions"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Product Functions
+            </a>
+
+            <a asp-controller="FunctionVersions"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Function Versions
+            </a>
+
+            <a asp-controller="FunctionKnowledgeFiles"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Function Knowledge Files
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- REQUIREMENTS                                              -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">3. Requirements</h5>
+        <small class="text-muted">
+            Engineering and project requirements.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="Requirements"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Requirements
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- TESTING                                                   -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">4. Testing</h5>
+        <small class="text-muted">
+            Test definition, execution, results and defects.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="TestCases"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Test Cases
+            </a>
+
+            <a asp-controller="TestRuns"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Test Runs
+            </a>
+
+            <a asp-controller="TestResults"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Test Results
+            </a>
+
+            <a asp-controller="Defects"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Defects
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- PRODUCTION TRACEABILITY                                   -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">5. Production Traceability</h5>
+        <small class="text-muted">
+            Production orders, batches, quality and serial traceability.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="ProductionOrders"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Production Orders
+            </a>
+
+            <a asp-controller="ProductionBatches"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Production Batches
+            </a>
+
+            <a asp-controller="BatchQualityRecords"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Batch Quality Records
+            </a>
+
+            <a asp-controller="SerialRanges"
+               asp-action="Index"
+               class="btn btn-outline-primary">
+                Serial Ranges
+            </a>
+
+            <a asp-controller="Traceability"
+               asp-action="Index"
+               class="btn btn-primary">
+                Serial Traceability
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- SYSTEM ADMINISTRATION                                     -->
+<!-- ========================================================= -->
+
+<div class="card mb-4">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">System Administration</h5>
+        <small class="text-muted">
+            User and access administration.
+        </small>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <a asp-controller="AdminUsers"
+               asp-action="Index"
+               class="btn btn-outline-dark">
+                Admin Users
+            </a>
+
+        </div>
+    </div>
+</div>
+
+<!-- ========================================================= -->
+<!-- NEXT MODULES                                              -->
+<!-- ========================================================= -->
+
+<div class="card mb-4 border-secondary">
+    <div class="card-header bg-white">
+        <h5 class="mb-1">Next Modules</h5>
+    </div>
+
+    <div class="card-body">
+        <div class="d-flex flex-wrap gap-2">
+
+            <span class="btn btn-outline-secondary disabled">
+                After-Sales & Maintenance
+            </span>
+
+            <span class="btn btn-outline-secondary disabled">
+                R&D Assets
+            </span>
+
+            <span class="btn btn-outline-secondary disabled">
+                Documents
+            </span>
+
+            <span class="btn btn-outline-secondary disabled">
+                Security & Audit
+            </span>
+
+        </div>
+    </div>
 </div>

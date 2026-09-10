@@ -69,7 +69,16 @@ namespace ESMC.ELM.Web.Controllers
                     .ThenByDescending(x => x.CreatedAt)
                     .ToListAsync();
 
+            var serialRanges =
+                await _context.SerialRanges
+                    .Include(x => x.RecipientCompany)
+                    .Where(x =>
+                        x.ProductionBatchId == id)
+                    .OrderBy(x => x.SerialFrom)
+                    .ToListAsync();
+
             ViewBag.QualityRecords = qualityRecords;
+            ViewBag.SerialRanges = serialRanges;
 
             return View(batch);
         }

@@ -34,6 +34,9 @@ namespace ESMC.ELM.Infrastructure.Persistence
         { get; set; }
         public DbSet<ProductionBatch> ProductionBatches { get; set; }
         public DbSet<BatchQualityRecord> BatchQualityRecords { get; set; }
+        public DbSet<Company> Companies { get; set; }
+        public DbSet<SerialRange> SerialRanges { get; set; }
+        public DbSet<ServiceRequest> ServiceRequests { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces
