@@ -1,0 +1,206 @@
+﻿@model ESMC.ELM.Web.Models.CreateServiceInspectionViewModel
+
+@{
+    ViewData["Title"] = "Create Service Inspection";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Create Service Inspection</h2>
+        <p class="text-muted mb-0">
+            Record the inspection and diagnosis for the service request.
+        </p>
+    </div>
+
+    <a asp-controller="ServiceRequests"
+       asp-action="Details"
+       asp-route-id="@Model.ServiceRequestId"
+       class="btn btn-outline-secondary">
+        Back
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+                <label class="text-muted small">
+                    Service Request
+                </label>
+
+                <div class="fw-semibold">
+                    @Model.ServiceRequestNumber
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="text-muted small">
+                    Meter Serial Number
+                </label>
+
+                <div class="fw-semibold">
+                    @Model.MeterSerialNumber
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            <input asp-for="ServiceRequestId" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="InspectionDate"
+                           class="form-label"></label>
+
+                    <input asp-for="InspectionDate"
+                           type="date"
+                           class="form-control" />
+
+                    <span asp-validation-for="InspectionDate"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="InspectionType"
+                           class="form-label"></label>
+
+                    <input asp-for="InspectionType"
+                           class="form-control"
+                           placeholder="Example: Visual, Functional, Electrical" />
+
+                    <span asp-validation-for="InspectionType"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="ObservedProblem"
+                           class="form-label"></label>
+
+                    <textarea asp-for="ObservedProblem"
+                              rows="3"
+                              class="form-control"
+                              placeholder="Describe the observed problem"></textarea>
+
+                    <span asp-validation-for="ObservedProblem"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Diagnosis"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Diagnosis"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="Diagnosis"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="RootCause"
+                           class="form-label"></label>
+
+                    <textarea asp-for="RootCause"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="RootCause"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="FailureCategory"
+                           class="form-label"></label>
+
+                    <input asp-for="FailureCategory"
+                           class="form-control" />
+
+                    <span asp-validation-for="FailureCategory"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="AffectedFunctionId"
+                           class="form-label"></label>
+
+                    <select asp-for="AffectedFunctionId"
+                            asp-items="Model.ProductFunctions"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Product Function --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="AffectedFunctionId"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="InspectionResult"
+                           class="form-label"></label>
+
+                    <textarea asp-for="InspectionResult"
+                              rows="3"
+                              class="form-control"
+                              placeholder="Inspection conclusion or result"></textarea>
+
+                    <span asp-validation-for="InspectionResult"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Notes"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Notes"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="Notes"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-controller="ServiceRequests"
+                   asp-action="Details"
+                   asp-route-id="@Model.ServiceRequestId"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Inspection
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

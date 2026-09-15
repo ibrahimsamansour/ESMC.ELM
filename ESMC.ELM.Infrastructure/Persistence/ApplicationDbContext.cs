@@ -37,6 +37,9 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<Company> Companies { get; set; }
         public DbSet<SerialRange> SerialRanges { get; set; }
         public DbSet<ServiceRequest> ServiceRequests { get; set; }
+        public DbSet<ServiceInspection> ServiceInspections { get; set; }
+        public DbSet<ServiceRepair> ServiceRepairs { get; set; }
+        public DbSet<ServicePartUsed> ServicePartsUsed { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces

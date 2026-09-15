@@ -60,6 +60,29 @@ namespace ESMC.ELM.Web.Controllers
                 return NotFound();
             }
 
+            var inspections =
+                await _context.ServiceInspections
+                    .Include(x => x.AffectedFunction)
+                    .Where(x =>
+                        x.ServiceRequestId == id)
+                    .OrderByDescending(x => x.InspectionDate)
+                    .ThenByDescending(x => x.ServiceInspectionId)
+                    .ToListAsync();
+
+            ViewBag.ServiceInspections = inspections;
+
+            var repairs =
+               await _context.ServiceRepairs
+                    .Include(x => x.FirmwareBefore)
+                    .Include(x => x.FirmwareAfter)
+                    .Where(x =>
+                        x.ServiceRequestId == id)
+                    .OrderByDescending(x => x.RepairDate)
+                    .ThenByDescending(x => x.ServiceRepairId)
+                    .ToListAsync();
+
+            ViewBag.ServiceRepairs = repairs;
+
             return View(serviceRequest);
         }
 
