@@ -14,6 +14,13 @@
     var repairs =
         ViewBag.ServiceRepairs as List<ServiceRepair>
         ?? new List<ServiceRepair>();
+
+    var partsUsed =
+        ViewBag.ServicePartsUsed as List<ServicePartUsed>
+        ?? new List<ServicePartUsed>();
+
+    var postMaintenanceResult =
+        ViewBag.PostMaintenanceResult as PostMaintenanceResult;
 }
 
 <div class="d-flex justify-content-between align-items-center mb-4">
@@ -132,23 +139,79 @@
     </div>
 </div>
 
-<div class="card mt-4">
+<div id="repair-history" class="card mt-4">
     <div class="card-header d-flex justify-content-between align-items-center">
         <h5 class="mb-0">Repair History</h5>
-
-        <a asp-controller="ServiceRepairs"
-           asp-action="Create"
+        <a asp-controller="ServiceRepairs" asp-action="Create"
            asp-route-serviceRequestId="@Model.ServiceRequestId"
-           class="btn btn-sm btn-primary">
-            Add Repair
-        </a>
+           class="btn btn-sm btn-primary">Add Repair</a>
     </div>
 
     <div class="card-body">
         @if (!repairs.Any())
         {
+            <div class="text-muted">No repairs have been recorded for this service request.</div>
+        }
+        else
+        {
+            @foreach (var repair in repairs)
+            {
+                <div class="border rounded mb-4">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover align-middle mb-0">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Engineer</th>
+                                    <th>Repair Type</th>
+                                    <th>Action Taken</th>
+                                    <th>Firmware Before</th>
+                                    <th>Firmware After</th>
+                                    <th>Configuration Changed</th>
+                                    <th>Result</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>@repair.RepairDate.ToString("dd/MM/yyyy")</td>
+                                    <td>@repair.RepairEngineerName</td>
+                                    <td>@repair.RepairType</td>
+                                    <td>@repair.ActionTaken</td>
+                                    <td>@(repair.FirmwareBefore != null ? repair.FirmwareBefore.Version : "-")</td>
+                                    <td>@(repair.FirmwareAfter != null ? repair.FirmwareAfter.Version : "-")</td>
+                                    <td>@(repair.ConfigurationChanged ? "Yes" : "No")</td>
+                                    <td>@(string.IsNullOrWhiteSpace(repair.RepairResult) ? "-" : repair.RepairResult)</td>
+                                    <td>
+                                        <a asp-controller="ServicePartsUsed"
+                                           asp-action="Create"
+                                           asp-route-serviceRepairId="@repair.ServiceRepairId"
+                                           class="btn btn-sm btn-outline-primary">
+                                            Add Part
+                                        </a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+            }
+        }
+    </div>
+</div>
+
+
+<div id="all-parts-used" class="card mt-4 mb-4">
+    <div class="card-header">
+        <h5 class="mb-0">All Parts Used</h5>
+    </div>
+
+    <div class="card-body">
+        @if (!partsUsed.Any())
+        {
             <div class="text-muted">
-                No repairs have been recorded for this service request.
+                No parts have been recorded for this service request.
             </div>
         }
         else
@@ -157,57 +220,60 @@
                 <table class="table table-bordered table-hover align-middle mb-0">
                     <thead class="table-light">
                         <tr>
-                            <th>Date</th>
+                            <th>Part Name</th>
+                            <th>Part Number</th>
+                            <th>Quantity</th>
+                            <th>Old Part Serial</th>
+                            <th>New Part Serial</th>
+                            <th>Repair Date</th>
                             <th>Engineer</th>
                             <th>Repair Type</th>
-                            <th>Action Taken</th>
-                            <th>Firmware Before</th>
-                            <th>Firmware After</th>
-                            <th>Configuration Changed</th>
-                            <th>Result</th>
+                            <th>Notes</th>
                         </tr>
                     </thead>
-
                     <tbody>
-                        @foreach (var repair in repairs)
+                        @foreach (var part in partsUsed)
                         {
+                            var relatedRepair = repairs
+                                .FirstOrDefault(x => x.ServiceRepairId == part.ServiceRepairId);
+
                             <tr>
+                                <td>@part.PartName</td>
                                 <td>
-                                    @repair.RepairDate.ToString("dd/MM/yyyy")
-                                </td>
-
-                                <td>
-                                    @repair.RepairEngineerName
-                                </td>
-
-                                <td>
-                                    @repair.RepairType
-                                </td>
-
-                                <td>
-                                    @repair.ActionTaken
-                                </td>
-
-                                <td>
-                                    @(repair.FirmwareBefore != null
-                                        ? repair.FirmwareBefore.Version
-                                        : "-")
-                                </td>
-
-                                <td>
-                                    @(repair.FirmwareAfter != null
-                                        ? repair.FirmwareAfter.Version
-                                        : "-")
-                                </td>
-
-                                <td>
-                                    @(repair.ConfigurationChanged ? "Yes" : "No")
-                                </td>
-
-                                <td>
-                                    @(string.IsNullOrWhiteSpace(repair.RepairResult)
+                                    @(string.IsNullOrWhiteSpace(part.PartNumber)
                                         ? "-"
-                                        : repair.RepairResult)
+                                        : part.PartNumber)
+                                </td>
+                                <td>@part.Quantity</td>
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(part.OldPartSerialNumber)
+                                        ? "-"
+                                        : part.OldPartSerialNumber)
+                                </td>
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(part.NewPartSerialNumber)
+                                        ? "-"
+                                        : part.NewPartSerialNumber)
+                                </td>
+                                <td>
+                                    @(relatedRepair != null
+                                        ? relatedRepair.RepairDate.ToString("dd/MM/yyyy")
+                                        : "-")
+                                </td>
+                                <td>
+                                    @(relatedRepair != null
+                                        ? relatedRepair.RepairEngineerName
+                                        : "-")
+                                </td>
+                                <td>
+                                    @(relatedRepair != null
+                                        ? relatedRepair.RepairType
+                                        : "-")
+                                </td>
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(part.Notes)
+                                        ? "-"
+                                        : part.Notes)
                                 </td>
                             </tr>
                         }
@@ -217,6 +283,85 @@
         }
     </div>
 </div>
+
+@if (postMaintenanceResult != null)
+{
+    <div id="post-maintenance-result" class="card mt-4 mb-4">
+        <div class="card-header d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Post-Maintenance Result</h5>
+            <span class="badge bg-success">@postMaintenanceResult.FinalStatus</span>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label class="text-muted small">Result Date</label>
+                    <div>@postMaintenanceResult.ResultDate.ToString("dd/MM/yyyy")</div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="text-muted small">Current Firmware</label>
+                    <div>@(postMaintenanceResult.CurrentFirmwareRelease != null ? postMaintenanceResult.CurrentFirmwareRelease.Version : "-")</div>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label class="text-muted small">Ready For Return</label>
+                    <div>@(postMaintenanceResult.ReadyForReturn ? "Yes" : "No")</div>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label class="text-muted small">Final Condition</label>
+                    <div style="white-space: pre-wrap;">@postMaintenanceResult.FinalCondition</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-muted small">Firmware Changed</label>
+                    <div>@(postMaintenanceResult.FirmwareChanged ? "Yes" : "No")</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-muted small">Configuration Changed</label>
+                    <div>@(postMaintenanceResult.ConfigurationChanged ? "Yes" : "No")</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-muted small">Configuration Reference</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.CurrentConfigurationReference) ? "-" : postMaintenanceResult.CurrentConfigurationReference)</div>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label class="text-muted small">Components Changed Summary</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.ComponentsChangedSummary) ? "-" : postMaintenanceResult.ComponentsChangedSummary)</div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="text-muted small">Functional Status</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.FunctionalStatus) ? "-" : postMaintenanceResult.FunctionalStatus)</div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="text-muted small">Communication Status</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.CommunicationStatus) ? "-" : postMaintenanceResult.CommunicationStatus)</div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="text-muted small">Meter Reading Status</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.MeterReadingStatus) ? "-" : postMaintenanceResult.MeterReadingStatus)</div>
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label class="text-muted small">Calibration Status</label>
+                    <div>@(string.IsNullOrWhiteSpace(postMaintenanceResult.CalibrationStatus) ? "-" : postMaintenanceResult.CalibrationStatus)</div>
+                </div>
+
+                <div class="col-12">
+                    <label class="text-muted small">Notes</label>
+                    <div style="white-space: pre-wrap;">@(string.IsNullOrWhiteSpace(postMaintenanceResult.Notes) ? "-" : postMaintenanceResult.Notes)</div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
 
 <div class="row">
 
@@ -414,13 +559,27 @@
                         Repair
                     </a>
 
-                    <button class="btn btn-outline-primary" disabled>
+                    <a href="#all-parts-used"
+                       class="btn btn-outline-primary">
                         Parts Used
-                    </button>
+                    </a>
 
-                    <button class="btn btn-outline-success" disabled>
-                        Post-Maintenance Result
-                    </button>
+                    @if (postMaintenanceResult == null)
+                    {
+                        <a asp-controller="PostMaintenanceResults"
+                           asp-action="Create"
+                           asp-route-serviceRequestId="@Model.ServiceRequestId"
+                           class="btn btn-success">
+                            Post-Maintenance Result
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="#post-maintenance-result"
+                           class="btn btn-success">
+                            View Post-Maintenance Result
+                        </a>
+                    }
 
                 </div>
 

@@ -1,0 +1,160 @@
+﻿@model ESMC.ELM.Web.Models.CreateServicePartUsedViewModel
+
+@{
+    ViewData["Title"] = "Add Part Used";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>Add Part Used</h2>
+        <p class="text-muted mb-0">
+            Record a replaced or used part for this repair.
+        </p>
+    </div>
+
+    <a asp-controller="ServiceRequests"
+       asp-action="Details"
+       asp-route-id="@Model.ServiceRequestId"
+       class="btn btn-outline-secondary">
+        Back
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <label class="text-muted small">
+                    Service Request
+                </label>
+
+                <div class="fw-semibold">
+                    @Model.ServiceRequestNumber
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="text-muted small">
+                    Service Repair ID
+                </label>
+
+                <div class="fw-semibold">
+                    @Model.ServiceRepairId
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            <input asp-for="ServiceRepairId" type="hidden" />
+            <input asp-for="ServiceRequestId" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-8 mb-3">
+                    <label asp-for="PartName"
+                           class="form-label"></label>
+
+                    <input asp-for="PartName"
+                           class="form-control"
+                           placeholder="Example: Communication Module" />
+
+                    <span asp-validation-for="PartName"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="Quantity"
+                           class="form-label"></label>
+
+                    <input asp-for="Quantity"
+                           type="number"
+                           min="1"
+                           class="form-control" />
+
+                    <span asp-validation-for="Quantity"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="PartNumber"
+                           class="form-label"></label>
+
+                    <input asp-for="PartNumber"
+                           class="form-control" />
+
+                    <span asp-validation-for="PartNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6"></div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="OldPartSerialNumber"
+                           class="form-label"></label>
+
+                    <input asp-for="OldPartSerialNumber"
+                           class="form-control" />
+
+                    <span asp-validation-for="OldPartSerialNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="NewPartSerialNumber"
+                           class="form-label"></label>
+
+                    <input asp-for="NewPartSerialNumber"
+                           class="form-control" />
+
+                    <span asp-validation-for="NewPartSerialNumber"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-12 mb-3">
+                    <label asp-for="Notes"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Notes"
+                              rows="3"
+                              class="form-control"></textarea>
+
+                    <span asp-validation-for="Notes"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2">
+
+                <a asp-controller="ServiceRequests"
+                   asp-action="Details"
+                   asp-route-id="@Model.ServiceRequestId"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Part
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

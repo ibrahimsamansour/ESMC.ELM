@@ -40,6 +40,7 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<ServiceInspection> ServiceInspections { get; set; }
         public DbSet<ServiceRepair> ServiceRepairs { get; set; }
         public DbSet<ServicePartUsed> ServicePartsUsed { get; set; }
+        public DbSet<PostMaintenanceResult> PostMaintenanceResults { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces

@@ -1,0 +1,372 @@
+﻿@model ESMC.ELM.Web.Models.CreatePostMaintenanceResultViewModel
+
+@{
+    ViewData["Title"] = "Post-Maintenance Result";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Post-Maintenance Result</h2>
+            <p class="text-muted mb-0">
+                Record the final condition of the meter after maintenance.
+            </p>
+        </div>
+
+        <a asp-controller="ServiceRequests"
+           asp-action="Details"
+           asp-route-id="@Model.ServiceRequestId"
+           class="btn btn-outline-secondary">
+            Back to Service Request
+        </a>
+    </div>
+
+    <div class="card mb-4">
+        <div class="card-header">
+            <strong>Service Request</strong>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+
+                <div class="col-md-6">
+                    <strong>Request Number</strong>
+                    <div>@Model.ServiceRequestNumber</div>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Meter Serial Number</strong>
+                    <div>@Model.MeterSerialNumber</div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <form asp-action="Create" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <input asp-for="ServiceRequestId" type="hidden" />
+
+        <div asp-validation-summary="ModelOnly"
+             class="text-danger mb-3">
+        </div>
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>Final Maintenance Result</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="ResultDate"
+                               class="form-label"></label>
+
+                        <input asp-for="ResultDate"
+                               class="form-control" />
+
+                        <span asp-validation-for="ResultDate"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="FinalStatus"
+                               class="form-label"></label>
+
+                        <select asp-for="FinalStatus"
+                                id="finalStatus"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Final Status --
+                            </option>
+
+                            <option value="Repaired">
+                                Repaired
+                            </option>
+
+                            <option value="PartiallyRepaired">
+                                Partially Repaired
+                            </option>
+
+                            <option value="NoFaultFound">
+                                No Fault Found
+                            </option>
+
+                            <option value="NotRepairable">
+                                Not Repairable
+                            </option>
+
+                            <option value="Replaced">
+                                Replaced
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="FinalStatus"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+                        <label asp-for="CurrentFirmwareReleaseId"
+                               class="form-label"></label>
+
+                        <select asp-for="CurrentFirmwareReleaseId"
+                                asp-items="Model.FirmwareReleases"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select Firmware --
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="CurrentFirmwareReleaseId"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="FinalCondition"
+                           class="form-label"></label>
+
+                    <textarea asp-for="FinalCondition"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                    <span asp-validation-for="FinalCondition"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="CurrentConfigurationReference"
+                           class="form-label"></label>
+
+                    <input asp-for="CurrentConfigurationReference"
+                           class="form-control" />
+
+                    <span asp-validation-for="CurrentConfigurationReference"
+                          class="text-danger"></span>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="form-check mt-4">
+
+                            <input asp-for="FirmwareChanged"
+                                   class="form-check-input" />
+
+                            <label asp-for="FirmwareChanged"
+                                   class="form-check-label">
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="form-check mt-4">
+
+                            <input asp-for="ConfigurationChanged"
+                                   class="form-check-input" />
+
+                            <label asp-for="ConfigurationChanged"
+                                   class="form-check-label">
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-4 mb-3">
+
+                        <div class="form-check mt-4">
+
+                            <input asp-for="ReadyForReturn"
+                                   id="readyForReturn"
+                                   class="form-check-input" />
+
+                            <label asp-for="ReadyForReturn"
+                                   class="form-check-label">
+                            </label>
+
+                            <span asp-validation-for="ReadyForReturn"
+                                  class="text-danger d-block"></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>Verification Status</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="FunctionalStatus"
+                               class="form-label"></label>
+
+                        <input asp-for="FunctionalStatus"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="CommunicationStatus"
+                               class="form-label"></label>
+
+                        <input asp-for="CommunicationStatus"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="MeterReadingStatus"
+                               class="form-label"></label>
+
+                        <input asp-for="MeterReadingStatus"
+                               class="form-control" />
+
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+
+                        <label asp-for="CalibrationStatus"
+                               class="form-label"></label>
+
+                        <input asp-for="CalibrationStatus"
+                               class="form-control" />
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="card mb-4">
+
+            <div class="card-header">
+                <strong>Components & Notes</strong>
+            </div>
+
+            <div class="card-body">
+
+                <div class="mb-3">
+
+                    <label asp-for="ComponentsChangedSummary"
+                           class="form-label"></label>
+
+                    <textarea asp-for="ComponentsChangedSummary"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label asp-for="Notes"
+                           class="form-label"></label>
+
+                    <textarea asp-for="Notes"
+                              class="form-control"
+                              rows="3"></textarea>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 mb-4">
+
+            <a asp-controller="ServiceRequests"
+               asp-action="Details"
+               asp-route-id="@Model.ServiceRequestId"
+               class="btn btn-outline-secondary">
+                Cancel
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary">
+                Save Post-Maintenance Result
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const finalStatus =
+                    document.getElementById("finalStatus");
+
+                const readyForReturn =
+                    document.getElementById("readyForReturn");
+
+                function updateReadyForReturn() {
+
+                    const cannotReturn =
+                        finalStatus.value === "PartiallyRepaired" ||
+                        finalStatus.value === "NotRepairable";
+
+                    if (cannotReturn) {
+
+                        readyForReturn.checked = false;
+
+                        readyForReturn.disabled = true;
+
+                    }
+                    else {
+
+                        readyForReturn.disabled = false;
+
+                    }
+                }
+
+                finalStatus.addEventListener(
+                    "change",
+                    updateReadyForReturn);
+
+                updateReadyForReturn();
+            });
+
+    </script>
+
+}

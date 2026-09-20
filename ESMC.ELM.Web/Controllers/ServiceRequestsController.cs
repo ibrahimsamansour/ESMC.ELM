@@ -83,6 +83,27 @@ namespace ESMC.ELM.Web.Controllers
 
             ViewBag.ServiceRepairs = repairs;
 
+            var repairIds = repairs
+                    .Select(x => x.ServiceRepairId)
+                    .ToList();
+
+            var partsUsed =
+                await _context.ServicePartsUsed
+                    .Where(x => repairIds.Contains(x.ServiceRepairId))
+                    .OrderBy(x => x.ServiceRepairId)
+                    .ThenBy(x => x.ServicePartUsedId)
+                    .ToListAsync();
+
+            ViewBag.ServicePartsUsed = partsUsed;
+
+            var postMaintenanceResult =
+               await _context.PostMaintenanceResults
+                   .Include(x => x.CurrentFirmwareRelease)
+                   .FirstOrDefaultAsync(x =>
+                   x.ServiceRequestId == id);
+
+            ViewBag.PostMaintenanceResult = postMaintenanceResult;
+
             return View(serviceRequest);
         }
 
