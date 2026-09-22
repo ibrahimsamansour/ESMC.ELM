@@ -1,0 +1,205 @@
+﻿@model ESMC.ELM.Domain.Entities.EngineeringToolVersion
+
+@{
+    ViewData["Title"] = "Tool Version Compatibility";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>@Model.EngineeringTool.ToolName - @Model.Version</h2>
+        <p class="text-muted mb-0">
+            Tool Version & Details
+        </p>
+    </div>
+
+    <a asp-controller="EngineeringTools"
+       asp-action="Details"
+       asp-route-id="@Model.EngineeringToolId"
+       class="btn btn-outline-secondary">
+        Back to Tool
+    </a>
+</div>
+
+<!-- VERSION INFORMATION -->
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header">
+        <strong>Version Information</strong>
+    </div>
+
+    <div class="card-body">
+        <div class="row">
+
+            <div class="col-md-3 mb-3">
+                <small class="text-muted">Version</small>
+                <div class="fw-semibold">@Model.Version</div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <small class="text-muted">Release Date</small>
+                <div>
+                    @(Model.ReleaseDate.HasValue
+                        ? Model.ReleaseDate.Value.ToString("dd/MM/yyyy")
+                        : "-")
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <small class="text-muted">Status</small>
+                <div>
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">Inactive</span>
+                    }
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-3">
+                <small class="text-muted">Created At</small>
+                <div>@Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+            <small class="text-muted">Executable Reference</small>
+            <div>
+                @(string.IsNullOrWhiteSpace(Model.ExecutableReference)
+                    ? "-"
+                    : Model.ExecutableReference)
+            </div>
+        </div>
+
+        <div>
+            <small class="text-muted">Release Notes</small>
+            <div>
+                @(string.IsNullOrWhiteSpace(Model.ReleaseNotes)
+                    ? "-"
+                    : Model.ReleaseNotes)
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- SUPPORTED METER MODELS -->
+
+<div class="card shadow-sm mb-4">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <strong>Supported Meter Models</strong>
+
+        <a asp-controller="EngineeringToolVersions"
+           asp-action="AddMeterModel"
+           asp-route-id="@Model.EngineeringToolVersionId"
+           class="btn btn-sm btn-primary">
+            Add Meter Model
+        </a>
+    </div>
+
+    <div class="card-body">
+
+        @if (!Model.MeterModels.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No meter models have been assigned to this version yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Meter Model</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.MeterModels)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>@item.MeterModel.ModelCode</strong>
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(item.Notes)
+                                        ? "-"
+                                        : item.Notes)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>
+
+<!-- FIRMWARE COMPATIBILITY -->
+
+<div class="card shadow-sm">
+    <div class="card-header d-flex justify-content-between align-items-center">
+        <strong>Firmware Compatibility</strong>
+
+        <a asp-controller="EngineeringToolVersions"
+           asp-action="AddFirmware"
+           asp-route-id="@Model.EngineeringToolVersionId"
+           class="btn btn-sm btn-primary">
+            Add Firmware
+        </a>
+    </div>
+
+    <div class="card-body">
+
+        @if (!Model.Firmwares.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No firmware compatibility has been defined for this version yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Meter Model</th>
+                            <th>Firmware Version</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Firmwares)
+                        {
+                            <tr>
+                                <td>
+                                    @item.MeterModel.ModelCode
+                                </td>
+
+                                <td>
+                                    <strong>
+                                        @item.FirmwareRelease.Version
+                                    </strong>
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(item.Notes)
+                                        ? "-"
+                                        : item.Notes)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

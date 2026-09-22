@@ -1,0 +1,88 @@
+﻿@model ESMC.ELM.Web.Models.AddEngineeringToolVersionMeterModelViewModel
+
+@{
+    ViewData["Title"] = "Add Meter Model";
+}
+
+<div class="mb-4">
+    <h2>Add Meter Model</h2>
+
+    <p class="text-muted mb-0">
+        Assign a supported Meter Model to
+        <strong>@Model.ToolName</strong>
+        version
+        <strong>@Model.Version</strong>.
+    </p>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <form asp-action="AddMeterModel" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="EngineeringToolVersionId" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="mb-3">
+
+                <label asp-for="MeterModelId"
+                       class="form-label"></label>
+
+                <select asp-for="MeterModelId"
+                        asp-items="Model.MeterModels"
+                        class="form-select">
+
+                    <option value="">
+                        -- Select Meter Model --
+                    </option>
+
+                </select>
+
+                <span asp-validation-for="MeterModelId"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Notes"
+                       class="form-label"></label>
+
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Optional compatibility notes"></textarea>
+
+                <span asp-validation-for="Notes"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Add Meter Model
+                </button>
+
+                <a asp-action="Details"
+                   asp-route-id="@Model.EngineeringToolVersionId"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,165 @@
+﻿@model ESMC.ELM.Web.Models.CreateEngineeringToolViewModel
+
+@{
+    ViewData["Title"] = "Add Engineering Tool";
+}
+
+<div class="mb-4">
+    <h2>Add Engineering Tool</h2>
+
+    <p class="text-muted">
+        Register a new engineering tool used for meter configuration,
+        maintenance, testing or other engineering activities.
+    </p>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <form asp-action="Create" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-3">
+                    <label asp-for="ToolCode"
+                           class="form-label"></label>
+
+                    <input asp-for="ToolCode"
+                           class="form-control"
+                           placeholder="e.g. TOOL-001" />
+
+                    <span asp-validation-for="ToolCode"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-8 mb-3">
+                    <label asp-for="ToolName"
+                           class="form-label"></label>
+
+                    <input asp-for="ToolName"
+                           class="form-control"
+                           placeholder="Enter tool name" />
+
+                    <span asp-validation-for="ToolName"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="ToolType"
+                           class="form-label"></label>
+
+                    <select asp-for="ToolType"
+                            class="form-select">
+
+                        <option value="">
+                            -- Select Tool Type --
+                        </option>
+
+                        <option value="Configuration">
+                            Configuration
+                        </option>
+
+                        <option value="MeterView">
+                            Meter View
+                        </option>
+
+                        <option value="Installation">
+                            Installation
+                        </option>
+
+                        <option value="Calibration">
+                            Calibration
+                        </option>
+
+                        <option value="Diagnostic">
+                            Diagnostic
+                        </option>
+
+                        <option value="FirmwareUpgrade">
+                            Firmware Upgrade
+                        </option>
+
+                        <option value="Testing">
+                            Testing
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="ToolType"
+                          class="text-danger"></span>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Vendor"
+                           class="form-label"></label>
+
+                    <input asp-for="Vendor"
+                           class="form-control"
+                           placeholder="e.g. ESMC" />
+
+                    <span asp-validation-for="Vendor"
+                          class="text-danger"></span>
+                </div>
+
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Description"
+                       class="form-label"></label>
+
+                <textarea asp-for="Description"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Describe the purpose and usage of this tool">
+                </textarea>
+
+                <span asp-validation-for="Description"
+                      class="text-danger"></span>
+            </div>
+
+            <div class="form-check mb-4">
+                <input asp-for="IsActive"
+                       class="form-check-input" />
+
+                <label asp-for="IsActive"
+                       class="form-check-label">
+                    Active
+                </label>
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Save Tool
+                </button>
+
+                <a asp-action="Index"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

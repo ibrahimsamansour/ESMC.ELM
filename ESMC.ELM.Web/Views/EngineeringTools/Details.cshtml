@@ -1,0 +1,232 @@
+﻿@model ESMC.ELM.Domain.Entities.EngineeringTool
+
+@{
+    ViewData["Title"] = "Engineering Tool Details";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h2>@Model.ToolName</h2>
+        <p class="text-muted mb-0">
+            Engineering Tool Details
+        </p>
+    </div>
+
+    <div class="d-flex gap-2">
+        <a asp-controller="EngineeringTools"
+           asp-action="Edit"
+           asp-route-id="@Model.EngineeringToolId"
+           class="btn btn-primary">
+            Edit Tool
+        </a>
+
+        <a asp-controller="EngineeringTools"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back to Tools
+        </a>
+    </div>
+</div>
+
+<!-- ====================================================== -->
+<!-- TOOL INFORMATION -->
+<!-- ====================================================== -->
+
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <strong>Tool Information</strong>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row mb-3">
+
+            <div class="col-md-3">
+                <small class="text-muted">Tool Code</small>
+                <div class="fw-semibold">
+                    @Model.ToolCode
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <small class="text-muted">Tool Name</small>
+                <div class="fw-semibold">
+                    @Model.ToolName
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <small class="text-muted">Tool Type</small>
+                <div>
+                    <span class="badge bg-secondary">
+                        @Model.ToolType
+                    </span>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <small class="text-muted">Status</small>
+                <div>
+                    @if (Model.IsActive)
+                    {
+                        <span class="badge bg-success">
+                            Active
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+                            Inactive
+                        </span>
+                    }
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mb-3">
+
+            <div class="col-md-6">
+                <small class="text-muted">Vendor</small>
+
+                <div>
+                    @(string.IsNullOrWhiteSpace(Model.Vendor)
+                        ? "-"
+                        : Model.Vendor)
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <small class="text-muted">Created At</small>
+
+                <div>
+                    @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")
+                </div>
+            </div>
+
+        </div>
+
+        <div>
+            <small class="text-muted">Description</small>
+
+            <div>
+                @(string.IsNullOrWhiteSpace(Model.Description)
+                    ? "-"
+                    : Model.Description)
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- ====================================================== -->
+<!-- TOOL VERSIONS -->
+<!-- ====================================================== -->
+
+<div class="card shadow-sm">
+
+    <div class="card-header d-flex justify-content-between align-items-center">
+
+        <strong>Tool Versions</strong>
+
+        <a asp-controller="EngineeringToolVersions"
+           asp-action="Create"
+           asp-route-engineeringToolId="@Model.EngineeringToolId"
+           class="btn btn-sm btn-primary">
+            Add Version
+        </a>
+
+    </div>
+
+    <div class="card-body">
+
+        @if (!Model.Versions.Any())
+        {
+            <div class="alert alert-info mb-0">
+                No versions have been added for this tool yet.
+            </div>
+        }
+        else
+        {
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Version</th>
+                            <th>Release Date</th>
+                            <th>Executable Reference</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var version in Model.Versions
+                       .OrderByDescending(x => x.ReleaseDate))
+                        {
+                            <tr>
+
+                                <td>
+                                    <a asp-controller="EngineeringToolVersions"
+                                       asp-action="Create"
+                                       asp-route-engineeringToolId="@Model.EngineeringToolId"
+                                       class="btn btn-sm btn-primary">
+                                        Add Version
+                                    </a>
+                                </td>
+
+                                <td>
+                                    @(version.ReleaseDate.HasValue
+                                        ? version.ReleaseDate.Value.ToString("dd/MM/yyyy")
+                                        : "-")
+                                </td>
+
+                                <td>
+                                    @(string.IsNullOrWhiteSpace(version.ExecutableReference)
+                                        ? "-"
+                                        : version.ExecutableReference)
+                                </td>
+
+                                <td>
+
+                                    @if (version.IsActive)
+                                    {
+                                        <span class="badge bg-success">
+                                            Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-secondary">
+                                            Inactive
+                                        </span>
+                                    }
+
+                                </td>
+
+                                <td class="text-end">
+                                    <a asp-controller="EngineeringToolVersions"
+                                       asp-action="Details"
+                                       asp-route-id="@version.EngineeringToolVersionId"
+                                       class="btn btn-sm btn-outline-primary">
+                                        Details
+                                    </a>
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+        }
+
+    </div>
+</div>

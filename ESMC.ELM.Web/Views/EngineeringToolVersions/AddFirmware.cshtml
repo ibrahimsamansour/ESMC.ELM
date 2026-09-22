@@ -1,0 +1,240 @@
+﻿@model ESMC.ELM.Web.Models.AddEngineeringToolVersionFirmwareViewModel
+
+@{
+    ViewData["Title"] = "Add Firmware Compatibility";
+}
+
+<div class="mb-4">
+    <h2>Add Firmware Compatibility</h2>
+
+    <p class="text-muted mb-0">
+        Define compatible firmware for
+        <strong>@Model.ToolName</strong>
+        version
+        <strong>@Model.Version</strong>.
+    </p>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+
+        <form asp-action="AddFirmware" method="post">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="EngineeringToolVersionId" type="hidden" />
+
+            <div asp-validation-summary="ModelOnly"
+                 class="text-danger mb-3">
+            </div>
+
+            <div class="row">
+
+                <!-- METER MODEL -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="MeterModelId"
+                           class="form-label"></label>
+
+                    <select asp-for="MeterModelId"
+                            asp-items="Model.MeterModels"
+                            class="form-select"
+                            id="meterModelSelect">
+
+                        <option value="">
+                            -- Select Meter Model --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="MeterModelId"
+                          class="text-danger"></span>
+
+                </div>
+
+                <!-- FIRMWARE -->
+
+                <div class="col-md-6 mb-3">
+
+                    <label asp-for="FirmwareReleaseId"
+                           class="form-label"></label>
+
+                    <select asp-for="FirmwareReleaseId"
+                            asp-items="Model.FirmwareReleases"
+                            class="form-select"
+                            id="firmwareSelect"
+                            disabled>
+
+                        <option value="">
+                            -- Select Meter Model First --
+                        </option>
+
+                    </select>
+
+                    <span asp-validation-for="FirmwareReleaseId"
+                          class="text-danger"></span>
+
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label asp-for="Notes"
+                       class="form-label"></label>
+
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="4"
+                          placeholder="Optional compatibility notes"></textarea>
+
+                <span asp-validation-for="Notes"
+                      class="text-danger"></span>
+
+            </div>
+
+            <div class="d-flex gap-2">
+
+                <button type="submit"
+                        class="btn btn-primary">
+                    Add Firmware
+                </button>
+
+                <a asp-action="Details"
+                   asp-route-id="@Model.EngineeringToolVersionId"
+                   class="btn btn-outline-secondary">
+                    Cancel
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const meterModelSelect =
+                document.getElementById("meterModelSelect");
+
+            const firmwareSelect =
+                document.getElementById("firmwareSelect");
+
+            const engineeringToolVersionId =
+        @Model.EngineeringToolVersionId;
+
+            async function loadFirmwares() {
+
+                const meterModelId = meterModelSelect.value;
+
+                firmwareSelect.innerHTML = "";
+                firmwareSelect.disabled = true;
+
+                if (!meterModelId) {
+
+                    const option = document.createElement("option");
+
+                    option.value = "";
+                    option.textContent =
+                        "-- Select Meter Model First --";
+
+                    firmwareSelect.appendChild(option);
+
+                    return;
+                }
+
+                const loadingOption =
+                    document.createElement("option");
+
+                loadingOption.value = "";
+                loadingOption.textContent =
+                    "Loading firmware versions...";
+
+                firmwareSelect.appendChild(loadingOption);
+
+                try {
+
+                    const url =
+                        '@Url.Action("GetFirmwaresByMeterModel", "EngineeringToolVersions")'
+                        + '?engineeringToolVersionId='
+                        + engineeringToolVersionId
+                        + '&meterModelId='
+                        + meterModelId;
+
+                    const response = await fetch(url);
+
+                    if (!response.ok) {
+                        throw new Error(
+                            "Unable to load firmware versions.");
+                    }
+
+                    const firmwares = await response.json();
+
+                    firmwareSelect.innerHTML = "";
+
+                    const defaultOption =
+                        document.createElement("option");
+
+                    defaultOption.value = "";
+
+                    if (firmwares.length === 0) {
+                        defaultOption.textContent =
+                            "-- No Firmware Versions Available --";
+                    }
+                    else {
+                        defaultOption.textContent =
+                            "-- Select Firmware Version --";
+                    }
+
+                    firmwareSelect.appendChild(defaultOption);
+
+                    firmwares.forEach(function (firmware) {
+
+                        const option =
+                            document.createElement("option");
+
+                        option.value = firmware.id;
+                        option.textContent = firmware.version;
+
+                        firmwareSelect.appendChild(option);
+                    });
+
+                    firmwareSelect.disabled =
+                        firmwares.length === 0;
+
+                }
+                catch (error) {
+
+                    firmwareSelect.innerHTML = "";
+
+                    const option =
+                        document.createElement("option");
+
+                    option.value = "";
+                    option.textContent =
+                        "-- Unable to Load Firmware --";
+
+                    firmwareSelect.appendChild(option);
+
+                    firmwareSelect.disabled = true;
+                }
+            }
+
+            meterModelSelect.addEventListener(
+                "change",
+                loadFirmwares);
+
+            // Useful when returning to the page after validation error
+            if (meterModelSelect.value) {
+                loadFirmwares();
+            }
+        });
+    </script>
+}

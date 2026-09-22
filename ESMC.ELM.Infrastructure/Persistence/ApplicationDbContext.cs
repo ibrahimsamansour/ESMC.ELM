@@ -41,6 +41,10 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<ServiceRepair> ServiceRepairs { get; set; }
         public DbSet<ServicePartUsed> ServicePartsUsed { get; set; }
         public DbSet<PostMaintenanceResult> PostMaintenanceResults { get; set; }
+        public DbSet<EngineeringTool> EngineeringTools { get; set; }
+        public DbSet<EngineeringToolVersion> EngineeringToolVersions { get; set; }
+        public DbSet<EngineeringToolVersionMeterModel> EngineeringToolVersionMeterModels { get; set; }
+        public DbSet<EngineeringToolVersionFirmware> EngineeringToolVersionFirmwares { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces
