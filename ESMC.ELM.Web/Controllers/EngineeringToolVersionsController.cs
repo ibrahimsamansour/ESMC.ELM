@@ -637,5 +637,86 @@ namespace ESMC.ELM.Web.Controllers
                 nameof(Details),
                 new { id = version.EngineeringToolVersionId });
         }
+
+        // =========================================================
+        // REMOVE FIRMWARE COMPATIBILITY
+        // =========================================================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveFirmware(
+            long engineeringToolVersionFirmwareId)
+        {
+            var compatibility =
+                await _context.EngineeringToolVersionFirmwares
+                    .FirstOrDefaultAsync(x =>
+                        x.FirmwareReleaseId ==
+                            engineeringToolVersionFirmwareId);
+
+            if (compatibility == null)
+            {
+                return NotFound();
+            }
+
+            var versionId = compatibility.EngineeringToolVersionId;
+
+            _context.EngineeringToolVersionFirmwares.Remove(compatibility);
+
+            await _context.SaveChangesAsync();
+
+            return RedirectToAction(
+                nameof(Details),
+                new { id = versionId });
+        }
+
+        // =========================================================
+        // REMOVE METER MODEL COMPATIBILITY
+        // =========================================================
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RemoveMeterModel(
+            long engineeringToolVersionId,
+            long meterModelId)
+        {
+            var compatibility =
+                await _context.EngineeringToolVersionMeterModels
+                    .FirstOrDefaultAsync(x =>
+                        x.EngineeringToolVersionId == engineeringToolVersionId &&
+                        x.MeterModelId == meterModelId);
+
+            if (compatibility == null)
+            {
+                return NotFound();
+            }
+
+            // Check if this meter model still has firmware compatibility
+            var hasFirmwareCompatibility =
+                await _context.EngineeringToolVersionFirmwares
+                    .AnyAsync(x =>
+                        x.EngineeringToolVersionId == engineeringToolVersionId &&
+                        x.MeterModelId == meterModelId);
+
+            if (hasFirmwareCompatibility)
+            {
+                TempData["ErrorMessage"] =
+                    "This meter model cannot be removed because it still has firmware compatibility. Remove the firmware compatibility first.";
+
+                return RedirectToAction(
+                    nameof(Details),
+                    new { id = engineeringToolVersionId });
+            }
+
+            _context.EngineeringToolVersionMeterModels.Remove(compatibility);
+
+            await _context.SaveChangesAsync();
+
+            TempData["SuccessMessage"] =
+                "Meter model compatibility removed successfully.";
+
+            return RedirectToAction(
+                nameof(Details),
+                new { id = engineeringToolVersionId });
+        }
     }
 }

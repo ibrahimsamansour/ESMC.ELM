@@ -20,6 +20,28 @@
     </a>
 </div>
 
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @TempData["SuccessMessage"]
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        @TempData["ErrorMessage"]
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+    </div>
+}
+
 <!-- VERSION INFORMATION -->
 
 <div class="card shadow-sm mb-4">
@@ -96,6 +118,7 @@
            asp-route-id="@Model.EngineeringToolVersionId"
            class="btn btn-sm btn-primary">
             Add Meter Model
+            <th class="text-end">Actions</th>
         </a>
     </div>
 
@@ -131,6 +154,31 @@
                                         ? "-"
                                         : item.Notes)
                                 </td>
+                                <td class="text-end">
+                                    <form asp-controller="EngineeringToolVersions"
+                                          asp-action="RemoveMeterModel"
+                                          method="post"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to remove this meter model compatibility?');">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="engineeringToolVersionId"
+                                               value="@Model.EngineeringToolVersionId" />
+
+                                        <input type="hidden"
+                                               name="meterModelId"
+                                               value="@item.MeterModelId" />
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger">
+                                            Remove
+                                        </button>
+
+                                    </form>
+                                </td>
+
                             </tr>
                         }
                     </tbody>
@@ -172,6 +220,7 @@
                             <th>Meter Model</th>
                             <th>Firmware Version</th>
                             <th>Notes</th>
+                            <th>Actions</th>
                         </tr>
                     </thead>
 
@@ -193,6 +242,26 @@
                                     @(string.IsNullOrWhiteSpace(item.Notes)
                                         ? "-"
                                         : item.Notes)
+                                </td>
+
+                                <td>
+                                    <form asp-controller="EngineeringToolVersions"
+                                          asp-action="RemoveFirmware"
+                                          method="post"
+                                          class="d-inline"
+                                          onsubmit="return confirm('Are you sure you want to remove this firmware compatibility?');">
+
+                                        @Html.AntiForgeryToken()
+
+                                        <input type="hidden"
+                                               name="engineeringToolVersionFirmwareId"
+                                               value="@item.FirmwareReleaseId" />
+
+                                        <button type="submit"
+                                                class="btn btn-sm btn-outline-danger">
+                                            Remove
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
