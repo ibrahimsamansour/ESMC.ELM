@@ -45,6 +45,7 @@ namespace ESMC.ELM.Infrastructure.Persistence
         public DbSet<EngineeringToolVersion> EngineeringToolVersions { get; set; }
         public DbSet<EngineeringToolVersionMeterModel> EngineeringToolVersionMeterModels { get; set; }
         public DbSet<EngineeringToolVersionFirmware> EngineeringToolVersionFirmwares { get; set; }
+        public DbSet<TaskItem> TaskItems { get; set; }
 
         public DbSet<MeterModelCommunicationInterface>
             MeterModelCommunicationInterfaces
