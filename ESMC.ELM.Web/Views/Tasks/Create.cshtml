@@ -1,0 +1,364 @@
+﻿@model ESMC.ELM.Web.Models.CreateTaskViewModel
+
+@{
+    ViewData["Title"] = "Create Task";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="mb-1">Create Task</h2>
+            <p class="text-muted mb-0">
+                Create and assign a new engineering task.
+            </p>
+        </div>
+
+        <a asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back to Tasks
+        </a>
+    </div>
+
+    <form asp-action="Create" method="post">
+
+        @Html.AntiForgeryToken()
+
+        <div asp-validation-summary="ModelOnly"
+             class="alert alert-danger"></div>
+
+        <!-- =========================================================
+             TASK INFORMATION
+        ========================================================== -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Task Information</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-8">
+                        <label asp-for="Title"
+                               class="form-label"></label>
+
+                        <input asp-for="Title"
+                               class="form-control"
+                               placeholder="Enter task title" />
+
+                        <span asp-validation-for="Title"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label asp-for="AssignedToUserId"
+                               class="form-label">
+                            Assigned To
+                        </label>
+
+                        <select asp-for="AssignedToUserId"
+                                asp-items="Model.Users"
+                                class="form-select">
+
+                            <option value="">
+                                -- Select User --
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="AssignedToUserId"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label asp-for="Description"
+                               class="form-label"></label>
+
+                        <textarea asp-for="Description"
+                                  class="form-control"
+                                  rows="4"
+                                  placeholder="Describe the task, expected action or follow-up..."></textarea>
+
+                        <span asp-validation-for="Description"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- =========================================================
+             PLANNING
+        ========================================================== -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Planning & Status</h5>
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-3">
+                        <label asp-for="Status"
+                               class="form-label"></label>
+
+                        <select asp-for="Status"
+                                class="form-select">
+
+                            <option value="ToDo">To Do</option>
+                            <option value="InProgress">In Progress</option>
+                            <option value="Blocked">Blocked</option>
+                            <option value="Done">Done</option>
+                            <option value="Cancelled">Cancelled</option>
+
+                        </select>
+
+                        <span asp-validation-for="Status"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="Priority"
+                               class="form-label"></label>
+
+                        <select asp-for="Priority"
+                                class="form-select">
+
+                            <option value="Low">Low</option>
+                            <option value="Normal">Normal</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+
+                        </select>
+
+                        <span asp-validation-for="Priority"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="StartDate"
+                               class="form-label">
+                            Start Date
+                        </label>
+
+                        <input asp-for="StartDate"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="StartDate"
+                              class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label asp-for="DueDate"
+                               class="form-label">
+                            Due Date
+                        </label>
+
+                        <input asp-for="DueDate"
+                               type="date"
+                               class="form-control" />
+
+                        <span asp-validation-for="DueDate"
+                              class="text-danger"></span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- =========================================================
+             ENGINEERING LINKS
+        ========================================================== -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+
+                <div>
+                    <h5 class="mb-1">
+                        Engineering Links
+                    </h5>
+
+                    <small class="text-muted">
+                        Optional — link this task to relevant engineering records.
+                    </small>
+                </div>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="row g-3">
+
+                    <!-- PROJECT -->
+                    <div class="col-md-6">
+
+                        <label asp-for="ProjectId"
+                               class="form-label">
+                            Project
+                        </label>
+
+                        <select asp-for="ProjectId"
+                                asp-items="Model.Projects"
+                                class="form-select">
+
+                            <option value="">
+                                -- No Project --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- METER MODEL -->
+                    <div class="col-md-6">
+
+                        <label asp-for="MeterModelId"
+                               class="form-label">
+                            Meter Model
+                        </label>
+
+                        <select asp-for="MeterModelId"
+                                asp-items="Model.MeterModels"
+                                class="form-select">
+
+                            <option value="">
+                                -- No Meter Model --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- REQUIREMENT -->
+                    <div class="col-md-6">
+
+                        <label asp-for="RequirementId"
+                               class="form-label">
+                            Requirement
+                        </label>
+
+                        <select asp-for="RequirementId"
+                                asp-items="Model.Requirements"
+                                class="form-select">
+
+                            <option value="">
+                                -- No Requirement --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- FUNCTION VERSION -->
+                    <div class="col-md-6">
+
+                        <label asp-for="FunctionVersionId"
+                               class="form-label">
+                            Function Version
+                        </label>
+
+                        <select asp-for="FunctionVersionId"
+                                asp-items="Model.FunctionVersions"
+                                class="form-select">
+
+                            <option value="">
+                                -- No Function Version --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- ENGINEERING TOOL -->
+                    <div class="col-md-6">
+
+                        <label asp-for="EngineeringToolId"
+                               class="form-label">
+                            Engineering Tool
+                        </label>
+
+                        <select asp-for="EngineeringToolId"
+                                asp-items="Model.EngineeringTools"
+                                class="form-select">
+
+                            <option value="">
+                                -- No Engineering Tool --
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+
+        <!-- =========================================================
+             NOTES
+        ========================================================== -->
+        <div class="card shadow-sm mb-4">
+
+            <div class="card-header bg-white">
+                <h5 class="mb-0">Additional Notes</h5>
+            </div>
+
+            <div class="card-body">
+
+                <label asp-for="Notes"
+                       class="form-label"></label>
+
+                <textarea asp-for="Notes"
+                          class="form-control"
+                          rows="3"
+                          placeholder="Optional notes..."></textarea>
+
+                <span asp-validation-for="Notes"
+                      class="text-danger"></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- =========================================================
+             ACTIONS
+        ========================================================== -->
+        <div class="d-flex justify-content-end gap-2">
+
+            <a asp-action="Index"
+               class="btn btn-outline-secondary">
+                Cancel
+            </a>
+
+            <button type="submit"
+                    class="btn btn-primary px-4">
+                Create Task
+            </button>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+
+}

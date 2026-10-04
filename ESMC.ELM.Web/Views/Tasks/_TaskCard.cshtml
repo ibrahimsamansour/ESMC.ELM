@@ -1,0 +1,229 @@
+﻿@model ESMC.ELM.Domain.Entities.TaskItem
+
+@{
+    var userNames =
+        ViewData["UserNames"] as Dictionary<Guid, string>
+        ?? new Dictionary<Guid, string>();
+
+    var assignedUserName =
+        userNames.TryGetValue(Model.AssignedToUserId, out var name)
+            ? name
+            : "Unknown User";
+
+    var priorityClass = Model.Priority switch
+    {
+        "Critical" => "bg-danger",
+        "High" => "bg-warning text-dark",
+        "Normal" => "bg-primary",
+        "Low" => "bg-secondary",
+        _ => "bg-secondary"
+    };
+
+    var isOverdue =
+        Model.Status != "Done" &&
+        Model.Status != "Cancelled" &&
+        Model.DueDate.HasValue &&
+        Model.DueDate.Value.Date < DateTime.Today;
+}
+
+<div class="card border-0 shadow-sm mb-3">
+
+    <div class="card-body">
+
+        <!-- Task Number + Priority -->
+
+        <div class="d-flex justify-content-between gap-2 mb-2">
+
+            <small class="text-muted fw-semibold">
+                @Model.TaskNumber
+            </small>
+
+            <span class="badge @priorityClass">
+                @Model.Priority
+            </span>
+
+        </div>
+
+
+        <!-- Title -->
+
+        <h6 class="mb-2">
+            @Model.Title
+        </h6>
+
+
+        <!-- Description -->
+        @if (!string.IsNullOrWhiteSpace(Model.Description))
+        {
+            <p class="small text-muted mb-3">
+                @Model.Description
+            </p>
+        }
+
+
+        <!-- Assigned User -->
+
+        <div class="small mb-2">
+
+            <span class="text-muted">
+                Assigned to:
+            </span>
+
+            <strong>
+                @assignedUserName
+            </strong>
+
+        </div>
+
+
+        <!-- Engineering Links -->
+        @if (Model.Project != null ||
+        Model.MeterModel != null ||
+        Model.Requirement != null ||
+        Model.FunctionVersion != null ||
+        Model.EngineeringTool != null)
+        {
+            <div class="border-top pt-2 mt-2 small">
+
+                @if (Model.Project != null)
+                {
+                    <div class="mb-1">
+                        <span class="text-muted">Project:</span>
+                        <strong>@Model.Project.ProjectCode</strong>
+                    </div>
+                }
+
+                @if (Model.MeterModel != null)
+                {
+                    <div class="mb-1">
+                        <span class="text-muted">Meter:</span>
+                        <strong>@Model.MeterModel.ModelCode</strong>
+                    </div>
+                }
+
+                @if (Model.Requirement != null)
+                {
+                    <div class="mb-1">
+                        <span class="text-muted">Requirement:</span>
+                        <strong>@Model.Requirement.RequirementCode</strong>
+                    </div>
+                }
+
+                @if (Model.FunctionVersion != null)
+                {
+                    <div class="mb-1">
+
+                        <span class="text-muted">
+                            Function:
+                        </span>
+
+                        <strong>
+                            @Model.FunctionVersion.ProductFunction?.FunctionCode
+                            -
+                            @Model.FunctionVersion.Revision
+                        </strong>
+
+                    </div>
+                }
+
+                @if (Model.EngineeringTool != null)
+                {
+                    <div class="mb-1">
+
+                        <span class="text-muted">
+                            Tool:
+                        </span>
+
+                        <strong>
+                            @Model.EngineeringTool.ToolCode
+                        </strong>
+
+                    </div>
+                }
+
+            </div>
+        }
+
+
+        <!-- Dates -->
+        @if (Model.Status == "Done" && Model.CompletedAt.HasValue)
+        {
+            <div class="small text-success mt-2">
+
+                Completed:
+
+                <strong>
+                    @Model.CompletedAt.Value.ToString("dd MMM yyyy")
+                </strong>
+
+            </div>
+        }
+        else if (Model.DueDate.HasValue)
+        {
+            <div class="small mt-2 @(isOverdue ? "text-danger" : "text-muted")">
+
+                @(isOverdue ? "Overdue:" : "Due:")
+
+                <strong>
+                    @Model.DueDate.Value.ToString("dd MMM yyyy")
+                </strong>
+
+            </div>
+        }
+
+        <!-- Change Status -->
+
+        <div class="border-top mt-3 pt-3">
+
+            <form asp-controller="Tasks"
+                  asp-action="ChangeStatus"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="taskId"
+                       value="@Model.TaskId" />
+
+                <label class="form-label small text-muted mb-1">
+                    Status
+                </label>
+
+                <select name="status"
+                        class="form-select form-select-sm"
+                        onchange="this.form.submit()">
+
+                    <option value="ToDo"
+                            selected="@(Model.Status == "ToDo")">
+                        To Do
+                    </option>
+
+                    <option value="InProgress"
+                            selected="@(Model.Status == "InProgress")">
+                        In Progress
+                    </option>
+
+                    <option value="Blocked"
+                            selected="@(Model.Status == "Blocked")">
+                        Blocked
+                    </option>
+
+                    <option value="Done"
+                            selected="@(Model.Status == "Done")">
+                        Done
+                    </option>
+
+                    <option value="Cancelled"
+                            selected="@(Model.Status == "Cancelled")">
+                        Cancelled
+                    </option>
+
+                </select>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
