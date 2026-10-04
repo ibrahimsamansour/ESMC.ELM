@@ -1,50 +1,779 @@
-﻿<!DOCTYPE html>
+﻿@{
+    var currentController =
+        ViewContext.RouteData.Values["controller"]?.ToString() ?? "";
+
+    bool IsController(params string[] controllers)
+    {
+        return controllers.Any(c =>
+            string.Equals(
+                c,
+                currentController,
+                StringComparison.OrdinalIgnoreCase));
+    }
+
+    var projectsProductActive = IsController(
+        "Projects",
+        "ProjectConfigurations",
+        "MeterModels",
+        "CommunicationInterfaces",
+        "FirmwareReleases"
+    );
+
+    var functionsKnowledgeActive = IsController(
+        "ProductFunctions",
+        "FunctionVersions",
+        "FunctionKnowledgeFiles"
+    );
+
+    var requirementsActive = IsController(
+        "Requirements"
+    );
+
+    var testingQualityActive = IsController(
+        "TestCases",
+        "TestRuns",
+        "TestResults",
+        "Defects",
+        "BatchQualityRecords",
+        "Traceability"
+    );
+
+    var productionActive = IsController(
+        "ProductionOrders",
+        "ProductionBatches",
+        "SerialRanges"
+    );
+
+    /*
+     * ServiceRequests is the main navigation entry.
+     * The remaining controllers are child workflow screens,
+     * but they still belong to the Service & Maintenance module.
+     */
+    var serviceMaintenanceActive = IsController(
+        "ServiceRequests",
+        "ServiceInspections",
+        "ServiceRepairs",
+        "ServicePartsUsed",
+        "PostMaintenanceResults"
+    );
+
+    /*
+     * EngineeringTools is the main navigation entry.
+     * EngineeringToolVersions contains child/detail screens,
+     * so it activates the module but does not get its own
+     * standalone sidebar link.
+     */
+    var engineeringToolsActive = IsController(
+        "EngineeringTools",
+        "EngineeringToolVersions"
+    );
+}
+
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
+
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ESMC.ELM.Web</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/ESMC.ELM.Web.styles.css" asp-append-version="true" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        @ViewData["Title"] - ESMC ELM
+    </title>
+
+    <link rel="stylesheet"
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+
+    <link rel="stylesheet"
+          href="~/css/site.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/css/dashboard.css"
+          asp-append-version="true" />
+
+    <link rel="stylesheet"
+          href="~/ESMC.ELM.Web.styles.css"
+          asp-append-version="true" />
+
 </head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ESMC.ELM.Web</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                    <partial name="_LoginPartial" />
-                </div>
+
+<body class="elm-body">
+
+    <div class="elm-layout">
+
+        <!-- ===================================================== -->
+        <!-- SIDEBAR -->
+        <!-- ===================================================== -->
+
+        <aside class="elm-sidebar">
+
+            <!-- ================================================= -->
+            <!-- BRAND -->
+            <!-- ================================================= -->
+
+            <div class="sidebar-brand">
+
+                <a asp-controller="Home"
+                   asp-action="Index"
+                   class="sidebar-brand-link">
+
+                    <div class="brand-icon">
+                        E
+                    </div>
+
+                    <div>
+
+                        <div class="brand-title">
+                            ESMC ELM
+                        </div>
+
+                        <div class="brand-subtitle">
+                            Engineering Lifecycle
+                        </div>
+
+                    </div>
+
+                </a>
+
             </div>
-        </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
-        </main>
+
+
+            <!-- ================================================= -->
+            <!-- NAVIGATION -->
+            <!-- ================================================= -->
+
+            <nav class="sidebar-navigation">
+
+
+                <!-- ================================================= -->
+                <!-- DASHBOARD -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-section">
+
+                    <div class="sidebar-section-title">
+                        OVERVIEW
+                    </div>
+
+                    <a asp-controller="Home"
+                       asp-action="Index"
+                       class="sidebar-link @(IsController("Home") ? "active" : "")">
+
+                        <span class="sidebar-icon">
+                            ▦
+                        </span>
+
+                        <span>
+                            Dashboard
+                        </span>
+
+                    </a>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 1. PROJECTS & PRODUCT -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(projectsProductActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(projectsProductActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#projectsMenu"
+                            aria-expanded="@(projectsProductActive ? "true" : "false")"
+                            aria-controls="projectsMenu">
+
+                        <span class="sidebar-icon">
+                            ◆
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Projects & Product
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(projectsProductActive ? "show" : "")"
+                         id="projectsMenu">
+
+                        <a asp-controller="Projects"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("Projects") ? "active" : "")">
+
+                            Projects
+
+                        </a>
+
+
+                        <a asp-controller="ProjectConfigurations"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("ProjectConfigurations") ? "active" : "")">
+
+                            Project Configurations
+
+                        </a>
+
+
+                        <a asp-controller="MeterModels"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("MeterModels") ? "active" : "")">
+
+                            Meter Models
+
+                        </a>
+
+
+                        <a asp-controller="CommunicationInterfaces"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("CommunicationInterfaces") ? "active" : "")">
+
+                            Communication Interfaces
+
+                        </a>
+
+
+                        <a asp-controller="FirmwareReleases"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("FirmwareReleases") ? "active" : "")">
+
+                            Firmware Releases
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 2. FUNCTIONS KNOWLEDGE -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(functionsKnowledgeActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(functionsKnowledgeActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#functionsMenu"
+                            aria-expanded="@(functionsKnowledgeActive ? "true" : "false")"
+                            aria-controls="functionsMenu">
+
+                        <span class="sidebar-icon">
+                            ▤
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Functions Knowledge
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(functionsKnowledgeActive ? "show" : "")"
+                         id="functionsMenu">
+
+                        <a asp-controller="ProductFunctions"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("ProductFunctions") ? "active" : "")">
+
+                            Product Functions
+
+                        </a>
+
+
+                        <a asp-controller="FunctionVersions"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("FunctionVersions") ? "active" : "")">
+
+                            Function Versions
+
+                        </a>
+
+
+                        <a asp-controller="FunctionKnowledgeFiles"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("FunctionKnowledgeFiles") ? "active" : "")">
+
+                            Knowledge Files
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 3. REQUIREMENTS -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(requirementsActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(requirementsActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#requirementsMenu"
+                            aria-expanded="@(requirementsActive ? "true" : "false")"
+                            aria-controls="requirementsMenu">
+
+                        <span class="sidebar-icon">
+                            ☷
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Requirements
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(requirementsActive ? "show" : "")"
+                         id="requirementsMenu">
+
+                        <a asp-controller="Requirements"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("Requirements") ? "active" : "")">
+
+                            Requirements
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 4. TESTING & QUALITY -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(testingQualityActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(testingQualityActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#qualityMenu"
+                            aria-expanded="@(testingQualityActive ? "true" : "false")"
+                            aria-controls="qualityMenu">
+
+                        <span class="sidebar-icon">
+                            ✓
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Testing & Quality
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(testingQualityActive ? "show" : "")"
+                         id="qualityMenu">
+
+                        <a asp-controller="TestCases"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("TestCases") ? "active" : "")">
+
+                            Test Cases
+
+                        </a>
+
+
+                        <a asp-controller="TestRuns"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("TestRuns") ? "active" : "")">
+
+                            Test Runs
+
+                        </a>
+
+
+                        <a asp-controller="TestResults"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("TestResults") ? "active" : "")">
+
+                            Test Results
+
+                        </a>
+
+
+                        <a asp-controller="Defects"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("Defects") ? "active" : "")">
+
+                            Defects
+
+                        </a>
+
+
+                        <a asp-controller="BatchQualityRecords"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("BatchQualityRecords") ? "active" : "")">
+
+                            Batch Quality Records
+
+                        </a>
+
+
+                        <a asp-controller="Traceability"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("Traceability") ? "active" : "")">
+
+                            Traceability
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 5. PRODUCTION -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(productionActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(productionActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#productionMenu"
+                            aria-expanded="@(productionActive ? "true" : "false")"
+                            aria-controls="productionMenu">
+
+                        <span class="sidebar-icon">
+                            ⚙
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Production
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(productionActive ? "show" : "")"
+                         id="productionMenu">
+
+                        <a asp-controller="ProductionOrders"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("ProductionOrders") ? "active" : "")">
+
+                            Production Orders
+
+                        </a>
+
+
+                        <a asp-controller="ProductionBatches"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("ProductionBatches") ? "active" : "")">
+
+                            Production Batches
+
+                        </a>
+
+
+                        <a asp-controller="SerialRanges"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("SerialRanges") ? "active" : "")">
+
+                            Serial Ranges
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 6. SERVICE & MAINTENANCE -->
+                <!-- ================================================= -->
+                <div class="sidebar-module @(serviceMaintenanceActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(serviceMaintenanceActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#serviceMenu"
+                            aria-expanded="@(serviceMaintenanceActive ? "true" : "false")"
+                            aria-controls="serviceMenu">
+
+                        <span class="sidebar-icon">
+                            ⌁
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Service & Maintenance
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(serviceMaintenanceActive ? "show" : "")"
+                         id="serviceMenu">
+
+                        <a asp-controller="ServiceRequests"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("ServiceRequests") ? "active" : "")">
+
+                            Service Requests
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================================================= -->
+                <!-- 7. ENGINEERING TOOLS -->
+                <!-- ================================================= -->
+
+                <div class="sidebar-module @(engineeringToolsActive ? "active" : "")">
+
+                    <button class="sidebar-module-button @(engineeringToolsActive ? "active" : "")"
+                            type="button"
+                            data-bs-toggle="collapse"
+                            data-bs-target="#engineeringToolsMenu"
+                            aria-expanded="@(engineeringToolsActive ? "true" : "false")"
+                            aria-controls="engineeringToolsMenu">
+
+                        <span class="sidebar-icon">
+                            ⌘
+                        </span>
+
+                        <span class="sidebar-module-name">
+                            Engineering Tools
+                        </span>
+
+                        <span class="sidebar-arrow">
+                            ›
+                        </span>
+
+                    </button>
+
+
+                    <div class="collapse sidebar-submenu @(engineeringToolsActive ? "show" : "")"
+                         id="engineeringToolsMenu">
+
+                        <a asp-controller="EngineeringTools"
+                           asp-action="Index"
+                           class="sidebar-submenu-link @(IsController("EngineeringTools") ? "active" : "")">
+
+                            Engineering Tools
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </aside>
+
+
+        <!-- ===================================================== -->
+        <!-- MAIN AREA -->
+        <!-- ===================================================== -->
+
+        <div class="elm-main">
+
+
+            <!-- ================================================= -->
+            <!-- TOP BAR -->
+            <!-- ================================================= -->
+
+            <header class="elm-topbar">
+
+                <div class="topbar-left">
+
+                    <button id="sidebarToggle"
+                            class="sidebar-toggle"
+                            type="button"
+                            aria-label="Toggle navigation">
+
+                        ☰
+
+                    </button>
+
+
+                    <div>
+
+                        <div class="topbar-title">
+                            Engineering Lifecycle Management
+                        </div>
+
+                        <div class="topbar-subtitle">
+                            Smart Meter Engineering Platform
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="topbar-account">
+
+                    <partial name="_LoginPartial" />
+
+                </div>
+
+            </header>
+
+
+            <!-- ================================================= -->
+            <!-- PAGE CONTENT -->
+            <!-- ================================================= -->
+
+            <main role="main"
+                  class="elm-content">
+
+                @RenderBody()
+
+            </main>
+
+
+            <!-- ================================================= -->
+            <!-- FOOTER -->
+            <!-- ================================================= -->
+
+            <footer class="elm-footer">
+
+                <span>
+                    &copy; 2026 ESMC — Engineering Lifecycle Management
+                </span>
+
+                <a asp-controller="Home"
+                   asp-action="Privacy">
+
+                    Privacy
+
+                </a>
+
+            </footer>
+
+        </div>
+
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2026 - ESMC.ELM.Web - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
+
+    <!-- ========================================================= -->
+    <!-- SCRIPTS -->
+    <!-- ========================================================= -->
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="~/js/site.js"
+            asp-append-version="true"></script>
+
+
+    <script>
+
+        document.getElementById("sidebarToggle")
+            ?.addEventListener("click", function () {
+
+                document
+                    .querySelector(".elm-layout")
+                    ?.classList.toggle("sidebar-collapsed");
+
+            });
+
+
+        /*
+         * Keep module arrows synchronized with Bootstrap Collapse.
+         */
+        document
+            .querySelectorAll(".sidebar-submenu")
+            .forEach(function (submenu) {
+
+                submenu.addEventListener(
+                    "show.bs.collapse",
+                    function () {
+
+                        const button =
+                            document.querySelector(
+                                '[data-bs-target="#' + submenu.id + '"]'
+                            );
+
+                        button?.classList.add("expanded");
+
+                    });
+
+
+                submenu.addEventListener(
+                    "hide.bs.collapse",
+                    function () {
+
+                        const button =
+                            document.querySelector(
+                                '[data-bs-target="#' + submenu.id + '"]'
+                            );
+
+                        button?.classList.remove("expanded");
+
+                    });
+
+            });
+
+
+        /*
+         * Mark automatically opened modules as expanded
+         * when the page initially loads.
+         */
+        document
+            .querySelectorAll(".sidebar-submenu.show")
+            .forEach(function (submenu) {
+
+                const button =
+                    document.querySelector(
+                        '[data-bs-target="#' + submenu.id + '"]'
+                    );
+
+                button?.classList.add("expanded");
+
+            });
+
+    </script>
+
+
+    @await RenderSectionAsync(
+    "Scripts",
+        required: false
+        )
+
 </body>
+
 </html>

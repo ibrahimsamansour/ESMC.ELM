@@ -1,22 +1,703 @@
+﻿/* =========================================================
+   ESMC ELM - GLOBAL APPLICATION LAYOUT
+   site.css
+
+   Contains:
+   - Global reset
+   - Application shell
+   - Sidebar
+   - Navigation
+   - Topbar
+   - Main content
+   - Footer
+   - Responsive layout
+
+   Dashboard-specific styles belong in dashboard.css
+   ========================================================= */
+
+
+/* =========================================================
+   1. GLOBAL
+   ========================================================= */
+
 html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    font-size: 14px;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
+    min-height: 100vh;
+    font-family: "Segoe UI", Arial, sans-serif;
+    color: #10233d;
+    background: #f4f7fb;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+}
+
+button,
+input,
+select,
+textarea {
+    font-family: inherit;
+}
+
+
+/* =========================================================
+   2. APPLICATION SHELL
+   ========================================================= */
+
+.elm-body {
+    margin: 0;
+    min-height: 100vh;
+    background: #f4f7fb;
+}
+
+.elm-layout {
+    display: flex;
+    min-height: 100vh;
+    width: 100%;
+}
+
+
+/* =========================================================
+   3. SIDEBAR
+   ========================================================= */
+
+.elm-sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 250px;
+    background: linear-gradient( 180deg, #102238 0%, #14263c 55%, #102137 100% );
+    color: #ffffff;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 1050;
+    border-right: 1px solid rgba(255,255,255,.05);
+    transition: width .25s ease, transform .25s ease;
+}
+
+
+    /* Scrollbar */
+
+    .elm-sidebar::-webkit-scrollbar {
+        width: 5px;
+    }
+
+    .elm-sidebar::-webkit-scrollbar-thumb {
+        background: rgba(255,255,255,.14);
+        border-radius: 10px;
+    }
+
+
+/* =========================================================
+   4. SIDEBAR BRAND
+   ========================================================= */
+
+.sidebar-brand {
+    min-height: 92px;
+    display: flex;
+    align-items: center;
+    padding: 18px 18px;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.sidebar-brand-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #ffffff;
+    width: 100%;
+}
+
+    .sidebar-brand-link:hover {
+        color: #ffffff;
+    }
+
+.brand-icon {
+    width: 46px;
+    height: 46px;
+    flex: 0 0 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: #ffffff;
+    color: #102238;
+    font-size: 20px;
+    font-weight: 800;
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+}
+
+.brand-title {
+    font-size: 18px;
+    line-height: 1.2;
+    font-weight: 750;
+    letter-spacing: .01em;
+    white-space: nowrap;
+}
+
+.brand-subtitle {
+    margin-top: 5px;
+    color: #9eb2c9;
+    font-size: 11px;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   5. SIDEBAR NAVIGATION
+   ========================================================= */
+
+.sidebar-navigation {
+    padding: 14px 10px 30px;
+}
+
+.sidebar-section {
+    margin-bottom: 12px;
+}
+
+.sidebar-section-title {
+    padding: 4px 12px 10px;
+    color: #7893af;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: .09em;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   6. DASHBOARD LINK
+   ========================================================= */
+
+.sidebar-link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    min-height: 42px;
+    padding: 10px 12px;
+    border-radius: 7px;
+    color: #d9e4ef;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+    .sidebar-link:hover {
+        color: #ffffff;
+        background: rgba(255,255,255,.06);
+    }
+
+    .sidebar-link.active {
+        color: #ffffff;
+        background: linear-gradient( 90deg, rgba(22,121,214,.34), rgba(22,121,214,.18) );
+        box-shadow: inset 3px 0 0 #45a7ff;
+    }
+
+        .sidebar-link.active .sidebar-icon {
+            color: #67b9ff;
+        }
+
+
+/* =========================================================
+   7. MODULES
+   ========================================================= */
+
+.sidebar-module {
+    margin: 4px 0;
+}
+
+.sidebar-module-button {
+    width: 100%;
+    min-height: 44px;
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    padding: 10px 12px;
+    border: 0;
+    border-radius: 7px;
+    background: transparent;
+    color: #d9e4ef;
+    text-align: left;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 500;
+    transition: background .18s ease, color .18s ease;
+}
+
+    .sidebar-module-button:hover {
+        color: #ffffff;
+        background: rgba(255,255,255,.055);
+    }
+
+
+/* Active module */
+
+.sidebar-module.active > .sidebar-module-button {
+    color: #ffffff;
+    background: rgba(255,255,255,.055);
+}
+
+    .sidebar-module.active > .sidebar-module-button::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 3px;
+        height: 28px;
+        border-radius: 0 3px 3px 0;
+        background: #63b8ff;
+    }
+
+.sidebar-module-button {
+    position: relative;
+}
+
+
+/* =========================================================
+   8. NAVIGATION ICONS
+   ========================================================= */
+
+.sidebar-icon {
+    width: 18px;
+    min-width: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: #9db3ca;
+    font-size: 14px;
+    line-height: 1;
+}
+
+.sidebar-module.active .sidebar-icon {
+    color: #7ec6ff;
+}
+
+.sidebar-module-name {
+    flex: 1;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   9. MODULE ARROW
+   ========================================================= */
+
+.sidebar-arrow {
+    margin-left: auto;
+    color: #7e98b1;
+    font-size: 18px;
+    transform: rotate(0deg);
+    transition: transform .2s ease;
+}
+
+.sidebar-module-button.expanded .sidebar-arrow,
+.sidebar-module-button[aria-expanded="true"] .sidebar-arrow {
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   10. SUBMENU
+   ========================================================= */
+
+.sidebar-submenu {
+    margin: 2px 0 7px;
+    padding-left: 34px;
+    padding-right: 4px;
+}
+
+.sidebar-submenu-link {
+    position: relative;
+    display: block;
+    padding: 8px 10px 8px 18px;
+    border-radius: 6px;
+    color: #9fb3c8;
+    font-size: 12px;
+    transition: color .18s ease, background .18s ease;
+}
+
+    .sidebar-submenu-link::before {
+        content: "";
+        position: absolute;
+        left: 5px;
+        top: 50%;
+        width: 4px;
+        height: 4px;
+        border-radius: 50%;
+        background: #647f9b;
+        transform: translateY(-50%);
+    }
+
+    .sidebar-submenu-link:hover {
+        color: #ffffff;
+        background: rgba(255,255,255,.045);
+    }
+
+    .sidebar-submenu-link.active {
+        color: #ffffff;
+        background: rgba(255,255,255,.07);
+        font-weight: 600;
+    }
+
+        .sidebar-submenu-link.active::before {
+            background: #ffffff;
+        }
+
+
+/* =========================================================
+   11. MAIN APPLICATION AREA
+   ========================================================= */
+
+.elm-main {
+    width: calc(100% - 250px);
+    min-width: 0;
+    margin-left: 250px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    transition: width .25s ease, margin-left .25s ease;
+}
+
+
+/* =========================================================
+   12. TOP BAR
+   ========================================================= */
+
+.elm-topbar {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    min-height: 92px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    padding: 16px 28px;
+    background: rgba(255,255,255,.96);
+    border-bottom: 1px solid #e1e8f0;
+    box-shadow: 0 1px 5px rgba(17,38,64,.025);
+    backdrop-filter: blur(8px);
+}
+
+.topbar-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    min-width: 0;
+}
+
+.sidebar-toggle {
+    width: 42px;
+    height: 42px;
+    flex: 0 0 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #d7e0ea;
+    border-radius: 8px;
+    background: #ffffff;
+    color: #294866;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background .18s ease, border-color .18s ease, color .18s ease;
+}
+
+    .sidebar-toggle:hover {
+        background: #f2f7fb;
+        border-color: #c7d6e5;
+        color: #0d6db6;
+    }
+
+.topbar-title {
+    color: #10233d;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.topbar-subtitle {
+    margin-top: 5px;
+    color: #73869b;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+
+/* =========================================================
+   13. ACCOUNT AREA
+   ========================================================= */
+
+.topbar-account {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+    color: #40556d;
+    font-size: 13px;
+}
+
+    .topbar-account ul,
+    .topbar-account .navbar-nav {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: 4px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .topbar-account .nav-link {
+        padding: 8px 10px !important;
+        color: #40556d !important;
+        border-radius: 6px;
+        white-space: nowrap;
+        transition: color .18s ease, background .18s ease;
+    }
+
+        .topbar-account .nav-link:hover {
+            color: #086fbd !important;
+            background: #f1f6fb;
+        }
+
+    .topbar-account form {
+        margin: 0;
+    }
+
+
+/* =========================================================
+   14. PAGE CONTENT
+   ========================================================= */
+
+.elm-content {
+    flex: 1;
+    width: 100%;
+    padding: 28px;
+    background: #f4f7fb;
+}
+
+
+/* =========================================================
+   15. FOOTER
+   ========================================================= */
+
+.elm-footer {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 28px;
+    border-top: 1px solid #e1e8f0;
+    background: #ffffff;
+    color: #7c8da0;
+    font-size: 11px;
+}
+
+    .elm-footer a {
+        color: #526a82;
+    }
+
+        .elm-footer a:hover {
+            color: #0875c1;
+        }
+
+
+/* =========================================================
+   16. COLLAPSED SIDEBAR
+   ========================================================= */
+
+.elm-layout.sidebar-collapsed .elm-sidebar {
+    width: 76px;
+}
+
+.elm-layout.sidebar-collapsed .elm-main {
+    width: calc(100% - 76px);
+    margin-left: 76px;
+}
+
+.elm-layout.sidebar-collapsed .sidebar-brand {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.elm-layout.sidebar-collapsed .sidebar-brand-link {
+    justify-content: center;
+}
+
+.elm-layout.sidebar-collapsed .brand-title,
+.elm-layout.sidebar-collapsed .brand-subtitle,
+.elm-layout.sidebar-collapsed .sidebar-section-title,
+.elm-layout.sidebar-collapsed .sidebar-module-name,
+.elm-layout.sidebar-collapsed .sidebar-arrow,
+.elm-layout.sidebar-collapsed .sidebar-link span:not(.sidebar-icon) {
+    display: none;
+}
+
+.elm-layout.sidebar-collapsed .sidebar-link,
+.elm-layout.sidebar-collapsed .sidebar-module-button {
+    justify-content: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.elm-layout.sidebar-collapsed .sidebar-icon {
+    width: 24px;
+    min-width: 24px;
+    font-size: 16px;
+}
+
+.elm-layout.sidebar-collapsed .sidebar-submenu {
+    display: none !important;
+}
+
+
+/* =========================================================
+   17. GENERAL FORM / TABLE BASELINE
+   Keeps existing application pages usable.
+   ========================================================= */
+
+.elm-content .card {
+    border-color: #dde5ed;
+    border-radius: 8px;
+}
+
+.elm-content .table {
+    color: #1b3047;
+}
+
+    .elm-content .table > :not(caption) > * > * {
+        border-bottom-color: #e2e8ef;
+    }
+
+.elm-content .form-control,
+.elm-content .form-select {
+    border-color: #d5dee8;
+    border-radius: 6px;
+}
+
+    .elm-content .form-control:focus,
+    .elm-content .form-select:focus {
+        border-color: #80b8e4;
+        box-shadow: 0 0 0 .2rem rgba(13,110,253,.10);
+    }
+
+
+/* =========================================================
+   18. RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 1100px) {
+
+    .elm-content {
+        padding: 22px;
+    }
+
+    .elm-topbar {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .elm-footer {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .elm-sidebar {
+        transform: translateX(-100%);
+        width: 250px;
+    }
+
+    .elm-main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .elm-layout.sidebar-collapsed .elm-sidebar {
+        width: 250px;
+        transform: translateX(0);
+    }
+
+    .elm-layout.sidebar-collapsed .elm-main {
+        width: 100%;
+        margin-left: 0;
+    }
+
+    .elm-layout.sidebar-collapsed .brand-title,
+    .elm-layout.sidebar-collapsed .brand-subtitle,
+    .elm-layout.sidebar-collapsed .sidebar-section-title,
+    .elm-layout.sidebar-collapsed .sidebar-module-name,
+    .elm-layout.sidebar-collapsed .sidebar-arrow,
+    .elm-layout.sidebar-collapsed .sidebar-link span:not(.sidebar-icon) {
+        display: initial;
+    }
+
+    .elm-layout.sidebar-collapsed .sidebar-brand-link,
+    .elm-layout.sidebar-collapsed .sidebar-link,
+    .elm-layout.sidebar-collapsed .sidebar-module-button {
+        justify-content: initial;
+    }
+
+    .elm-layout.sidebar-collapsed .sidebar-submenu.show {
+        display: block !important;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .elm-topbar {
+        min-height: 76px;
+        padding: 12px 16px;
+    }
+
+    .topbar-title {
+        font-size: 15px;
+    }
+
+    .topbar-subtitle {
+        display: none;
+    }
+
+    .topbar-account {
+        font-size: 11px;
+    }
+
+    .elm-content {
+        padding: 16px;
+    }
+
+    .elm-footer {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+}
+
+
+@media (max-width: 520px) {
+
+    .topbar-account {
+        display: none;
+    }
+
+    .elm-topbar {
+        justify-content: flex-start;
+    }
 }

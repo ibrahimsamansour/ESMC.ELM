@@ -1,278 +1,984 @@
-﻿@{
-    ViewData["Title"] = "ELM Testing Dashboard";
+﻿@model ESMC.ELM.Web.Models.DashboardViewModel
+
+@{
+    ViewData["Title"] = "Engineering Lifecycle Dashboard";
 }
 
-<div class="mb-4">
-    <h1 class="display-6 fw-semibold">
-        ESMC Engineering Lifecycle Management
-    </h1>
+<div class="elm-dashboard dashboard-v2">
 
-    <p class="text-muted mb-0">
-        Development, Testing & Data Entry Dashboard
-    </p>
-</div>
+    <!-- ========================================================= -->
+    <!-- HERO -->
+    <!-- ========================================================= -->
 
-<div class="alert alert-info mb-4">
-    <strong>Testing Mode:</strong>
-    Quick access to all implemented ELM screens.
-</div>
+    <section class="dashboard-hero dashboard-hero-v2">
 
-<!-- ========================================================= -->
-<!-- PROJECTS & PRODUCT CONFIGURATION                          -->
-<!-- ========================================================= -->
+        <div class="dashboard-hero-overlay"></div>
+        <div class="dashboard-hero-grid"></div>
 
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">1. Projects & Product Configuration</h5>
-        <small class="text-muted">
-            Core project and meter configuration data.
-        </small>
-    </div>
+        <div class="dashboard-hero-content">
 
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
+            <!-- LEFT -->
+            <div class="dashboard-hero-copy">
 
-            <a asp-controller="Projects"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Projects
-            </a>
+                <div class="dashboard-eyebrow">
+                    ESMC ENGINEERING LIFECYCLE MANAGEMENT
+                </div>
 
-            <a asp-controller="MeterModels"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Meter Models
-            </a>
+                <h1>
+                    Smart Meter Engineering,
+                    <span>Connected End to End.</span>
+                </h1>
 
-            <a asp-controller="FirmwareReleases"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Firmware Releases
-            </a>
+                <p class="dashboard-hero-description">
+                    A unified engineering platform for managing the complete smart meter
+                    lifecycle — from product definition and requirements through testing,
+                    production and field service.
+                </p>
 
-            <a asp-controller="CommunicationInterfaces"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Communication Interfaces
-            </a>
+                <div class="hero-lifecycle-tags">
 
-            <a asp-controller="ProjectConfigurations"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Project Configurations
-            </a>
+                    <div class="hero-tag hero-tag-project">
+                        <span class="hero-tag-icon">◇</span>
+                        <span>Projects</span>
+                    </div>
+
+                    <div class="hero-tag hero-tag-requirement">
+                        <span class="hero-tag-icon">▤</span>
+                        <span>Requirements</span>
+                    </div>
+
+                    <div class="hero-tag hero-tag-testing">
+                        <span class="hero-tag-icon">△</span>
+                        <span>Testing &amp; Quality</span>
+                    </div>
+
+                    <div class="hero-tag hero-tag-production">
+                        <span class="hero-tag-icon">▥</span>
+                        <span>Production</span>
+                    </div>
+
+                    <div class="hero-tag hero-tag-service">
+                        <span class="hero-tag-icon">⌁</span>
+                        <span>Service</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT / METER -->
+            <div class="dashboard-meter-visual">
+
+                <div class="meter-visual-ring meter-ring-one"></div>
+                <div class="meter-visual-ring meter-ring-two"></div>
+
+                <img src="~/images/dashboard/cl730s22.png"
+                     asp-append-version="true"
+                     class="dashboard-meter-image"
+                     alt="ESMC CL730S22 Smart Meter" />
+
+                <div class="meter-caption">
+                    <strong>CL730S22</strong>
+                    <span>Three Phase Smart Energy Meter</span>
+                </div>
+
+            </div>
 
         </div>
-    </div>
-</div>
 
-<!-- ========================================================= -->
-<!-- FUNCTIONS KNOWLEDGE                                       -->
-<!-- ========================================================= -->
+    </section>
 
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">2. Functions Knowledge</h5>
-        <small class="text-muted">
-            Product functions, versions and supporting knowledge files.
-        </small>
-    </div>
 
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
+    <!-- ========================================================= -->
+    <!-- KPI CARDS -->
+    <!-- ========================================================= -->
+
+    <section class="dashboard-kpis">
+
+        <!-- ACTIVE PROJECTS -->
+        <a asp-controller="Projects"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-project">
+
+            <div class="kpi-icon">
+                ◇
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.ActiveProjects
+                </strong>
+
+                <span class="kpi-label">
+                    Active Projects
+                </span>
+
+                <small>
+                    @Model.TotalProjects total projects
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+
+        <!-- METER MODELS -->
+        <a asp-controller="MeterModels"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-model">
+
+            <div class="kpi-icon">
+                ▣
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.MeterModels
+                </strong>
+
+                <span class="kpi-label">
+                    Meter Models
+                </span>
+
+                <small>
+                    Product configurations
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+
+        <!-- REQUIREMENTS -->
+        <a asp-controller="Requirements"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-requirements">
+
+            <div class="kpi-icon">
+                ▤
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.Requirements
+                </strong>
+
+                <span class="kpi-label">
+                    Total Requirements
+                </span>
+
+                <small>
+                    Engineering requirements
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+
+        <!-- OPEN DEFECTS -->
+        <a asp-controller="Defects"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-defects">
+
+            <div class="kpi-icon">
+                !
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.OpenDefects
+                </strong>
+
+                <span class="kpi-label">
+                    Open Defects
+                </span>
+
+                <small>
+                    @Model.TotalDefects total defects
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+
+        <!-- PRODUCTION BATCHES -->
+        <a asp-controller="ProductionBatches"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-production">
+
+            <div class="kpi-icon">
+                ▥
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.ProductionBatches
+                </strong>
+
+                <span class="kpi-label">
+                    Production Batches
+                </span>
+
+                <small>
+                    @Model.ProductionOrders production orders
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+
+        <!-- SERVICE REQUESTS -->
+        <a asp-controller="ServiceRequests"
+           asp-action="Index"
+           class="dashboard-kpi-card kpi-card-service">
+
+            <div class="kpi-icon">
+                ⌁
+            </div>
+
+            <div class="kpi-main">
+
+                <strong class="kpi-value">
+                    @Model.OpenServiceRequests
+                </strong>
+
+                <span class="kpi-label">
+                    Open Service Requests
+                </span>
+
+                <small>
+                    @Model.ServiceRequests total requests
+                </small>
+
+            </div>
+
+            <div class="kpi-bars">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+        </a>
+
+    </section>
+
+
+    <!-- ========================================================= -->
+    <!-- ENGINEERING LIFECYCLE -->
+    <!-- ========================================================= -->
+
+    <section class="lifecycle-card lifecycle-card-v2">
+
+        <div class="lifecycle-header">
+
+            <h2>
+                Engineering Lifecycle
+            </h2>
+
+            <span>
+                Integrated management across the entire smart meter lifecycle
+            </span>
+
+        </div>
+
+
+        <div class="lifecycle-flow">
+
+            <!-- PROJECTS -->
+            <div class="lifecycle-step lifecycle-project">
+
+                <div class="lifecycle-icon-row">
+
+                    <span class="lifecycle-number">
+                        01
+                    </span>
+
+                    <div class="lifecycle-icon">
+                        ◇
+                    </div>
+
+                </div>
+
+                <strong>
+                    Projects &amp; Product
+                </strong>
+
+                <span class="lifecycle-description">
+                    Define products, configurations
+                    <br />
+                    and meter models
+                </span>
+
+            </div>
+
+
+            <div class="lifecycle-connector">
+                <span>→</span>
+            </div>
+
+
+            <!-- REQUIREMENTS -->
+            <div class="lifecycle-step lifecycle-requirement">
+
+                <div class="lifecycle-icon-row">
+
+                    <span class="lifecycle-number">
+                        02
+                    </span>
+
+                    <div class="lifecycle-icon">
+                        ▤
+                    </div>
+
+                </div>
+
+                <strong>
+                    Requirements
+                </strong>
+
+                <span class="lifecycle-description">
+                    Manage and trace
+                    <br />
+                    engineering requirements
+                </span>
+
+            </div>
+
+
+            <div class="lifecycle-connector">
+                <span>→</span>
+            </div>
+
+
+            <!-- TESTING -->
+            <div class="lifecycle-step lifecycle-testing">
+
+                <div class="lifecycle-icon-row">
+
+                    <span class="lifecycle-number">
+                        03
+                    </span>
+
+                    <div class="lifecycle-icon">
+                        △
+                    </div>
+
+                </div>
+
+                <strong>
+                    Testing &amp; Quality
+                </strong>
+
+                <span class="lifecycle-description">
+                    Test cases, test runs,
+                    <br />
+                    results and defect management
+                </span>
+
+            </div>
+
+
+            <div class="lifecycle-connector">
+                <span>→</span>
+            </div>
+
+
+            <!-- PRODUCTION -->
+            <div class="lifecycle-step lifecycle-production">
+
+                <div class="lifecycle-icon-row">
+
+                    <span class="lifecycle-number">
+                        04
+                    </span>
+
+                    <div class="lifecycle-icon">
+                        ▥
+                    </div>
+
+                </div>
+
+                <strong>
+                    Production
+                </strong>
+
+                <span class="lifecycle-description">
+                    Production orders,
+                    <br />
+                    batches and quality records
+                </span>
+
+            </div>
+
+
+            <div class="lifecycle-connector">
+                <span>→</span>
+            </div>
+
+
+            <!-- SERVICE -->
+            <div class="lifecycle-step lifecycle-service">
+
+                <div class="lifecycle-icon-row">
+
+                    <span class="lifecycle-number">
+                        05
+                    </span>
+
+                    <div class="lifecycle-icon">
+                        ⌁
+                    </div>
+
+                </div>
+
+                <strong>
+                    Service &amp; Maintenance
+                </strong>
+
+                <span class="lifecycle-description">
+                    Field service requests,
+                    <br />
+                    inspections, repairs and results
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- SUPPORTING RESOURCES -->
+        <div class="lifecycle-support">
+
+            <div class="support-title">
+                Supporting Engineering Resources
+            </div>
+
 
             <a asp-controller="ProductFunctions"
                asp-action="Index"
-               class="btn btn-outline-primary">
-                Product Functions
+               class="support-resource">
+
+                <span class="support-icon support-functions">
+                    ▤
+                </span>
+
+                <div>
+                    <strong>
+                        Functions Knowledge
+                    </strong>
+
+                    <small>
+                        Product functions, versions and knowledge files
+                    </small>
+                </div>
+
             </a>
 
-            <a asp-controller="FunctionVersions"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Function Versions
-            </a>
 
-            <a asp-controller="FunctionKnowledgeFiles"
+            <a asp-controller="EngineeringTools"
                asp-action="Index"
-               class="btn btn-outline-primary">
-                Function Knowledge Files
+               class="support-resource">
+
+                <span class="support-icon support-tools">
+                    ⌘
+                </span>
+
+                <div>
+                    <strong>
+                        Engineering Tools
+                    </strong>
+
+                    <small>
+                        Tools, versions and supported meter models
+                    </small>
+                </div>
+
             </a>
 
         </div>
-    </div>
-</div>
 
-<!-- ========================================================= -->
-<!-- REQUIREMENTS                                              -->
-<!-- ========================================================= -->
+    </section>
 
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">3. Requirements</h5>
-        <small class="text-muted">
-            Engineering and project requirements.
-        </small>
-    </div>
 
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
+    <!-- ========================================================= -->
+    <!-- OPERATIONAL OVERVIEW -->
+    <!-- ========================================================= -->
 
-            <a asp-controller="Requirements"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Requirements
-            </a>
+    <section class="operational-section">
 
-        </div>
-    </div>
-</div>
+        <div class="operational-heading">
 
-<!-- ========================================================= -->
-<!-- TESTING                                                   -->
-<!-- ========================================================= -->
+            <h2>
+                Operational Overview
+            </h2>
 
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">4. Testing</h5>
-        <small class="text-muted">
-            Test definition, execution, results and defects.
-        </small>
-    </div>
-
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
-
-            <a asp-controller="TestCases"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Test Cases
-            </a>
-
-            <a asp-controller="TestRuns"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Test Runs
-            </a>
-
-            <a asp-controller="TestResults"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Test Results
-            </a>
-
-            <a asp-controller="Defects"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Defects
-            </a>
-
-        </div>
-    </div>
-</div>
-
-<!-- ========================================================= -->
-<!-- PRODUCTION TRACEABILITY                                   -->
-<!-- ========================================================= -->
-
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">5. Production Traceability</h5>
-        <small class="text-muted">
-            Production orders, batches, quality and serial traceability.
-        </small>
-    </div>
-
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
-
-            <a asp-controller="ProductionOrders"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Production Orders
-            </a>
-
-            <a asp-controller="ProductionBatches"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Production Batches
-            </a>
-
-            <a asp-controller="BatchQualityRecords"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Batch Quality Records
-            </a>
-
-            <a asp-controller="SerialRanges"
-               asp-action="Index"
-               class="btn btn-outline-primary">
-                Serial Ranges
-            </a>
-
-            <a asp-controller="Traceability"
-               asp-action="Index"
-               class="btn btn-primary">
-                Serial Traceability
-            </a>
-
-        </div>
-    </div>
-</div>
-
-<!-- ========================================================= -->
-<!-- SYSTEM ADMINISTRATION                                     -->
-<!-- ========================================================= -->
-
-<div class="card mb-4">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">System Administration</h5>
-        <small class="text-muted">
-            User and access administration.
-        </small>
-    </div>
-
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
-
-            <a asp-controller="AdminUsers"
-               asp-action="Index"
-               class="btn btn-outline-dark">
-                Admin Users
-            </a>
-
-        </div>
-    </div>
-</div>
-
-<!-- ========================================================= -->
-<!-- NEXT MODULES                                              -->
-<!-- ========================================================= -->
-
-<div class="card mb-4 border-secondary">
-    <div class="card-header bg-white">
-        <h5 class="mb-1">Next Modules</h5>
-    </div>
-
-    <div class="card-body">
-        <div class="d-flex flex-wrap gap-2">
-
-            <span class="btn btn-outline-secondary disabled">
-                After-Sales & Maintenance
-            </span>
-
-            <span class="btn btn-outline-secondary disabled">
-                R&D Assets
-            </span>
-
-            <span class="btn btn-outline-secondary disabled">
-                Documents
-            </span>
-
-            <span class="btn btn-outline-secondary disabled">
-                Security & Audit
+            <span>
+                Current engineering, quality, production and service activity.
             </span>
 
         </div>
-    </div>
+
+
+        <div class="operational-grid">
+
+
+            <!-- ================================================= -->
+            <!-- RECENT PROJECTS -->
+            <!-- ================================================= -->
+
+            <article class="operational-card">
+
+                <div class="operational-card-header">
+
+                    <div class="operational-title">
+
+                        <span class="operational-icon icon-project">
+                            ◇
+                        </span>
+
+                        <strong>
+                            Recent Projects
+                        </strong>
+
+                    </div>
+
+                    <a asp-controller="Projects"
+                       asp-action="Index">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="operational-table-wrapper">
+
+                    <table class="operational-table">
+
+                        <thead>
+                            <tr>
+                                <th>Project Code</th>
+                                <th>Project Name</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model.RecentProjects.Any())
+                            {
+                                @foreach (var project in Model.RecentProjects)
+                                {
+                                    var projectStatusClass =
+                                    project.Status?.ToLowerInvariant() switch
+                                    {
+                                        "active" => "status-success",
+                                        "planning" => "status-warning",
+                                        "on hold" => "status-danger",
+                                        "onhold" => "status-danger",
+                                        "completed" => "status-success",
+                                        _ => "status-neutral"
+                                    };
+
+                                    <tr>
+
+                                        <td>
+                                            <a asp-controller="Projects"
+                                               asp-action="Details"
+                                               asp-route-id="@project.ProjectId"
+                                               class="table-primary-link">
+
+                                                @project.ProjectCode
+
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            @project.ProjectName
+                                        </td>
+
+                                        <td>
+                                            <span class="table-status @projectStatusClass">
+                                                @project.Status
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @project.Priority
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4"
+                                        class="operational-empty">
+
+                                        No projects available.
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </article>
+
+
+            <!-- ================================================= -->
+            <!-- TESTING & QUALITY -->
+            <!-- ================================================= -->
+
+            <article class="operational-card">
+
+                <div class="operational-card-header">
+
+                    <div class="operational-title">
+
+                        <span class="operational-icon icon-testing">
+                            △
+                        </span>
+
+                        <strong>
+                            Testing &amp; Quality
+                        </strong>
+
+                    </div>
+
+                    <a asp-controller="TestRuns"
+                       asp-action="Index">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="quality-operational-body">
+
+                    <div class="quality-operational-stat">
+
+                        <span>
+                            Test Runs
+                        </span>
+
+                        <strong>
+                            @Model.TestRuns
+                        </strong>
+
+                    </div>
+
+
+                    <div class="quality-operational-stat">
+
+                        <span>
+                            Open Defects
+                        </span>
+
+                        <strong>
+                            @Model.OpenDefects
+                        </strong>
+
+                    </div>
+
+
+                    <div class="quality-operational-stat">
+
+                        <span>
+                            Total Defects
+                        </span>
+
+                        <strong>
+                            @Model.TotalDefects
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <div class="operational-summary-row">
+
+                    <span class="summary-icon summary-quality">
+                        ✓
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Quality Management
+                        </strong>
+
+                        <small>
+                            Test execution, results and defect management
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- ================================================= -->
+            <!-- PRODUCTION STATUS -->
+            <!-- ================================================= -->
+
+            <article class="operational-card">
+
+                <div class="operational-card-header">
+
+                    <div class="operational-title">
+
+                        <span class="operational-icon icon-production">
+                            ▥
+                        </span>
+
+                        <strong>
+                            Production Status
+                        </strong>
+
+                    </div>
+
+                    <a asp-controller="ProductionOrders"
+                       asp-action="Index">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="production-operational-body">
+
+                    <a asp-controller="ProductionOrders"
+                       asp-action="Index"
+                       class="production-operational-stat">
+
+                        <span class="production-mini-icon">
+                            ◫
+                        </span>
+
+                        <div>
+                            <strong>
+                                @Model.ProductionOrders
+                            </strong>
+
+                            <span>
+                                Production Orders
+                            </span>
+                        </div>
+
+                    </a>
+
+
+                    <a asp-controller="ProductionBatches"
+                       asp-action="Index"
+                       class="production-operational-stat">
+
+                        <span class="production-mini-icon">
+                            ▦
+                        </span>
+
+                        <div>
+                            <strong>
+                                @Model.ProductionBatches
+                            </strong>
+
+                            <span>
+                                Production Batches
+                            </span>
+                        </div>
+
+                    </a>
+
+                </div>
+
+
+                <div class="operational-summary-row">
+
+                    <span class="summary-icon summary-production">
+                        ⚙
+                    </span>
+
+                    <div>
+
+                        <strong>
+                            Manufacturing Control
+                        </strong>
+
+                        <small>
+                            Production orders and batch management
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </article>
+
+
+            <!-- ================================================= -->
+            <!-- RECENT SERVICE REQUESTS -->
+            <!-- ================================================= -->
+
+            <article class="operational-card">
+
+                <div class="operational-card-header">
+
+                    <div class="operational-title">
+
+                        <span class="operational-icon icon-service">
+                            ⌁
+                        </span>
+
+                        <strong>
+                            Recent Service Requests
+                        </strong>
+
+                    </div>
+
+                    <a asp-controller="ServiceRequests"
+                       asp-action="Index">
+                        View all →
+                    </a>
+
+                </div>
+
+
+                <div class="operational-table-wrapper">
+
+                    <table class="operational-table service-table">
+
+                        <thead>
+                            <tr>
+                                <th>Request No.</th>
+                                <th>Meter S/N</th>
+                                <th>Status</th>
+                                <th>Priority</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @if (Model.RecentServiceRequests.Any())
+                            {
+                                @foreach (var request in Model.RecentServiceRequests)
+                                {
+                                    var serviceStatusClass =
+                                    request.Status?.ToLowerInvariant() switch
+                                    {
+                                        "closed" => "status-success",
+                                        "readyforreturn" => "status-success",
+                                        "ready for return" => "status-success",
+                                        "inrepair" => "status-info",
+                                        "in repair" => "status-info",
+                                        "inspection" => "status-warning",
+                                        "open" => "status-danger",
+                                        _ => "status-neutral"
+                                    };
+
+                                    <tr>
+
+                                        <td>
+                                            <a asp-controller="ServiceRequests"
+                                               asp-action="Details"
+                                               asp-route-id="@request.ServiceRequestId"
+                                               class="table-primary-link">
+
+                                                @request.ServiceRequestNumber
+
+                                            </a>
+                                        </td>
+
+                                        <td>
+                                            @request.MeterSerialNumber
+                                        </td>
+
+                                        <td>
+                                            <span class="table-status @serviceStatusClass">
+                                                @request.Status
+                                            </span>
+                                        </td>
+
+                                        <td>
+                                            @request.Priority
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="4"
+                                        class="operational-empty">
+
+                                        No service requests available.
+
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </section>
+
 </div>

@@ -1,48 +1,245 @@
-﻿/* Please see documentation at https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
-for details on configuring this project to bundle and minify static web assets. */
+﻿/* Please see documentation at
+   https://learn.microsoft.com/aspnet/core/client-side/bundling-and-minification
+   for details on configuring this project to bundle and minify static web assets.
+*/
+
+
+/* =========================================================
+   DEFAULT ASP.NET STYLES
+   ========================================================= */
 
 a.navbar-brand {
-  white-space: normal;
-  text-align: center;
-  word-break: break-all;
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
 }
+
 
 a {
-  color: #0077cc;
+    color: #0077cc;
 }
+
 
 .btn-primary {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
 
-.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-  color: #fff;
-  background-color: #1b6ec2;
-  border-color: #1861ac;
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
 }
+
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
+
+
 .border-bottom {
-  border-bottom: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
 }
+
 
 .box-shadow {
-  box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
 }
+
 
 button.accept-policy {
-  font-size: 1rem;
-  line-height: inherit;
+    font-size: 1rem;
+    line-height: inherit;
 }
 
+
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px;
+}
+
+
+/* =========================================================
+   SIDEBAR - ACTIVE DASHBOARD
+   ========================================================= */
+
+.sidebar-link {
+    transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+
+    .sidebar-link.active {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.10);
+        font-weight: 600;
+        border-left: 3px solid #ffffff;
+    }
+
+
+/* =========================================================
+   SIDEBAR MODULE
+   ========================================================= */
+
+.sidebar-module {
+    position: relative;
+}
+
+
+.sidebar-module-button {
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+
+    .sidebar-module-button:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+
+
+/* Current module */
+
+.sidebar-module.active > .sidebar-module-button {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.04);
+    font-weight: 600;
+}
+
+
+/* =========================================================
+   SIDEBAR SUBMENU
+   ========================================================= */
+
+.sidebar-submenu {
+    background-color: rgba(0, 0, 0, 0.08);
+}
+
+
+.sidebar-submenu-link {
+    position: relative;
+    display: block;
+    padding-top: 9px;
+    padding-bottom: 9px;
+    padding-left: 54px;
+    padding-right: 16px;
+    color: #aebdcd;
+    text-decoration: none;
+    border-left: 3px solid transparent;
+    font-size: 14px;
+    transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+
+    .sidebar-submenu-link:hover {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.06);
+        text-decoration: none;
+    }
+
+
+    /* =========================================================
+   CURRENT PAGE
+   ========================================================= */
+
+    .sidebar-submenu-link.active {
+        color: #ffffff;
+        background-color: rgba(255, 255, 255, 0.11);
+        border-left-color: #ffffff;
+        font-weight: 600;
+    }
+
+
+        /*
+ * Small visual marker for the current screen.
+ */
+        .sidebar-submenu-link.active::before {
+            content: "";
+            position: absolute;
+            left: 39px;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: currentColor;
+            transform: translateY(-50%);
+        }
+
+
+/* =========================================================
+   MODULE ARROW
+   ========================================================= */
+
+.sidebar-arrow {
+    display: inline-block;
+    transition: transform 0.20s ease;
+}
+
+
+/*
+ * Bootstrap changes aria-expanded automatically.
+ * This means the arrow also works when the user manually
+ * opens/closes a module.
+ */
+.sidebar-module-button[aria-expanded="true"] .sidebar-arrow,
+.sidebar-module-button.expanded .sidebar-arrow {
+    transform: rotate(90deg);
+}
+
+
+/* =========================================================
+   ACTIVE MODULE INDICATOR
+   ========================================================= */
+
+.sidebar-module.active::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 3px;
+    height: 30px;
+    border-radius: 0 3px 3px 0;
+    background-color: rgba(255, 255, 255, 0.65);
+}
+
+
+/* =========================================================
+   ICONS
+   ========================================================= */
+
+.sidebar-icon {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   ACCESSIBILITY / KEYBOARD
+   ========================================================= */
+
+.sidebar-module-button:focus-visible,
+.sidebar-link:focus-visible,
+.sidebar-submenu-link:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.75);
+    outline-offset: -2px;
+}
+
+
+/* =========================================================
+   MOBILE / SMALL SCREEN IMPROVEMENTS
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .sidebar-submenu-link {
+        padding-left: 46px;
+    }
+
+
+        .sidebar-submenu-link.active::before {
+            left: 32px;
+        }
 }
