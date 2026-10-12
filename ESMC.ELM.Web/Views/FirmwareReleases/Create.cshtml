@@ -106,9 +106,12 @@
                             <select asp-for="Status"
                                     class="form-select">
                                 <option value="Draft">Draft</option>
-                                <option value="Testing">Testing</option>
+                                <option value="UnderTest">UnderTest</option>
+                                <option value="Rejected">Rejected</option>
+                                <option value="Superseded">Superseded</option>
                                 <option value="Released">Released</option>
-                                <option value="Deprecated">Deprecated</option>
+                                <option value="ReadyForApproval">ReadyForApproval</option>
+                                <option value="Approved">Approved</option>
                             </select>
 
                             <span asp-validation-for="Status"
