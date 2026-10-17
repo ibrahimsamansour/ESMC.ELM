@@ -1,0 +1,19 @@
+@{
+    ViewData["Title"] = "Test Cases Excel Import";
+}
+<div class="container-fluid py-4">
+    <h3>Test Cases Excel Import</h3>
+    <p class="text-muted">Download the template, fill in test cases, then upload to validate before saving.</p>
+    @if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+    @if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+    <div class="card p-4">
+        <a asp-action="DownloadTemplate" class="btn btn-outline-primary mb-3 align-self-start">Download Excel Template</a>
+        <form asp-action="Upload" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <label for="excelFile" class="form-label">Excel file (.xlsx, max 5 MB)</label>
+            <input id="excelFile" name="excelFile" type="file" accept=".xlsx" required class="form-control mb-3" />
+            <button type="submit" class="btn btn-primary">Upload &amp; Validate</button>
+            <a asp-controller="TestCases" asp-action="Index" class="btn btn-outline-secondary">Test Cases List</a>
+        </form>
+    </div>
+</div>

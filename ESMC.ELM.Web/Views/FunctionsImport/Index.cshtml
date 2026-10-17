@@ -1,0 +1,57 @@
+﻿@{
+    ViewData["Title"] = "Import Functions";
+}
+
+<div class="container-fluid py-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h4 class="mb-1">Import Product Functions</h4>
+            <p class="text-muted mb-0">
+                Import multiple product functions using an Excel file.
+            </p>
+        </div>
+
+        <div class="card-body">
+            <h5>Step 1: Download Excel Template</h5>
+
+            <p class="text-muted">
+                Download the template and fill in the required function data.
+            </p>
+
+            <a asp-controller="FunctionsImport"
+               asp-action="DownloadTemplate"
+               class="btn btn-outline-primary mb-4">
+                Download Excel Template
+            </a>
+
+            <hr />
+
+            <h5>Step 2: Upload Completed Excel File</h5>
+
+            <form asp-controller="FunctionsImport"
+                  asp-action="Upload"
+                  method="post"
+                  enctype="multipart/form-data">
+
+                @Html.AntiForgeryToken()
+
+                <div class="mb-3">
+                    <label for="excelFile" class="form-label">
+                        Select Excel File (.xlsx)
+                    </label>
+
+                    <input type="file"
+                           id="excelFile"
+                           name="excelFile"
+                           accept=".xlsx"
+                           class="form-control"
+                           required />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Upload &amp; Validate
+                </button>
+            </form>
+        </div>
+    </div>
+</div>

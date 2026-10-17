@@ -1,0 +1,154 @@
+﻿@model ESMC.ELM.Web.Models.FunctionsImportViewModel
+
+@{
+    ViewData["Title"] = "Functions Import Preview";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h3 class="mb-1">Functions Import Preview</h3>
+            <p class="text-muted mb-0">
+                Review validation results before importing functions.
+            </p>
+        </div>
+
+        <a asp-controller="FunctionsImport"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Back to Import
+        </a>
+    </div>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="mb-3">
+                <strong>File:</strong> @Model.FileName
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="border rounded p-3">
+                        <div class="text-muted">Total Rows</div>
+                        <h3 class="mb-0">@Model.TotalRows</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3">
+                        <div class="text-muted">Valid Rows</div>
+                        <h3 class="text-success mb-0">@Model.ValidRows</h3>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded p-3">
+                        <div class="text-muted">Invalid Rows</div>
+                        <h3 class="text-danger mb-0">@Model.InvalidRows</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (Model.InvalidRows > 0)
+    {
+        <div class="alert alert-warning">
+            <strong>Validation failed.</strong>
+            Please correct the invalid rows in your Excel file
+            and upload it again.
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-success">
+            <strong>Validation successful.</strong>
+            All rows passed the initial validation checks.
+        </div>
+    }
+
+    <div class="card shadow-sm">
+        <div class="card-header bg-white">
+            <h5 class="mb-0">Imported Data Preview</h5>
+        </div>
+
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered table-hover align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Excel Row</th>
+                            <th>Function Code</th>
+                            <th>Function Name</th>
+                            <th>Category</th>
+                            <th>Description</th>
+                            <th>Status</th>
+                            <th>Validation</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Rows)
+                        {
+                            <tr>
+                                <td>@item.RowNumber</td>
+                                <td>@item.FunctionCode</td>
+                                <td>@item.FunctionName</td>
+                                <td>@item.Category</td>
+                                <td>@item.Description</td>
+                                <td>@item.Status</td>
+                                <td>
+                                    @if (item.IsValid)
+                                    {
+                                        <span class="badge bg-success">
+                                            Valid
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger mb-1">
+                                            Invalid
+                                        </span>
+
+                                        <ul class="text-danger small mt-2 mb-0 ps-3">
+                                            @foreach (var error in item.Errors)
+                                            {
+                                                <li>@error</li>
+                                            }
+                                        </ul>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4 d-flex justify-content-end align-items-center gap-2">
+        <a asp-controller="FunctionsImport"
+           asp-action="Index"
+           class="btn btn-outline-secondary">
+            Upload Another File
+        </a>
+
+        @if (Model.TotalRows > 0 && Model.InvalidRows == 0 &&
+             !string.IsNullOrWhiteSpace(Model.ImportToken))
+        {
+            <form asp-controller="FunctionsImport"
+                  asp-action="ConfirmImport"
+                  method="post"
+                  class="m-0"
+                  onsubmit="this.querySelector('button[type=submit]').disabled = true;">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="importToken" value="@Model.ImportToken" />
+                <button type="submit" class="btn btn-success">
+                    Confirm Import (@Model.ValidRows Functions)
+                </button>
+            </form>
+        }
+    </div>
+
+</div>
