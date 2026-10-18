@@ -77,26 +77,26 @@
     <meta charset="utf-8" />
 
     <meta name="viewport"
-    content="width=device-width, initial-scale=1.0" />
+          content="width=device-width, initial-scale=1.0" />
 
     <title>
         @ViewData["Title"] - ESMC ELM
     </title>
 
     <link rel="stylesheet"
-    href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+          href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
 
     <link rel="stylesheet"
-    href="~/css/site.css"
-    asp-append-version="true" />
+          href="~/css/site.css"
+          asp-append-version="true" />
 
     <link rel="stylesheet"
-    href="~/css/dashboard.css"
-    asp-append-version="true" />
+          href="~/css/dashboard.css"
+          asp-append-version="true" />
 
     <link rel="stylesheet"
-    href="~/ESMC.ELM.Web.styles.css"
-    asp-append-version="true" />
+          href="~/ESMC.ELM.Web.styles.css"
+          asp-append-version="true" />
 
 </head>
 
@@ -118,8 +118,8 @@
                 <div class="sidebar-brand">
 
                     <a asp-controller="Home"
-                    asp-action="Index"
-                    class="sidebar-brand-link">
+                       asp-action="Index"
+                       class="sidebar-brand-link">
 
                         <div class="brand-icon">
                             E
@@ -160,8 +160,8 @@
                         </div>
 
                         <a asp-controller="Home"
-                        asp-action="Index"
-                        class="sidebar-link @(IsController("Home") ? "active" : "")">
+                           asp-action="Index"
+                           class="sidebar-link @(IsController("Home") ? "active" : "")">
 
                             <span class="sidebar-icon">
                                 ▦
@@ -183,11 +183,11 @@
                     <div class="sidebar-module @(projectsProductActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(projectsProductActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#projectsMenu"
-                        aria-expanded="@(projectsProductActive ? "true" : "false")"
-                        aria-controls="projectsMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#projectsMenu"
+                                aria-expanded="@(projectsProductActive ? "true" : "false")"
+                                aria-controls="projectsMenu">
 
                             <span class="sidebar-icon">
                                 ◆
@@ -205,11 +205,11 @@
 
 
                         <div class="collapse sidebar-submenu @(projectsProductActive ? "show" : "")"
-                        id="projectsMenu">
+                             id="projectsMenu">
 
                             <a asp-controller="Projects"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("Projects") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("Projects") ? "active" : "")">
 
                                 Projects
 
@@ -217,8 +217,8 @@
 
 
                             <a asp-controller="ProjectConfigurations"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("ProjectConfigurations") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("ProjectConfigurations") ? "active" : "")">
 
                                 Project Configurations
 
@@ -226,8 +226,8 @@
 
 
                             <a asp-controller="MeterModels"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("MeterModels") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("MeterModels") ? "active" : "")">
 
                                 Meter Models
 
@@ -235,8 +235,8 @@
 
 
                             <a asp-controller="CommunicationInterfaces"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("CommunicationInterfaces") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("CommunicationInterfaces") ? "active" : "")">
 
                                 Communication Interfaces
 
@@ -244,8 +244,8 @@
 
 
                             <a asp-controller="FirmwareReleases"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("FirmwareReleases") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("FirmwareReleases") ? "active" : "")">
 
                                 Firmware Releases
 
@@ -263,11 +263,11 @@
                     <div class="sidebar-module @(functionsKnowledgeActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(functionsKnowledgeActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#functionsMenu"
-                        aria-expanded="@(functionsKnowledgeActive ? "true" : "false")"
-                        aria-controls="functionsMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#functionsMenu"
+                                aria-expanded="@(functionsKnowledgeActive ? "true" : "false")"
+                                aria-controls="functionsMenu">
 
                             <span class="sidebar-icon">
                                 ▤
@@ -285,11 +285,11 @@
 
 
                         <div class="collapse sidebar-submenu @(functionsKnowledgeActive ? "show" : "")"
-                        id="functionsMenu">
+                             id="functionsMenu">
 
                             <a asp-controller="ProductFunctions"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("ProductFunctions") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("ProductFunctions") ? "active" : "")">
 
                                 Product Functions
 
@@ -297,8 +297,8 @@
 
 
                             <a asp-controller="FunctionVersions"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("FunctionVersions") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("FunctionVersions") ? "active" : "")">
 
                                 Function Versions
 
@@ -306,8 +306,8 @@
 
 
                             <a asp-controller="FunctionKnowledgeFiles"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("FunctionKnowledgeFiles") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("FunctionKnowledgeFiles") ? "active" : "")">
 
                                 Knowledge Files
 
@@ -325,11 +325,11 @@
                     <div class="sidebar-module @(requirementsActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(requirementsActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#requirementsMenu"
-                        aria-expanded="@(requirementsActive ? "true" : "false")"
-                        aria-controls="requirementsMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#requirementsMenu"
+                                aria-expanded="@(requirementsActive ? "true" : "false")"
+                                aria-controls="requirementsMenu">
 
                             <span class="sidebar-icon">
                                 ☷
@@ -347,11 +347,11 @@
 
 
                         <div class="collapse sidebar-submenu @(requirementsActive ? "show" : "")"
-                        id="requirementsMenu">
+                             id="requirementsMenu">
 
                             <a asp-controller="Requirements"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("Requirements") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("Requirements") ? "active" : "")">
 
                                 Requirements
 
@@ -369,11 +369,11 @@
                     <div class="sidebar-module @(testingQualityActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(testingQualityActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#qualityMenu"
-                        aria-expanded="@(testingQualityActive ? "true" : "false")"
-                        aria-controls="qualityMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#qualityMenu"
+                                aria-expanded="@(testingQualityActive ? "true" : "false")"
+                                aria-controls="qualityMenu">
 
                             <span class="sidebar-icon">
                                 ✓
@@ -391,11 +391,11 @@
 
 
                         <div class="collapse sidebar-submenu @(testingQualityActive ? "show" : "")"
-                        id="qualityMenu">
+                             id="qualityMenu">
 
                             <a asp-controller="TestCases"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("TestCases") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("TestCases") ? "active" : "")">
 
                                 Test Cases
 
@@ -403,8 +403,8 @@
 
 
                             <a asp-controller="TestRuns"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("TestRuns") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("TestRuns") ? "active" : "")">
 
                                 Test Runs
 
@@ -412,8 +412,8 @@
 
 
                             <a asp-controller="TestResults"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("TestResults") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("TestResults") ? "active" : "")">
 
                                 Test Results
 
@@ -421,8 +421,8 @@
 
 
                             <a asp-controller="Defects"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("Defects") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("Defects") ? "active" : "")">
 
                                 Defects
 
@@ -430,8 +430,8 @@
 
 
                             <a asp-controller="BatchQualityRecords"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("BatchQualityRecords") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("BatchQualityRecords") ? "active" : "")">
 
                                 Batch Quality Records
 
@@ -439,8 +439,8 @@
 
 
                             <a asp-controller="Traceability"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("Traceability") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("Traceability") ? "active" : "")">
 
                                 Traceability
 
@@ -458,11 +458,11 @@
                     <div class="sidebar-module @(productionActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(productionActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#productionMenu"
-                        aria-expanded="@(productionActive ? "true" : "false")"
-                        aria-controls="productionMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#productionMenu"
+                                aria-expanded="@(productionActive ? "true" : "false")"
+                                aria-controls="productionMenu">
 
                             <span class="sidebar-icon">
                                 ⚙
@@ -480,11 +480,11 @@
 
 
                         <div class="collapse sidebar-submenu @(productionActive ? "show" : "")"
-                        id="productionMenu">
+                             id="productionMenu">
 
                             <a asp-controller="ProductionOrders"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("ProductionOrders") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("ProductionOrders") ? "active" : "")">
 
                                 Production Orders
 
@@ -492,8 +492,8 @@
 
 
                             <a asp-controller="ProductionBatches"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("ProductionBatches") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("ProductionBatches") ? "active" : "")">
 
                                 Production Batches
 
@@ -501,8 +501,8 @@
 
 
                             <a asp-controller="SerialRanges"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("SerialRanges") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("SerialRanges") ? "active" : "")">
 
                                 Serial Ranges
 
@@ -519,11 +519,11 @@
                     <div class="sidebar-module @(serviceMaintenanceActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(serviceMaintenanceActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#serviceMenu"
-                        aria-expanded="@(serviceMaintenanceActive ? "true" : "false")"
-                        aria-controls="serviceMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#serviceMenu"
+                                aria-expanded="@(serviceMaintenanceActive ? "true" : "false")"
+                                aria-controls="serviceMenu">
 
                             <span class="sidebar-icon">
                                 ⌁
@@ -541,11 +541,11 @@
 
 
                         <div class="collapse sidebar-submenu @(serviceMaintenanceActive ? "show" : "")"
-                        id="serviceMenu">
+                             id="serviceMenu">
 
                             <a asp-controller="ServiceRequests"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("ServiceRequests") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("ServiceRequests") ? "active" : "")">
 
                                 Service Requests
 
@@ -563,11 +563,11 @@
                     <div class="sidebar-module @(engineeringToolsActive ? "active" : "")">
 
                         <button class="sidebar-module-button @(engineeringToolsActive ? "active" : "")"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#engineeringToolsMenu"
-                        aria-expanded="@(engineeringToolsActive ? "true" : "false")"
-                        aria-controls="engineeringToolsMenu">
+                                type="button"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#engineeringToolsMenu"
+                                aria-expanded="@(engineeringToolsActive ? "true" : "false")"
+                                aria-controls="engineeringToolsMenu">
 
                             <span class="sidebar-icon">
                                 ⌘
@@ -585,11 +585,11 @@
 
 
                         <div class="collapse sidebar-submenu @(engineeringToolsActive ? "show" : "")"
-                        id="engineeringToolsMenu">
+                             id="engineeringToolsMenu">
 
                             <a asp-controller="EngineeringTools"
-                            asp-action="Index"
-                            class="sidebar-submenu-link @(IsController("EngineeringTools") ? "active" : "")">
+                               asp-action="Index"
+                               class="sidebar-submenu-link @(IsController("EngineeringTools") ? "active" : "")">
 
                                 Engineering Tools
 
@@ -621,9 +621,9 @@
                     <div class="topbar-left">
 
                         <button id="sidebarToggle"
-                        class="sidebar-toggle"
-                        type="button"
-                        aria-label="Toggle navigation">
+                                class="sidebar-toggle"
+                                type="button"
+                                aria-label="Toggle navigation">
 
                             ☰
 
@@ -655,16 +655,16 @@
 
             }
             <!-- ================================================= -->
-                <!-- PAGE CONTENT -->
-                <!-- ================================================= -->
+            <!-- PAGE CONTENT -->
+            <!-- ================================================= -->
 
-                <main role="main"
-                class="elm-content">
+            <main role="main"
+                  class="elm-content">
 
                 @RenderBody()
 
             </main>
-            
+
 
             <!-- ================================================= -->
             <!-- FOOTER -->
@@ -772,9 +772,9 @@
 
 
     @await RenderSectionAsync(
-    "Scripts",
-        required: false
-        )
+            "Scripts",
+            required: false
+            )
 
 </body>
 
