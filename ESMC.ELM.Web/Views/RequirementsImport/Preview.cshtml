@@ -1,0 +1,13 @@
+@model ESMC.ELM.Web.Models.RequirementsImportViewModel
+@{ ViewData["Title"] = "Requirements Import Preview"; }
+<div class="container-fluid py-4"><h3>Requirements Import Preview</h3><p>File: @Model.FileName</p>
+<div class="row mb-3"><div class="col">Total: <strong>@Model.Rows.Count</strong></div><div class="col text-success">Valid: <strong>@Model.ValidRows</strong></div><div class="col text-danger">Invalid: <strong>@Model.InvalidRows</strong></div></div>
+@if(Model.Rows.Count == 0){<div class="alert alert-warning">No data rows found.</div>}
+else if(Model.InvalidRows > 0){<div class="alert alert-warning">Validation failed. Correct the invalid rows and upload again.</div>}
+else {<div class="alert alert-success">Validation successful. All rows passed.</div>}
+<div class="table-responsive"><table class="table table-bordered table-sm"><thead><tr><th>Excel Row</th><th>Requirement Code</th><th>Project</th><th>Type</th><th>Title</th><th>Priority</th><th>Status</th><th>Functions</th><th>Validation</th></tr></thead><tbody>
+@foreach(var r in Model.Rows){<tr><td>@r.ExcelRow</td><td>@r.RequirementCode</td><td>@r.ProjectCode</td><td>@r.RequirementType</td><td>@r.Title</td><td>@r.Priority</td><td>@r.Status</td><td>@r.FunctionCodes</td><td>@if(r.Errors.Count == 0){<span class="badge bg-success">Valid</span>}else{<span class="badge bg-danger">Invalid</span><ul class="text-danger">@foreach(var e in r.Errors){<li>@e</li>}</ul>}</td></tr>}
+</tbody></table></div>
+@if(Model.Rows.Count > 0 && Model.InvalidRows == 0 && !string.IsNullOrEmpty(Model.ImportToken)){
+<form asp-action="ConfirmImport" method="post">@Html.AntiForgeryToken()<input type="hidden" name="importToken" value="@Model.ImportToken"/><button type="submit" class="btn btn-success">Confirm Import (@Model.Rows.Count Requirements)</button></form>}
+<a class="btn btn-outline-secondary mt-3" asp-action="Index">Upload Another File</a></div>

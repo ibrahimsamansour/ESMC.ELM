@@ -1,0 +1,10 @@
+@{ ViewData["Title"] = "Requirements Excel Import"; }
+<div class="container-fluid py-4">
+<h3>Requirements Excel Import</h3><p class="text-muted">Download template, upload and validate before saving.</p>
+@if (TempData["Error"] != null) { <div class="alert alert-danger">@TempData["Error"]</div> }
+@if (TempData["Success"] != null) { <div class="alert alert-success">@TempData["Success"]</div> }
+<div class="card p-4"><p><a class="btn btn-outline-primary" asp-action="DownloadTemplate">Download Excel Template</a></p>
+<form asp-action="Upload" method="post" enctype="multipart/form-data">@Html.AntiForgeryToken()
+<label class="form-label">Excel file (.xlsx, max 5 MB)</label><input type="file" name="excelFile" accept=".xlsx" required class="form-control mb-3" />
+<button class="btn btn-primary" type="submit">Upload &amp; Validate</button>
+<a class="btn btn-outline-secondary" asp-controller="Requirements" asp-action="Index">Requirements List</a></form></div></div>
