@@ -5,6 +5,7 @@ using ESMC.ELM.Infrastructure.Identity;
 using ESMC.ELM.Infrastructure.Seed;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using ESMC.ELM.Web.Identity;
+using Microsoft.AspNetCore.Rewrite;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -64,7 +65,11 @@ else
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
+app.UseRewriter(new RewriteOptions()
+    .AddRewrite(
+        "^$",
+        "Identity/Account/Login",
+        skipRemainingRules: true));
 app.UseRouting();
 
 app.UseAuthentication();
@@ -72,7 +77,10 @@ app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+   // pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Account}/{action=Login}/{id?}");
+
+
 
 app.MapRazorPages();
 

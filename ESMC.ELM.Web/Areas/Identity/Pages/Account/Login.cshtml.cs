@@ -106,8 +106,8 @@ namespace ESMC.ELM.Web.Areas.Identity.Pages.Account
                 _logger.LogInformation(
                     "User logged in: {Email}",
                     Input.Email);
-
-                return LocalRedirect(returnUrl);
+                return RedirectToAction("Index", "Home");
+                //return LocalRedirect(returnUrl);
             }
 
             if (result.RequiresTwoFactor)
