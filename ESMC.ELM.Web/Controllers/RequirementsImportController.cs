@@ -18,7 +18,7 @@ public class RequirementsImportController : Controller
     private readonly UserManager<ApplicationUser> _users;
     private static readonly ConcurrentDictionary<string, PendingImport> Pending = new();
     private sealed record PendingImport(byte[] Bytes, string FileName, Guid UserId, DateTime Created);
-    private static readonly string[] AllowedPriorities = { "Low", "Normal", "High", "Critical" };
+    private static readonly string[] AllowedPriorities = { "Low", "Medium", "High", "Critical" };
     private static readonly string[] Headers = { "RequirementCode", "ProjectCode", "RequirementType", "Title", "CustomerRequirement", "TechnicalInterpretation", "Source", "Priority", "Status", "AcceptanceCriteria", "FunctionCodes" };
 
     public RequirementsImportController(ApplicationDbContext db, UserManager<ApplicationUser> users)
@@ -103,7 +103,7 @@ public class RequirementsImportController : Controller
             TempData["Success"] = $"Successfully imported {preview.Rows.Count} requirements.";
             return RedirectToAction(nameof(Index));
         }
-        catch (DbUpdateException)
+        catch (DbUpdateException ex)
         {
             await tx.RollbackAsync();
             TempData["Error"] = "Import could not be saved. Data may have changed; please upload and validate again.";
